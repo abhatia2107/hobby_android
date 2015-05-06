@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:padding="25dp"
+    tools:context="in.hobbyix.hobbyix.Authentication">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:textColor="#ff000000"
+        android:onClick="onclickemail"
+        android:textSize="15dp"
+        android:typeface="sans"
+        android:id="@+id/EmailEditView"
+        android:text="username@domain.com"
+        android:layout_below="@+id/EmailTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/RegisterButton"
+        android:layout_alignEnd="@+id/RegisterButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="EMAIL"
+        android:textStyle="bold"
+        android:textColor="#ff000000"
+        android:textSize="15dp"
+        android:typeface="sans"
+        android:id="@+id/EmailTextView"
+        android:layout_marginTop="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/EmailEditView"
+        android:layout_alignStart="@+id/EmailEditView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PASSWORD"
+        android:textStyle="bold"
+        android:textColor="#ff000000"
+        android:textSize="15dp"
+        android:typeface="sans"
+        android:id="@+id/PasswordTextView"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/EmailEditView"
+        android:layout_alignLeft="@+id/EmailEditView"
+        android:layout_alignStart="@+id/EmailEditView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:ems="10"
+        android:id="@+id/PasswordEditText"
+        android:text="password"
+        android:textColor="#ff000000"
+        android:textSize="15dp"
+        android:onClick="onclickpassword"
+        android:typeface="sans"
+        android:layout_below="@+id/PasswordTextView"
+        android:layout_alignLeft="@+id/PasswordTextView"
+        android:layout_alignStart="@+id/PasswordTextView"
+        android:layout_alignRight="@+id/EmailEditView"
+        android:layout_alignEnd="@+id/EmailEditView" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/LoginButton"
+        android:onClick="onclicklogin"
+        android:textColor="#ffffffff"
+        android:background="#ca187fe5"
+        android:typeface="serif"
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/PasswordEditText"
+        android:layout_alignLeft="@+id/PasswordEditText"
+        android:layout_alignStart="@+id/PasswordEditText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:typeface="serif"
+        android:background="#ca187fe5"
+        android:textColor="#ffffffff"
+        android:id="@+id/RegisterButton"
+        android:layout_alignBottom="@+id/LoginButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Forgot Password ?"
+        android:onClick="onclickforgetpassword"
+        android:textSize="15dp"
+        android:textColor="#ff0029ff"
+        android:clickable="true"
+        android:id="@+id/ForgotPassword"
+        android:layout_below="@+id/RegisterButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp" />
+
+</RelativeLayout>
