@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Hobbyix</string>
     <string name="title_activity_payment_method">HOBBYIX</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_setting">Action Setting</string>
+
 </resources>
