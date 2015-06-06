@@ -4,5 +4,10 @@
     <string name="action_search">Search</string>
     <string name="action_filter">Filter</string>
     <string name="action_setting">Action Setting</string>
+    <string name="title_activity_filter">HOBBYIX</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="white_color">#ffffffff</string>
 
 </resources>

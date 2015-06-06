@@ -8,20 +8,26 @@
         yourapp:showAsAction="always|collapseActionView"
         yourapp:actionViewClass="android.support.v7.widget.SearchView"/>
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/Profile"
+    <item android:id="@+id/action_filter"
+        android:icon="@drawable/filter"
+        android:title="@string/action_filter"
+        yourapp:showAsAction="always"/>
+
+
+    <item android:id="@+id/Profile"
             android:orderInCategory="1"
             android:title="Profile"
-            android:showAsAction="never"
-            tools:ignore="AppCompatResource" />
-        <item android:id="@+id/Membership"
+            android:icon="@drawable/profile"
+            yourapp:showAsAction="never"/>
+
+    <item android:id="@+id/Membership"
             android:orderInCategory="2"
-            android:title="Membership"
-            android:showAsAction="never"/>
-        <item android:id="@+id/Status"
+            android:title="never"
+            yourapp:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/Status"
             android:orderInCategory="3"
             android:title="Status"
-            android:showAsAction="never"/>
-    </group>
+            yourapp:showAsAction="never"/>
 
 </menu>
