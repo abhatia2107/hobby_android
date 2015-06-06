@@ -2,25 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.hobbyix.hobbyix" >
 
-    <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--
- To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
-     option is required to comply with the Google+ Sign-In developer policies
-    -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- To retrieve the account name (email) as part of sign-in: -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
-                                                                                                                                                                                                                                                                android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/MaterialDark" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="HOBBYIX" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,42 +17,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Authentication"
-            android:label="Welcome" >
-            <intent-filter>
-                <action android:name="in.hobbyix.hobbyix.AUTHENTICATION" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:name=".FitnessClasses"
+            android:label="HOBBYIX" >
         </activity>
         <activity
-            android:name=".RegisterActivity"
-            android:label="Register" >
-        </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".Navigation"
-            android:label="@string/title_activity_navigation" >
+            android:name=".PaymentMethod"
+            android:label="@string/title_activity_payment_method" >
         </activity>
         <activity
-            android:name=".NavigationTabhost"
-            android:label="@string/title_activity_navigation_tabhost" >
-        </activity>
-        <activity
-            android:name=".welcome"
-            android:label="@string/title_activity_welcome" >
-        </activity>
-        <activity
-            android:name=".Welcome"
-            android:label="@string/title_activity_welcome" >
-        </activity>
-        <activity
-            android:name=".forgetpassword"
-            android:label="@string/title_activity_forgetpassword" >
+            android:name=".Filter"
+            android:label="@string/title_activity_filter" >
         </activity>
     </application>
 
