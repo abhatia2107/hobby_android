@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
             BookNow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent Payment = new Intent(v.getContext(),PaymentMethod.class);
+                    Intent Payment = new Intent(v.getContext(),FitnessClasses.class);
                     startActivityForResult(Payment,0);
                 }
             });

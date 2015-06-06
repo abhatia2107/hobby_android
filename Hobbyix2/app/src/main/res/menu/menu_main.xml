@@ -1,5 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
 
     <item android:id="@+id/action_search"
@@ -13,21 +12,20 @@
         android:title="@string/action_filter"
         yourapp:showAsAction="always"/>
 
-
     <item android:id="@+id/Profile"
-            android:orderInCategory="1"
             android:title="Profile"
             android:icon="@drawable/profile"
-            yourapp:showAsAction="never"/>
-
-    <item android:id="@+id/Membership"
-            android:orderInCategory="2"
-            android:title="never"
-            yourapp:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/Status"
-            android:orderInCategory="3"
-            android:title="Status"
-            yourapp:showAsAction="never"/>
-
+            yourapp:showAsAction="always">
+        <menu>
+            <item android:id="@+id/LoginLogout"
+                android:title="Login/Logout"
+                yourapp:showAsAction="never"/>
+            <item android:id="@+id/MyOrders"
+                android:title="My Orders"
+                yourapp:showAsAction="never"/>
+            <item android:id="@+id/Profile"
+                android:title="MyProfile"
+                yourapp:showAsAction="never"/>
+        </menu>
+    </item>
 </menu>
