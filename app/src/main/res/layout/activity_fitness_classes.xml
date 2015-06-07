@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="in.hobbyix.hobbyix.FitnessClasses"
     android:layout_height="match_parent"
-    layout_width="wrap_content"
     android:layout_width="wrap_content"
     android:fillViewport="false"
     android:id="@+id/ScrollView">
@@ -12,7 +11,7 @@
     android:background="#ffffffff">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:id="@+id/Gym"
         android:background="@drawable/gym"
         android:layout_alignParentTop="true">
@@ -22,8 +21,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="#4cffffff"
-        android:layout_height="90dp"
+        android:background="#4c000000"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -70,10 +69,314 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="335dp"
-        android:layout_marginTop="200dp">
+        android:layout_height="1000dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="#fff0f3f6"
+        android:weightSum="1"
+        android:layout_below="@+id/Gym">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:background="#ffffffff"
+            android:layout_height="280dp"
+            android:id="@+id/View">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Book This Class"
+                android:textColor="#ff000000"
+                android:id="@+id/textView4"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#cd28b9ff"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Price Per Session"
+                android:layout_marginTop="10dp"
+                android:textColor="#ff000000"
+                android:textSize="15dp"
+                android:id="@+id/textView6"
+                android:layout_below="@+id/textView5"
+                android:layout_alignLeft="@+id/textView5"
+                android:layout_alignStart="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=": Rs. Dummy"
+                android:textSize="12dp"
+                android:textColor="#ff000000"
+                android:id="@+id/textView7"
+                android:layout_alignTop="@+id/textView6"
+                android:layout_toRightOf="@+id/textView4"
+                android:layout_toEndOf="@+id/textView4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Number of Sessions*"
+                android:id="@+id/textView8"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#ff000000"
+                android:layout_below="@+id/textView6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Booking Date*"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:textColor="#ff000000"
+                android:id="@+id/textView9"
+                android:layout_below="@+id/textView8"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_marginTop="10dp"
+                android:text="Enter Promo Code"
+                android:textSize="15sp"
+                android:layout_below="@+id/editText4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/textView10"
+                android:layout_alignRight="@+id/textView8"
+                android:layout_alignEnd="@+id/textView8" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply"
+                android:background="#cd2c58ff"
+                android:textColor="#ffffffff"
+                android:textSize="10dp"
+                android:id="@+id/textView10"
+                android:layout_alignBottom="@+id/editText"
+                android:layout_alignRight="@+id/editText4"
+                android:layout_alignEnd="@+id/editText4"
+                android:layout_alignLeft="@+id/editText4"
+                android:layout_alignStart="@+id/editText4"
+                android:layout_alignTop="@+id/editText" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#cd28b9ff"
+                android:layout_below="@+id/textView10"
+                android:id="@+id/View5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Amount Payable:"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/textView11"
+                android:layout_below="@+id/View5"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Proceed"
+                android:textColor="#ffffffff"
+                android:background="#cd2c58ff"
+                android:layout_marginTop="5dp"
+                android:id="@+id/ProceedButton"
+                android:layout_below="@+id/textView11"
+                android:layout_toRightOf="@+id/textView9"
+                android:layout_toEndOf="@+id/textView9" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_alignLeft="@+id/textView7"
+                android:layout_alignStart="@+id/textView7"
+                android:layout_alignBottom="@+id/textView9"
+                android:layout_below="@+id/textView8"
+                android:layout_alignRight="@+id/textView7"
+                android:layout_alignEnd="@+id/textView7" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:layout_above="@+id/textView9"
+                android:layout_alignLeft="@+id/editText4"
+                android:layout_alignStart="@+id/editText4"
+                android:layout_below="@+id/textView6"
+                android:layout_alignRight="@+id/View5" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:layout_marginTop="45dp"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#ffffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Write a Review"
+                android:textColor="#ff000000"
+                android:id="@+id/textView12"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="#cd28b9ff"
+                android:layout_below="@+id/textView10"
+                android:id="@+id/View5" />
+
+            <RatingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_below="@+id/View5"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Review :"
+                android:textSize="15dp"
+                android:textColor="#ff000000"
+                android:id="@+id/textView13"
+                android:layout_below="@+id/ratingBar"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="Submit"
+                android:background="#cd2c58ff"
+                android:textColor="#ffffffff"
+                android:id="@+id/SubmitButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="137dp"
+            android:layout_marginTop="45dp"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#ffffffff">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Institute Details"
+                android:textColor="#ff000000"
+                android:id="@+id/textView14"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="#cd28b9ff"
+                android:layout_below="@+id/textView10"
+                android:id="@+id/View5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Et labore optio sit nihil aliquid a dolorem. Fuga illo porro distinctio exercitationem explicabo. Quo tempore dignissimos est dolore sed quibusdam.*"
+                android:id="@+id/textView"
+                android:textSize="15dp"
+                android:textColor="#ff000000"
+                android:layout_below="@+id/View5"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="137dp"
+            android:layout_marginTop="45dp"
+            android:padding="8dp"
+            android:background="#ffffffff">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Jerrod Smith IV Details"
+                android:textColor="#ff000000"
+                android:id="@+id/textView14"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="#cd28b9ff"
+                android:layout_below="@+id/textView10"
+                android:id="@+id/View5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sessions per Week:"
+                android:id="@+id/textView"
+                android:textSize="15dp"
+                android:textColor="#ff000000"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/textView14"
+                android:layout_alignStart="@+id/textView14" />
+
+        </RelativeLayout>
     </LinearLayout>
-
-
 </RelativeLayout>
 </ScrollView>
