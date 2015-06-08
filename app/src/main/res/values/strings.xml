@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Hobbyix</string>
+    <string name="title_activity_payment_method">HOBBYIX</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_setting">Action Setting</string>
+    <string name="title_activity_filter">HOBBYIX</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="white_color">#ffffffff</string>
+    <string name="Back">Back</string>
+    <string name="list_numbers" />
+    <string-array name="list_numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>
