@@ -2,14 +2,14 @@ package in.hobbyix.hobbyix;
 
 import android.widget.Button;
 
-public class Post {
+public class PostItems {
     private String Name;
     private String ClassType;
     private String Address;
     private String Timings;
     private String Fees;
     private int ButttonId;
-    public Post(String name, String classType, String address, String timings, String fees,int  buttonid) {
+    public PostItems(String name, String classType, String address, String timings, String fees,int  buttonid) {
         Name = name;
         ClassType = classType;
         Address = address;

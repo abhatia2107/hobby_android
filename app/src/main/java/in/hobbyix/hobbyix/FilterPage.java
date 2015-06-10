@@ -1,5 +1,6 @@
 package in.hobbyix.hobbyix;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,23 +15,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Filter extends ActionBarActivity {
+public class FilterPage extends ActionBarActivity {
     private List<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     private List<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
-
+    String load_locality_details[]=new String[25];
+    String load_subcategory_details[]=new String[25];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        load_locality_details = new Location_batches().store_details_of_locality();
+        load_subcategory_details=new Subcategory_Fitness().store_details_of_subcategory();
         populatecheckBoxList();
         populateListView();
 
     }
     private void populatecheckBoxList(){
-        for(int i=1;i<=10;i++){
-            checkBoxList.add(new CheckBoxString("Dummy1Data"+i));
-            checkBoxList2.add(new CheckBoxString("Dummy2data"+i));
+        for(int i=0;i<10;i++) {
+            checkBoxList2.add(new CheckBoxString(load_locality_details[i]));
+        }
+        for(int i=0;i<20;i++) {
+            checkBoxList.add(new CheckBoxString(load_subcategory_details[i]));
         }
     }
     private void populateListView() {
@@ -43,7 +52,7 @@ public class Filter extends ActionBarActivity {
     }
     private class MyListAdapter extends ArrayAdapter<CheckBoxString> {
         public MyListAdapter() {
-            super(Filter.this, R.layout.checkbox_element, checkBoxList);
+            super(FilterPage.this, R.layout.checkbox_element, checkBoxList);
         }
 
         @Override
@@ -60,7 +69,7 @@ public class Filter extends ActionBarActivity {
     }
     private class MyListAdapter2 extends ArrayAdapter<CheckBoxString> {
         public MyListAdapter2() {
-            super(Filter.this, R.layout.checkbox_element, checkBoxList);
+            super(FilterPage.this, R.layout.checkbox_element, checkBoxList);
         }
 
         @Override
@@ -73,6 +82,17 @@ public class Filter extends ActionBarActivity {
             CheckBox checkbox = (CheckBox)itemView.findViewById(R.id.ItemCheckBox);
             checkbox.setText(CurrentString.getMainString());
             return itemView;
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
