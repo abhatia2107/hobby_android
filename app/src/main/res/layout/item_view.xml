@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingRight="10dp"
+    android:layout_height="match_parent"
+    android:id="@+id/ItemView">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Name"
+        android:textSize="15dp"
+        android:textColor="#ff348fff"
+        android:id="@+id/item_NameTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ClassType"
+        android:textSize="14dp"
+        android:id="@+id/item_ClassTypeTextView"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Address"
+        android:textSize="13dp"
+        android:id="@+id/item_AddressTextView"
+        android:layout_below="@+id/item_ClassTypeTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Timings"
+        android:textSize="13dp"
+        android:id="@+id/item_TimingsTextView"
+        android:layout_below="@+id/item_AddressTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView"
+        android:textSize="10dp"
+        android:layout_alignBottom="@+id/item_NameTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:text="Book Now"
+        android:id="@+id/item_book_now_button"
+        android:textColor="#ffffff"
+        android:background="#ff3396d1"
+        android:textSize="10dp"
+        android:gravity="center"
+        android:layout_alignTop="@+id/item_AddressTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Fees"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:textSize="10dp"
+        android:id="@+id/item_FessTextView"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/item_book_now_button"
+        android:layout_alignStart="@+id/item_book_now_button" />
+</RelativeLayout>

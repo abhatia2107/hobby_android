@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background"
+    android:id="@+id/MainLayout">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
+        android:indeterminate="false" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/progressBar">
+        <TextView
+            android:layout_marginTop="75dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="H"
+            android:textColor="#ff8622ca"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/H"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="75dp"
+            android:text="O"
+            android:textColor="#ff131ba4"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/O" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="B"
+            android:layout_marginTop="75dp"
+            android:textColor="#ff1a24f8"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/B" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="B"
+            android:textColor="#ff27ca45"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/B2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Y"
+            android:layout_marginTop="75dp"
+            android:textColor="#fffffb05"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/Y" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="I"
+            android:layout_marginTop="75dp"
+            android:textColor="#ffff5707"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:id="@+id/I" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="X"
+            android:textColor="#ffec1c0a"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_marginTop="75dp"
+            android:id="@+id/X" />
+    </LinearLayout>
+</RelativeLayout>
