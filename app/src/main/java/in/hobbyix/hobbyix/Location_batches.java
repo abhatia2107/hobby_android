@@ -43,7 +43,7 @@ public class Location_batches  {
     //-----------------------------------------------------------------------------------------------------------------------//
     public String[] store_details_of_locality() {
 
-        String[] aResultM = new String[25];
+        String[] aResultM = new String[30];
         try {
             String params = null;
             LoadAllLOCALITY task = new LoadAllLOCALITY();
@@ -77,7 +77,7 @@ public class Location_batches  {
         protected String[] doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
-                 String locality_details_list[] =new String[21];
+                 String locality_details_list[] = new String[0];
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
 
@@ -93,17 +93,23 @@ public class Location_batches  {
                 if(success==1)
                 {
                     Log.e("jkjhkjgdh","success");
+
                     localitylines =  json.getJSONArray(TAG_LOCALITY );
+                    locality_details_list=new String[localitylines.length()+1];
+                    Log.e("jjkfdsffffkkk",localitylines.length()+"");
+                   int j;
+                    locality_details_list[0]=Integer.toString(localitylines.length());
                     for(int i=0;i<localitylines.length();i++)
                     {
-                        JSONObject c = localitylines.getJSONObject(i);
+                        j=i+1;
+                     JSONObject c=  localitylines.getJSONObject(i);
 
                         // Integer id = c.getInt(TAG_ID);
                         String name_of_locality = c.getString("locality");
 
                         Log.e("dhkajhdj",""+name_of_locality+"");
 
-                    locality_details_list[i]=name_of_locality;
+                    locality_details_list[j]=name_of_locality;
 
                     }
                     //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
