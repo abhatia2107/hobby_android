@@ -20,7 +20,7 @@ public class Institute_Details {
     //the progessdialog for progress bar
     private ProgressDialog pDialog;
     //url to get required guidelines
-    private static String url_for_institute = "http://192.168.137.1/Hobbyix/displaying_institute_details.php";
+    private static String url_for_institute = "http://192.168.10.101/Hobbyix/displaying_institute_details.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_INSTITUTE = "institute";
