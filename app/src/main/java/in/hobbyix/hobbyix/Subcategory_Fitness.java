@@ -41,7 +41,7 @@ public class Subcategory_Fitness  {
 
     public String[] store_details_of_subcategory() {
 
-        String[] aResultM = new String[25];
+        String[] aResultM = new String[30];
         try {
             String params = null;
             LoadAllSubcategory task = new LoadAllSubcategory();
@@ -81,7 +81,7 @@ public class Subcategory_Fitness  {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
-            String subcategory[]=new String[25];
+            String subcategory[] = new String[0];
             JSONObject json = jparser.makeHttpRequest(url_for_subcategory, "GET", params);
             if(json==null){
                 message = "No internet connection... please try later";
@@ -95,15 +95,21 @@ public class Subcategory_Fitness  {
                 {
                     Log.e("jkjhkjgdh","success");
                     subcategorylines =  json.getJSONArray("subcategories");
+
+                    subcategory = new  String[subcategorylines.length()+1];
+                    subcategory[0]=Integer.toString(subcategorylines.length());
+                    Log.e("djfjk","ooio"+subcategory[0]+"");
+                    int j;
                     for(int i=0;i<subcategorylines.length();i++)
                     {
-                        JSONObject c = subcategorylines.getJSONObject(i);
+                        j=i+1;
+                     JSONObject c =  subcategorylines.getJSONObject(i);
 
                         // Integer id = c.getInt(TAG_ID);
                         String name_of_subcategory = c.getString(TAG_SUBCATEGORY);
 
                         Log.e("dhkajhdj",""+name_of_subcategory+"");
-                           subcategory[i]=name_of_subcategory;
+                           subcategory[j]=name_of_subcategory;
 
 
                     }

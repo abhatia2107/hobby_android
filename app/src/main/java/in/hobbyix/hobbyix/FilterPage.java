@@ -3,6 +3,7 @@ package in.hobbyix.hobbyix;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +19,8 @@ import java.util.List;
 public class FilterPage extends ActionBarActivity {
     private List<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     private List<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
-    String load_locality_details[]=new String[25];
-    String load_subcategory_details[]=new String[25];
+    String load_locality_details[]=new String[1000];
+    String load_subcategory_details[]=new String[1000];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,16 @@ public class FilterPage extends ActionBarActivity {
 
     }
     private void populatecheckBoxList(){
-        for(int i=0;i<10;i++) {
-            checkBoxList2.add(new CheckBoxString(load_locality_details[i]));
+
+
+        for(int i=0;i<Integer.valueOf(load_subcategory_details[0]);i++) {
+            checkBoxList.add(new CheckBoxString(load_subcategory_details[i+1]));
         }
-        for(int i=0;i<20;i++) {
-            checkBoxList.add(new CheckBoxString(load_subcategory_details[i]));
+        /*for(int i=0;i<Integer.valueOf(load_locality_details[0]);i++) {
+            checkBoxList2.add(new CheckBoxString(load_locality_details[i+1]));
+        }*/
+        for(int i=0;i<50;i++) {
+            checkBoxList2.add(new CheckBoxString("kkljkl"));
         }
     }
     private void populateListView() {

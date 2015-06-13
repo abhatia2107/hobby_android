@@ -41,13 +41,16 @@ public class MainActivity extends ActionBarActivity {
         //list=store(list);
         // Log.e("list", "" + list + "");
         // int size=list.size();
-        for (int i = 0; i < 25; i++) {
+        Log.e("jdfj",""+list_institute[0][0]+"");
+        for (int i = 1; i <=Integer.valueOf( list_institute[0][0]); i++) {
             String x = list_institute[i][0];
             String y = list_institute[i][1];
             String z = list_institute[i][2];
+
             String a = list_institute[i][3];
+            //String b=list_institute[i][4];
             // Log.e("djfk",""+list.get(i).get("institute")+""+list.get(i).get("batch_category")+""+list.get(i).get("venue_address"));
-            PostList.add(new PostItems(x, y, z, "Mon-Sat:5-6pm", "₹ " + a + " / Session", R.id.item_book_now_button));
+            PostList.add(new PostItems(x, y, "ghgjhgj", a, "₹ " + z + " / Session", R.id.item_book_now_button));
         }
     }
     private void populatePostListView() {
