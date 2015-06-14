@@ -1,42 +1,54 @@
 package in.hobbyix.hobbyix;
 
-import android.widget.Button;
-
 public class PostItems {
     private String Name;
     private String ClassType;
     private String Address;
     private String Timings;
     private String Fees;
-    private int ButttonId;
-    public PostItems(String name, String classType, String address, String timings, String fees,int  buttonid) {
-        Name = name;
-        ClassType = classType;
-        Address = address;
-        Timings = timings;
-        Fees = fees;
-        ButttonId=buttonid;
+
+    public PostItems(){
+
     }
 
     public String getName() {
         return Name;
     }
 
+    public void setName(String name) {
+        Name = name;
+    }
+
     public String getClassType() {
         return ClassType;
+    }
+
+    public void setClassType(String classType) {
+        ClassType = classType;
     }
 
     public String getAddress() {
         return Address;
     }
 
+    public void setAddress(String address) {
+        Address = address;
+    }
+
     public String getTimings() {
         return Timings;
+    }
+
+    public void setTimings(String timings) {
+        Timings = timings;
     }
 
     public String getFees() {
         return Fees;
     }
 
-    public int getButttonId() {return  ButttonId; }
+    public void setFees(String fees) {
+        Fees = fees;
+    }
+
 }
