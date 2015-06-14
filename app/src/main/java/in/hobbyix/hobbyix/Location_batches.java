@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class Location_batches  {
     //url to get required guidelines
-    private static String url_for_locality = "http://192.168.10.101/Hobbyix/displaying_localities.php";
+    private static String url_for_locality = "http://192.168.10.108/Hobbyix/displaying_localities.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";

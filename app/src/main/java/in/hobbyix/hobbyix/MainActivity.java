@@ -1,11 +1,8 @@
 package in.hobbyix.hobbyix;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,42 +19,33 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
     private List<PostItems> PostList=new ArrayList<PostItems>();
-    public ArrayList<HashMap<String, String>> list= new ArrayList<HashMap<String, String>>();
-    public  String list_institute[][]= new String[100][6];
+    //public  String list_institute[][]= new String[100][5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("dhfjkd", "kjlkjkjklllkl");
-        list_institute= new Institute_Details().store_details();
-        Log.e("dhfjkddddddd",""+list_institute[0][0]);
+        //list_institute= new Institute_Details().store_details();
         populatePostList();
         populatePostListView();
         registerClickCallback();
     }
-    private void populatePostList() {
-        Log.e("f", "" + list_institute[0][0]);
-        // list_institute=send_details(list_institute);
-        //list=store(list);
-        // Log.e("list", "" + list + "");
-        // int size=list.size();
-        Log.e("jdfj",""+list_institute[0][0]+"");
-        for (int i = 1; i <=Integer.valueOf( list_institute[0][0]); i++) {
-            String x = list_institute[i][0];
-            String y = list_institute[i][1];
-            String z = list_institute[i][2];
 
-            String a = list_institute[i][3];
-            //String b=list_institute[i][4];
-            // Log.e("djfk",""+list.get(i).get("institute")+""+list.get(i).get("batch_category")+""+list.get(i).get("venue_address"));
-            PostList.add(new PostItems(x, y, "ghgjhgj", a, "₹ " + z + " / Session", R.id.item_book_now_button));
-        }
+    private void populatePostList() {
+       // for (int i = 1; i <=Integer.valueOf( list_institute[0][0]); i++) {
+         //   String x = list_institute[i][0];
+           // String y = list_institute[i][1];
+            //String z = list_institute[i][2];
+            //String a = list_institute[i][3];
+            //String b = list_institute[i][4];
+            PostList.add(new PostItems("Yashdeep", "Sharma", "a","b", "₹ " + "z" + " / Session", R.id.item_book_now_button));
+        //}
     }
     private void populatePostListView() {
         ArrayAdapter<PostItems> adapter=new MyListAdapter();
         ListView postlist=(ListView)findViewById(R.id.listView);
         postlist.setAdapter(adapter);
     }
+
     private void registerClickCallback() {
         ListView list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

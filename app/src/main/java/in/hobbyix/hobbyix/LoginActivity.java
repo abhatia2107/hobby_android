@@ -37,7 +37,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     //url for checking
-    public  String url_login="http://192.168.10.101/Hobbyix/logincheck.php";
+    public  String url_login="http://192.168.10.108/Hobbyix/logincheck.php";
 
     String message = null;
 

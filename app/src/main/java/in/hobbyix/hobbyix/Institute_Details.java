@@ -1,9 +1,7 @@
 package in.hobbyix.hobbyix;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Button;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
@@ -11,29 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 
 public class Institute_Details {
 
-    //the progessdialog for progress bar
-    private ProgressDialog pDialog;
-    //url to get required guidelines
-    private static String url_for_institute = "http://192.168.10.101/Hobbyix/displaying_institute_details.php";
-    // desc of all important strings : names of columns
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_INSTITUTE = "institute";
-    String institute_list[][]=new String[100][100];
-    String message = null;
-    //object for JSONParser class
-    JSONParser jparser = new JSONParser();
-    //button to start the syncing of databases
-    Button btn;
-    // ArrayList of HashMaps to store the JSONArray of mapped values
-
-    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
-    //JSONArray(inbuilt) to extract the JSONArray
+    private static String url_for_institute = "http://192.168.10.108/Hobbyix/displaying_institute_details.php";
+    public String institute_list[][]=new String[100][5];
+    JSONParser jsonParser = new JSONParser();
     JSONArray guidelines = null;
 
 
@@ -65,100 +47,40 @@ public class Institute_Details {
 
         @Override
         public String[][] doInBackground(String... arg0) {
-
             // TODO Auto-generated method stub
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
+            JSONObject json = jsonParser.makeHttpRequest(url_for_institute, "GET", params);
+            try{
+                 guidelines = json.getJSONArray("institute");
+                 institute_list[0][0]=Integer.toString(guidelines.length());
 
-            JSONObject json = jparser.makeHttpRequest(url_for_institute, "GET", params);
-            if (json == null) {
-                message = "No internet connection... please try later";
-                Log.v("tushita", "The Json Object was Null");
-                return null;
+                 for (int i = 1; i <= guidelines.length(); i++) {
+                     JSONObject c= guidelines.getJSONObject(i);
+                     String name_of_institute = c.getString("institute");
+                     String batch_category = c.getString("batch_category");
+                     String batch_time=c.getString("batch_time");
+                     String venue_address = c.getString("venue_address");
+                     Integer price = c.getInt("batch_single_price");
+                     String batch_price=price.toString();
+                     institute_list[i][0]=name_of_institute;
+                     institute_list[i][1]=batch_category;
+                     institute_list[i][2]=batch_price;
+                     institute_list[i][3]=batch_time;
+                     institute_list[i][4]=venue_address;
+                 }
             }
-            try {
-                int success = json.getInt(TAG_SUCCESS);
-                if (success == 1) {
-                    guidelines = json.getJSONArray("institutes");
-
-                    int k;
-
-                  int j;
-                    institute_list[0][0]=Integer.toString(guidelines.length());
-                    for (int i = 0; i < guidelines.length(); i++) {
-                        k=0;
-                        j=i+1;
-                        Log.e("dskjfhj",""+guidelines.length()+"");
-                        JSONObject c= guidelines.getJSONObject(i);
-                      /*  if(i==0) {
-                            int no_of_rows = c.getInt("no_of_rows");
-                            institute_list[0][0]=Integer.toString(no_of_rows);
-                        }
-                        else{*/
-                        // Integer id = c.getInt(TAG_ID);
-                        String name_of_institute = c.getString(TAG_INSTITUTE);
-                        String batch_category = c.getString("batch_category");
-                        String batch_time=c.getString("batch_time");
-                       // String venue_address = c.getString("venue_address");
-                        Integer price = c.getInt("batch_single_price");
-                        String batch_price=price.toString();
-                       // String schedule_start_time = c.getString("schedule_start_time");
-
-                       // String schedule_end_time = c.getString("schedule_end_time");
-                        Log.e("dhkajhdj", "" + name_of_institute + "");
-                       institute_list[j][k]=name_of_institute;
-                        k++;
-                        institute_list[j][k]=batch_category;
-                        k++;
-                      //  institute_list[i][k]=venue_address;
-                        //k++;
-                        institute_list[j][k]=batch_price;
-                        k++;
-                        institute_list[j][k]=batch_time;
-                        k++;
-
-                       /* HashMap<String, String> map = new HashMap<String, String>();
-                        map.put(TAG_INSTITUTE, name_of_institute);
-
-                        map.put("batch_category", batch_category);
-                        map.put("venue_address", venue_address);
-                        map.put("batch_price", batch_price);*/
-                        //map.put(schedule_start_time, schedule_start_time);
-                        //map.put(schedule_end_time, schedule_end_time);
-
-
-                    }
-
-
-                    //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //startActivity(in);
-
-                } else {
-                    Log.v("tush", "success was 0");
-                    //Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //finish();
-                    //startActivity(in);
-                }
-
-            } catch (JSONException e) {
+            catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return institute_list;
         }
 
         @Override
         protected void onPostExecute(String[][] result) {
             // TODO Auto-generated method stub
-
            super.onPostExecute(result);
 
-           // pDialog.dismiss();
         }
-
-
     }
 }
 

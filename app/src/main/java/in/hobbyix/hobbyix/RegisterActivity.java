@@ -33,7 +33,7 @@ public class RegisterActivity extends ActionBarActivity {
     //the progessdialog for progress bar
     private ProgressDialog pDialog ;
     //url to get required guidelines
-    private static String url_all_guidelines = "http://192.168.10.101/Hobbyix/adding_user.php";
+    private static String url_all_guidelines = "http://192.168.10.108/Hobbyix/adding_user.php";
 
     String message = null;
     //object for JSONParser class

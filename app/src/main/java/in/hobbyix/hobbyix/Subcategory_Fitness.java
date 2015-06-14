@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Subcategory_Fitness  {
     //url to get required guidelines
-    private static String url_for_subcategory = "http://192.168.10.101/Hobbyix/displaying_subcategory_details.php";
+    private static String url_for_subcategory = "http://192.168.10.108/Hobbyix/displaying_subcategory_details.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_SUBCATEGORY = "subcategory";
