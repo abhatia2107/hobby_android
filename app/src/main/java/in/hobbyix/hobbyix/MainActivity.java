@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,12 +41,12 @@ public class MainActivity extends ActionBarActivity {
     ListView postItemListView;
     InstituteAdapter adapter;
     ArrayList<PostItems> postItemArrayList;
-
+    public static Bundle main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        main=savedInstanceState;
         setContentView(R.layout.activity_main);
-
         postItemListView = (ListView)findViewById(R.id.listView);
         postItemArrayList = new ArrayList<>();
         new PostItemsAsyncTask().execute(instituteUrl);
@@ -75,8 +76,12 @@ public class MainActivity extends ActionBarActivity {
                     for(int i=0;i<jsonArray.length();i++){
                         PostItems postItems = new PostItems();
                         JSONObject jsonPostItem=jsonArray.getJSONObject(i);
+                        postItems.setClassType(jsonPostItem.getString("batch_category"));
                         postItems.setName(jsonPostItem.getString("institute"));
-
+                        postItems.setFees(jsonPostItem.getString("batch_single_price"));
+                        postItems.setAddress("Hi Tech City");
+                        postItems.setTimings("4am-9pm");
+                        postItems.setBookNow("BookNow");
                         postItemArrayList.add(postItems);
                     }
                     return true;
@@ -96,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
             super.onPostExecute(result);
             if(result == false){
                 Context context = getApplicationContext();
-                CharSequence text = "Parsing Error ";
+                CharSequence text = "Internet Connection Not Available.";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();

@@ -6,11 +6,18 @@ public class PostItems {
     private String Address;
     private String Timings;
     private String Fees;
-
+    private String BookNow;
     public PostItems(){
 
     }
 
+    public String getBookNow() {
+        return BookNow;
+    }
+
+    public void setBookNow(String bookNow) {
+        BookNow = bookNow;
+    }
     public String getName() {
         return Name;
     }
