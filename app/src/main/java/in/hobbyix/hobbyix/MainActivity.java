@@ -37,9 +37,8 @@ import java.util.List;
 import java.util.jar.JarException;
 
 public class MainActivity extends ActionBarActivity {
-    private final String instituteUrl="http://192.168.10.108/Hobbyix/displaying_institute_details.php";
+    private final String instituteUrl="http://192.168.10.110/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
-    InstituteAdapter adapter;
     ArrayList<PostItems> postItemArrayList;
     public static Bundle main;
     @Override

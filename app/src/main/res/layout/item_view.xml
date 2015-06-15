@@ -76,7 +76,7 @@
         android:layout_alignTop="@+id/item_AddressTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-    />
+        android:onClick="onBookNowClick" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,4 +90,5 @@
         android:layout_below="@+id/textView"
         android:layout_alignLeft="@+id/item_book_now_button"
         android:layout_alignStart="@+id/item_book_now_button" />
+
 </RelativeLayout>

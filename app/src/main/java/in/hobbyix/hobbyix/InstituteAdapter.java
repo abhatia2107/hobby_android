@@ -1,24 +1,15 @@
 package in.hobbyix.hobbyix;
 
-import android.app.Activity;
-import android.app.ListFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import org.json.JSONArray;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
 
@@ -48,11 +39,12 @@ public class InstituteAdapter extends ArrayAdapter<PostItems> {
         ArrayListPost = objects;
         this.resource = resource;
         this.context=context;
+
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder ;
         if(convertView == null){
             convertView = layoutInflater.inflate(resource,null);
@@ -73,7 +65,14 @@ public class InstituteAdapter extends ArrayAdapter<PostItems> {
         viewHolder.institute_price.setText("Fees Rs."+ ArrayListPost.get(position).getFees()+"/-");
         viewHolder.institute_class_type.setText(ArrayListPost.get(position).getClassType());
         viewHolder.institute_timing.setText(ArrayListPost.get(position).getTimings());
-
+        viewHolder.book_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SamplePage.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
-}
+
+ }
