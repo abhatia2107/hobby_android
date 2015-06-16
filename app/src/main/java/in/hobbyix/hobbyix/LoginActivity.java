@@ -38,7 +38,7 @@ public class LoginActivity extends ActionBarActivity {
 
     //url for checking
     public  String url_login="http://192.168.10.108/Hobbyix/logincheck.php";
-
+    public String details_of_user[] =new String[100];
     String message = null;
 
     //object for JSONParser class
@@ -88,7 +88,11 @@ public class LoginActivity extends ActionBarActivity {
                 if(m==1){
 
                     Log.e("oioio","popop");*/
-                new ConnectiontoInternet().execute();
+                details_of_user =set_user();
+
+                MyProfile.user_details = details_of_user;
+
+               // MyProfile.set_profile_contents(details_of_user);
 
             }
                 /*else
@@ -130,8 +134,42 @@ public class LoginActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
+   public String [] set_user()
+    {
+        String[] aResultM = new String[30];
+        try {
+            String params = null;
+            Login_Details task = new Login_Details();
+            task.execute(params);
+            aResultM = task.get();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+        return aResultM;
+    }
+
+<<<<<<< HEAD
     class ConnectiontoInternet extends AsyncTask<String,String,String> {
+=======
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    class Login_Details extends AsyncTask<String,String,String[]> {
+>>>>>>> 81089da567d251f43ccfded0c851e885a49bcca0
 
         @Override
         protected void onPreExecute() {
@@ -146,7 +184,7 @@ public class LoginActivity extends ActionBarActivity {
 
         }
         @Override
-        protected String doInBackground(String... arg0) {
+        protected String [] doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -154,42 +192,30 @@ public class LoginActivity extends ActionBarActivity {
             params.add(new BasicNameValuePair("Email",emailtext));
             params.add(new BasicNameValuePair("Pass",passwordtext));
 
-
-            JSONObject json = jparser.makeHttpRequest(url_login,"GET",params);
-
+             JSONArray user_details;
+            JSONObject json = jparser.makeHttpRequest(url_login,"POST",params);
+            String user_detail[]= new String[100];
             if(json==null){
                 message = "No internet connection... please try later";
-                // Log.e("garvit","gf");
+
                 return null;
             }
 
             try {
                 if(json.getInt("success")==1)
                 {
-                    /*guidelines = json.getJSONArray(TAG_CALAMITIES);
-                    for(int i=0;i<guidelines.length();i++)
-                    {
+                    guidelines = json.getJSONArray("login");
+                    for(int i=0;i<guidelines.length();i++) {
                         JSONObject c = guidelines.getJSONObject(i);
-                        Integer id = c.getInt(TAG_ID);
-                        String calamity = c.getString(TAG_CALAMITY);
-                        String before_cal = c.getString(TAG_BEFORE_CAL);
-                        String after_cal = c.getString(TAG_AFTER_CAL);
-                        String during_cal = c.getString(TAG_DURING_CAL);
+                       user_detail[ 0]=c.getString("fname");
+                        user_detail[ 1]=c.getString("lname");
+                        user_detail[ 2]=c.getString("city");
+                       user_detail[ 3]=c.getString("mobileno");
+                         user_detail[ 4]=c.getString("email");
 
-                        HashMap<String,String> map = new HashMap<String,String>();
-                        map.put(TAG_CALAMITY, calamity);
-                        map.put(TAG_ID, id.toString());
-                        map.put(TAG_BEFORE_CAL, before_cal);
-                        map.put(TAG_DURING_CAL, during_cal);
-                        map.put(TAG_AFTER_CAL, after_cal);
 
-                        guidelist.add(map);
-                    }*/
-
-                    Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                    Intent OpenLogin = new Intent(getApplicationContext(), MainActivity.class);
-
-                    startActivityForResult(OpenLogin, 0);
+                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    }
 
                 }else{
 
@@ -199,11 +225,11 @@ public class LoginActivity extends ActionBarActivity {
             }
 
 
-            return null;
+            return user_detail;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result[]) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 

@@ -13,7 +13,8 @@
         android:background="@color/white"
         android:padding="5dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/xyz">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
             android:layout_alignParentStart="true"
             android:id="@+id/header" />
 
-        <TextView
+                <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -81,6 +82,38 @@
             android:layout_below="@+id/mobile_number"
             android:layout_alignLeft="@+id/mobile_number"
             android:layout_alignStart="@+id/mobile_number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_of_person"
+            android:layout_alignTop="@+id/name"
+            android:layout_alignRight="@+id/Title"
+            android:layout_alignEnd="@+id/Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_name"
+            android:layout_below="@+id/name"
+            android:layout_alignLeft="@+id/name_of_person"
+            android:layout_alignStart="@+id/name_of_person" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mobileno"
+            android:layout_alignTop="@+id/mobile_number"
+            android:layout_alignLeft="@+id/email"
+            android:layout_alignStart="@+id/email" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/city_name"
+            android:layout_below="@+id/mobile_number"
+            android:layout_alignLeft="@+id/mobileno"
+            android:layout_alignStart="@+id/mobileno" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -39,7 +39,11 @@ import java.util.List;
 import java.util.jar.JarException;
 
 public class MainActivity extends ActionBarActivity {
+<<<<<<< HEAD
     private final String instituteUrl="http://192.168.10.101/Hobbyix/displaying_institute_details.php";
+=======
+    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
+>>>>>>> 81089da567d251f43ccfded0c851e885a49bcca0
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
     @Override
