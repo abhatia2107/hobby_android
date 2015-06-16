@@ -1,8 +1,9 @@
 package in.hobbyix.hobbyix;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Entity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,103 +17,98 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.jar.JarException;
 
 public class MainActivity extends ActionBarActivity {
-    private List<PostItems> PostList=new ArrayList<PostItems>();
-    public ArrayList<HashMap<String, String>> list= new ArrayList<HashMap<String, String>>();
-    public  String list_institute[][]= new String[100][6];
+    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
+    ListView postItemListView;
+    ArrayList<PostItems> postItemArrayList;
+    public static Bundle main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        main=savedInstanceState;
         setContentView(R.layout.activity_main);
-        Log.e("dhfjkd", "kjlkjkjklllkl");
-        list_institute= new Institute_Details().store_details();
-        Log.e("dhfjkddddddd",""+list_institute[0][0]);
-        populatePostList();
-        populatePostListView();
-        registerClickCallback();
-    }
-    private void populatePostList() {
-        Log.e("f", "" + list_institute[0][0]);
-        // list_institute=send_details(list_institute);
-        //list=store(list);
-        // Log.e("list", "" + list + "");
-        // int size=list.size();
-        Log.e("jdfj",""+list_institute[0][0]+"");
-        for (int i = 1; i <=Integer.valueOf( list_institute[0][0]); i++) {
-            String x = list_institute[i][0];
-            String y = list_institute[i][1];
-            String z = list_institute[i][2];
+        postItemListView = (ListView)findViewById(R.id.listView);
+        postItemArrayList = new ArrayList<>();
+        new PostItemsAsyncTask().execute(instituteUrl);
 
-            String a = list_institute[i][3];
-            //String b=list_institute[i][4];
-            // Log.e("djfk",""+list.get(i).get("institute")+""+list.get(i).get("batch_category")+""+list.get(i).get("venue_address"));
-            PostList.add(new PostItems(x, y, "ghgjhgj", a, "₹ " + z + " / Session", R.id.item_book_now_button));
-        }
+
     }
-    private void populatePostListView() {
-        ArrayAdapter<PostItems> adapter=new MyListAdapter();
-        ListView postlist=(ListView)findViewById(R.id.listView);
-        postlist.setAdapter(adapter);
-    }
-    private void registerClickCallback() {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Intent appInfo = new Intent(viewClicked.getContext(), SamplePage.class);
-                startActivity(appInfo);
+    public class PostItemsAsyncTask extends AsyncTask<String,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            try{
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post =new HttpPost(params[0]);
+                HttpResponse response = client.execute(post);
+
+                int status=response.getStatusLine().getStatusCode();
+
+                if(status==200){
+                    HttpEntity entity = response.getEntity();
+                    String Data = EntityUtils.toString(entity);
+
+                    JSONObject jsonObject = new JSONObject(Data);
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("institutes");
+
+                    for(int i=0;i<jsonArray.length();i++){
+                        PostItems postItems = new PostItems();
+                        JSONObject jsonPostItem=jsonArray.getJSONObject(i);
+                        postItems.setClassType(jsonPostItem.getString("batch_category"));
+                        postItems.setName(jsonPostItem.getString("institute"));
+                        postItems.setFees(jsonPostItem.getString("batch_single_price"));
+                        postItems.setAddress("Hi Tech City");
+                        postItems.setTimings("4am-9pm");
+                        postItems.setBookNow("BookNow");
+                        postItemArrayList.add(postItems);
+                    }
+                    return true;
+                }
+            } catch (ClientProtocolException e){
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
-    }
-
-    private class MyListAdapter extends ArrayAdapter<PostItems>{
-        public MyListAdapter(){
-            super(MainActivity.this,R.layout.item_view,PostList);
+            return false;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View itemView = convertView;
-            if(itemView==null){
-                itemView=getLayoutInflater().inflate(R.layout.item_view,parent,false);
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(result == false){
+                Context context = getApplicationContext();
+                CharSequence text = "Internet Connection Not Available.";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
-            PostItems CurrentPost = PostList.get(position);
-            TextView InstituteName=(TextView)itemView.findViewById(R.id.item_NameTextView);
-            InstituteName.setText(CurrentPost.getName());
-            InstituteName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent Payment = new Intent(v.getContext(),SamplePage.class);
-                    startActivityForResult(Payment,0);
-                }
-            });
-
-            TextView ClassType=(TextView)itemView.findViewById(R.id.item_ClassTypeTextView);
-            ClassType.setText(CurrentPost.getClassType());
-
-            TextView InstituteAddress=(TextView)itemView.findViewById(R.id.item_AddressTextView);
-            InstituteAddress.setText(CurrentPost.getAddress());
-
-            TextView InstituteTimings=(TextView)itemView.findViewById(R.id.item_TimingsTextView);
-            InstituteTimings.setText(CurrentPost.getTimings());
-
-            TextView InstituteFees=(TextView)itemView.findViewById(R.id.item_FessTextView);
-            InstituteFees.setText(CurrentPost.getFees());
-
-            Button BookNow=(Button)itemView.findViewById(R.id.item_book_now_button);
-            BookNow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent Payment = new Intent(v.getContext(),SamplePage.class);
-                    startActivityForResult(Payment,0);
-                }
-            });
-
-            return itemView;
+            else{
+                InstituteAdapter adapter = new InstituteAdapter(getApplicationContext(),R.layout.item_view,postItemArrayList);
+                postItemListView.setAdapter(adapter);
+            }
         }
     }
 

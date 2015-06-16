@@ -54,67 +54,41 @@ public class JSONParser {
 
             }else if(method == "GET"){
                 // request method is GET
-                Log.e("dikshasada","djfjdjfshfkd");
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");
                 url += "?" + paramString;
                 HttpGet httpGet = new HttpGet(url);
-                Log.e("Navneet","URLS is "+url);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-
-                Log.e("Navneet","Not in of the GET");
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
-
-
             }
         } catch (UnsupportedEncodingException e) {
-            Log.e("Navneet","Encoding Exception");
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.e("Navneet","Client Protocol Exception");
             e.printStackTrace();
         } catch (IOException e) {
-            Log.e("Navneet","IO Exception");
             e.printStackTrace();
         }
 
         try {
-            Log.e("Navneet","Hey man are you crazy2122");
             if(is==null){
                 Log.e("Navneet","Hey man are you crazy");
             }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-
-                    is, "iso-8859-1"), 8);
-            //Log.e("Navneet","Hey man are you carzy2");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
             String line = null;
-            //Log.e("Navneet","Hey man are you carzy3");
-			/*if(is !=null){
-                while ((line = in.readLine()) != null) {
-                sb.append(line + "\n");
-                x = sb.toString();
-            }
-            responseJsonData = new String(x);
-
-            }*/
             if(is!=null){
                 while ((line = reader.readLine()) != null) {
-                    Log.v("Navneetr","THis is not jullll");
                     sb.append(line + "\n");
                 }
                 is.close();
                 json = sb.toString();
-                Log.e("djhfj",""+json+"");
             }else{
-                Log.v("My ererer","THis is null");
                 json = "";
             }
 
         } catch (Exception e) {
             jObj=null;
-            Log.e("Buffer Error", "Error converting result " + e.toString());
         }
 
         // try parse the string to a JSON object
@@ -124,7 +98,6 @@ public class JSONParser {
             jObj = null;
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
-        // return JSON String
         return jObj;
 
     }

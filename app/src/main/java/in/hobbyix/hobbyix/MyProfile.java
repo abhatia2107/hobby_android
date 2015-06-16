@@ -6,9 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class MyProfile extends ActionBarActivity {
+    TextView email,name,mobileno,city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,15 @@ public class MyProfile extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        email=(TextView)findViewById(R.id.email_name);
+        name=(TextView)findViewById(R.id.email_name);
+        mobileno=(TextView)findViewById(R.id.mobileno);
+        city=(TextView)findViewById(R.id.city_name);
+        set_profile_contents();
+    }
+    public void set_profile_contents()
+    {
+        LoginActivity.set_
     }
 
 

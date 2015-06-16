@@ -19,8 +19,8 @@ import java.util.List;
 public class FilterPage extends ActionBarActivity {
     private List<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     private List<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
-    String load_locality_details[]=new String[1000];
-    String load_subcategory_details[]=new String[1000];
+    String load_locality_details[]=new String[100];
+    String load_subcategory_details[]=new String[100];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,8 @@ public class FilterPage extends ActionBarActivity {
         for(int i=0;i<Integer.valueOf(load_subcategory_details[0]);i++) {
             checkBoxList.add(new CheckBoxString(load_subcategory_details[i+1]));
         }
-        /*for(int i=0;i<Integer.valueOf(load_locality_details[0]);i++) {
+        for(int i=0;i<Integer.valueOf(load_locality_details[0]);i++) {
             checkBoxList2.add(new CheckBoxString(load_locality_details[i+1]));
-        }*/
-        for(int i=0;i<50;i++) {
-            checkBoxList2.add(new CheckBoxString("kkljkl"));
         }
     }
     private void populateListView() {

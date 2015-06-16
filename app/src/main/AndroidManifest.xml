@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/MaterialDark" >
         <activity
-            android:name=".SpalshScreen"
+            android:name=".SplashScreen"
             android:label="@string/title_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

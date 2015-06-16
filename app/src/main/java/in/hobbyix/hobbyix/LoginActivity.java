@@ -37,7 +37,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     //url for checking
-    public  String url_login="http://192.168.43.175/Hobbyix/logincheck.php";
+    public  String url_login="http://192.168.10.108/Hobbyix/logincheck.php";
 
     String message = null;
 
@@ -173,19 +173,19 @@ public class LoginActivity extends ActionBarActivity {
             params.add(new BasicNameValuePair("Email",emailtext));
             params.add(new BasicNameValuePair("Pass",passwordtext));
 
-
+             JSONArray user_details;
             JSONObject json = jparser.makeHttpRequest(url_login,"GET",params);
 
             if(json==null){
                 message = "No internet connection... please try later";
-                // Log.e("garvit","gf");
+
                 return null;
             }
 
             try {
                 if(json.getInt("success")==1)
                 {
-                    /*guidelines = json.getJSONArray(TAG_CALAMITIES);
+                    guidelines = json.getJSONArray("login");
                     for(int i=0;i<guidelines.length();i++)
                     {
                         JSONObject c = guidelines.getJSONObject(i);

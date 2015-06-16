@@ -33,7 +33,9 @@ public class RegisterActivity extends ActionBarActivity {
     //the progessdialog for progress bar
     private ProgressDialog pDialog ;
     //url to get required guidelines
+
     private static String url_of_adding_user = "http://192.168.137.1/Hobbyix/adding_user.php";
+
 
     String message = null;
     //object for JSONParser class
@@ -157,7 +159,7 @@ public class RegisterActivity extends ActionBarActivity {
             params.add(new BasicNameValuePair("Name",fullnametext));
             params.add(new BasicNameValuePair("Phoneno",phonenotext));
 
-            JSONObject json = jparser.makeHttpRequest(url_all_guidelines,"POST",params);
+            JSONObject json = jparser.makeHttpRequest(url_of_adding_user,"POST",params);
 
             if(json==null){
                 message = "No internet connection... please try later";
