@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:paddingRight="10dp"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:id="@+id/ItemView">
+    android:id="@+id/ItemView"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Name"
+        android:padding="1dp"
         android:textSize="15dp"
         android:textColor="#ff348fff"
         android:id="@+id/item_NameTextView"
@@ -23,72 +26,104 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ClassType"
         android:textSize="14dp"
-        android:textColor="#ff6f6f6f"
+        android:padding="1dp"
+        android:textColor="#ff000000"
         android:id="@+id/item_ClassTypeTextView"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/item_NameTextView"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Address"
-        android:textColor="#ff6f6f6f"
+        android:padding="1dp"
+        android:textColor="#ff000000"
         android:textSize="13dp"
         android:id="@+id/item_AddressTextView"
-        android:layout_below="@+id/item_ClassTypeTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_below="@+id/item_TimingsTextView"
+        android:layout_toLeftOf="@+id/relativeLayout"
+        android:layout_toStartOf="@+id/relativeLayout"
+        android:layout_alignBottom="@+id/relativeLayout" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Timings"
         android:textSize="13dp"
-        android:textColor="#ff6f6f6f"
+        android:padding="3dp"
+        android:textColor="#ff000000"
         android:id="@+id/item_TimingsTextView"
-        android:layout_below="@+id/item_AddressTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingBottom="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/textView"
-        android:textSize="10dp"
-        android:layout_alignBottom="@+id/item_NameTextView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="75dp"
-        android:layout_height="25dp"
-        android:text="Book Now"
-        android:id="@+id/item_book_now_button"
-        android:textColor="#ffffff"
-        android:background="#ff3396d1"
-        android:textSize="10dp"
-        android:gravity="center"
-        android:layout_alignTop="@+id/item_AddressTextView"
+        android:layout_below="@+id/item_ClassTypeTextView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView" />
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="onBookNowClick" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Fees"
-        android:textAlignment="gravity"
-        android:gravity="center"
-        android:textSize="10dp"
-        android:textColor="#ff6f6f6f"
-        android:id="@+id/item_FessTextView"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/item_book_now_button"
-        android:layout_alignStart="@+id/item_book_now_button" />
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fees"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="10dp"
+            android:layout_gravity="end"
+            android:textColor="#ff000000"
+            android:id="@+id/item_FessTextView"
+            android:layout_above="@+id/CreditTextView"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:text="Book Now"
+            android:id="@+id/item_book_now_button"
+            android:textColor="#ffffff"
+            android:background="#ff3396d1"
+            android:textSize="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_below="@+id/CreditTextView"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Credit"
+            android:textSize="13dp"
+            android:paddingTop="1dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="#ff000000"
+            android:id="@+id/CreditTextView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/imageView"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/clock"
+        android:layout_alignBottom="@+id/item_TimingsTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/imageView2"
+        android:background="@drawable/location"
+        android:layout_alignTop="@+id/item_AddressTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

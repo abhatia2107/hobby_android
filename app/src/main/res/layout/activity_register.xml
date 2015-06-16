@@ -34,28 +34,36 @@
                 android:inputType="textPersonName"
                 android:padding="12dp"
                 android:background="@drawable/round_edit_text"
-                android:id="@+id/FullnameEditText"
+                android:id="@+id/FirstNameEditText"
                 android:textColor="#ff000000"
                 android:textSize="15dp"
                 android:typeface="sans"
-                android:hint="Enter Name"
-
+                android:hint="FIRST NAME"
                 android:layout_marginBottom="20dp"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
+                android:inputType="textPersonName"
                 android:padding="12dp"
                 android:background="@drawable/round_edit_text"
-
-                android:id="@+id/PasswordEditText"
-                android:hint="Enter Password"
+                android:id="@+id/LastNameEditTextView"
                 android:textColor="#ff000000"
                 android:textSize="15dp"
                 android:typeface="sans"
-                android:layout_above="@+id/RegisterButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:hint="LAST NAME"
+                android:layout_marginBottom="20dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:background="@drawable/round_edit_text"
+                android:textColor="#ff000000"
+                android:textSize="15dp"
+                android:typeface="sans"
+                android:id="@+id/EmailEditView"
+                android:hint="E-MAIL ID"
                 android:layout_marginBottom="20dp" />
 
             <EditText
@@ -67,21 +75,56 @@
                 android:textColor="#ff000000"
                 android:textSize="15dp"
                 android:typeface="sans"
-                android:id="@+id/PhonenoEditText"
-                android:hint="Enter Mobile Number"
+                android:id="@+id/MobileEditText"
+                android:hint="MOBILE NUMBER"
                 android:layout_marginBottom="20dp"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:padding="12dp"
                 android:background="@drawable/round_edit_text"
+                android:id="@+id/City"
                 android:textColor="#ff000000"
                 android:textSize="15dp"
                 android:typeface="sans"
-                android:id="@+id/EmailEditView"
-                android:hint="username@domain.com"
+                android:hint="CITY"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:padding="12dp"
+                android:background="@drawable/round_edit_text"
+                android:id="@+id/PasswordEditText"
+                android:hint="PASSOWRD"
+                android:textColor="#ff000000"
+                android:textSize="15dp"
+                android:typeface="sans"
+                android:layout_above="@+id/RegisterButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginBottom="20dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:padding="12dp"
+                android:background="@drawable/round_edit_text"
+                android:id="@+id/ConfirmPasswordEditTextView"
+                android:hint="CONFIRM PASSOWRD"
+                android:textColor="#ff000000"
+                android:textSize="15dp"
+                android:typeface="sans"
+                android:layout_above="@+id/RegisterButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal" />
 
             <Button
                 android:layout_width="match_parent"

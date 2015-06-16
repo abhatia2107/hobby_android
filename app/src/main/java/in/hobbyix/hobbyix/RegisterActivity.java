@@ -52,7 +52,7 @@ public class RegisterActivity extends ActionBarActivity {
         email=(EditText)findViewById(R.id.EmailEditView);
         password=(EditText)findViewById(R.id.PasswordEditText);
         phoneno=(EditText)findViewById(R.id.PhonenoEditText);
-        fullname=(EditText)findViewById(R.id.FullnameEditText);
+        fullname=(EditText)findViewById(R.id.FirstNameEditText);
 
     }
 

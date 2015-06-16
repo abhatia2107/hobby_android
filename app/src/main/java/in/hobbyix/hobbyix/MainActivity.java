@@ -3,6 +3,7 @@ package in.hobbyix.hobbyix;
 import android.content.Context;
 import android.content.Entity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -31,20 +32,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.jar.JarException;
 
 public class MainActivity extends ActionBarActivity {
-    private final String instituteUrl="http://192.168.10.110/Hobbyix/displaying_institute_details.php";
+    private final String instituteUrl="http://192.168.10.101/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
-    public static Bundle main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        main=savedInstanceState;
         setContentView(R.layout.activity_main);
         postItemListView = (ListView)findViewById(R.id.listView);
         postItemArrayList = new ArrayList<>();
