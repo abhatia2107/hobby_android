@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 
 public class MyProfile extends ActionBarActivity {
-    TextView email,name,mobileno,city;
+    static TextView email;
+    static TextView name;
+    static TextView mobileno;
+    static TextView city;
+    static String[] user_details = new String[100];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +29,14 @@ public class MyProfile extends ActionBarActivity {
         city=(TextView)findViewById(R.id.city_name);
         set_profile_contents();
     }
-    public void set_profile_contents()
+    public static void set_profile_contents()
     {
-        LoginActivity.set_
+        email.setText(user_details[4]);
+        String name_person=user_details[0].concat(" ");
+        name_person=name_person.concat(user_details[1]);
+        name.setText(name_person);
+        city.setText(user_details[2]);
+        mobileno.setText(user_details[3]);
     }
 
 
