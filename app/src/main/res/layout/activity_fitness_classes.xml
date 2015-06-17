@@ -60,10 +60,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1000dp"
+        android:layout_height="1050dp"
         android:orientation="vertical"
         android:background="#fff0f3f6"
         android:weightSum="1"
+        android:padding="5dp"
         android:layout_below="@+id/Gym"
         android:id="@+id/linearLayout2">
 
@@ -122,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Number of Sessions*"
+                android:text="Sessions*"
                 android:id="@+id/textView8"
                 android:textSize="15dp"
                 android:paddingTop="15dp"
@@ -158,9 +159,8 @@
                 android:layout_below="@+id/editText4"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/textView10"
-                android:layout_alignRight="@+id/textView8"
-                android:layout_alignEnd="@+id/textView8" />
+                android:layout_toStartOf="@+id/editText4"
+                android:layout_toLeftOf="@+id/editText4" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -243,11 +243,11 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="350dp"
             android:layout_marginTop="45dp"
             android:padding="8dp"
             android:background="#ffffffff"
-            android:layout_weight="0.77"
+
             android:id="@+id/Mmy">
 
 
@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Institute Details"
-                android:textColor="#ff000000"
+                android:textColor="@color/black"
                 android:id="@+id/textView14"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -342,9 +342,169 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="#cd28b9ff"
-                android:layout_marginTop="5dp"
+                android:id="@+id/Header2"
+                android:layout_marginTop="15dp"
                 android:layout_below="@+id/imageView4"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black"
+                android:id="@+id/FacilitiesTextView"
+                android:text="Facilities"
+                android:layout_alignTop="@+id/Header2"
+                android:layout_centerHorizontal="true" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#cd28b9ff"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/FacilitiesTextView"
+                android:id="@+id/view5" />
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/view5"
+                android:layout_alignRight="@+id/view5"
+                android:layout_alignEnd="@+id/view5"
+                android:id="@+id/FacilityLayout">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/AcImageView"
+                    android:background="@drawable/ac"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Air Conditioner"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
+                    android:padding="9dp"
+                    android:id="@+id/textView15"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/AcImageView"
+                    android:layout_toEndOf="@+id/AcImageView" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/imageView5"
+                    android:background="@drawable/shower"
+                    android:layout_below="@+id/textView15"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Shower Room"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="12dp"
+                    android:id="@+id/textView16"
+                    android:padding="9dp"
+                    android:layout_below="@+id/AcImageView"
+                    android:layout_alignLeft="@+id/textView20"
+                    android:layout_alignStart="@+id/textView20" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/imageView6"
+                    android:background="@drawable/cafe"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:padding="9dp"
+                    android:text="Cafe Coffee"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:id="@+id/textView17"
+                    android:layout_above="@+id/imageView8"
+                    android:layout_toRightOf="@+id/imageView6"
+                    android:layout_toEndOf="@+id/imageView6" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/imageView7"
+                    android:background="@drawable/steam"
+                    android:layout_below="@+id/imageView8"
+                    android:layout_alignLeft="@+id/imageView8"
+                    android:layout_alignStart="@+id/imageView8" />
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/imageView8"
+                    android:background="@drawable/locker"
+                    android:layout_below="@+id/imageView6"
+                    android:layout_alignLeft="@+id/imageView6"
+                    android:layout_alignStart="@+id/imageView6" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/imageView9"
+                    android:background="@drawable/change"
+                    android:layout_below="@+id/textView19"
+                    android:layout_toLeftOf="@+id/textView20"
+                    android:layout_toStartOf="@+id/textView20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Steam Bath"
+                    android:textColor="@color/black"
+                    android:padding="9dp"
+                    android:id="@+id/textView18"
+                    android:textSize="12dp"
+                    android:layout_below="@+id/imageView8"
+                    android:layout_toRightOf="@+id/imageView7"
+                    android:layout_toEndOf="@+id/imageView7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Locker Room"
+                    android:textSize="12dp"
+                    android:padding="9dp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView19"
+                    android:layout_below="@+id/textView17"
+                    android:layout_toRightOf="@+id/imageView6"
+                    android:layout_toEndOf="@+id/imageView6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Changing Room"
+                    android:padding="9dp"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView20"
+                    android:layout_below="@+id/imageView5"
+                    android:layout_toRightOf="@+id/imageView5"
+                    android:layout_toEndOf="@+id/imageView5" />
+            </RelativeLayout>
 
         </RelativeLayout>
         <RelativeLayout
@@ -353,8 +513,7 @@
             android:layout_marginTop="45dp"
             android:padding="8dp"
             android:layout_gravity="center_horizontal"
-            android:background="#ffffffff"
-            android:layout_weight="0.23">
+            android:background="#ffffffff">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -413,7 +572,7 @@
                 android:layout_marginTop="33dp" />
 
             <Button
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:text="Submit"
                 android:textSize="10dp"
@@ -422,7 +581,8 @@
                 android:id="@+id/SubmitButton"
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/textView12"
-                android:layout_toRightOf="@+id/textView12" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
