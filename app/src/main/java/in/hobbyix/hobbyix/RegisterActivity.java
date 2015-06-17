@@ -3,8 +3,8 @@ package in.hobbyix.hobbyix;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +53,7 @@ public class RegisterActivity extends ActionBarActivity {
         setContentView(R.layout.activity_register);
         email=(EditText)findViewById(R.id.EmailEditView);
         password=(EditText)findViewById(R.id.PasswordEditText);
-        phoneno=(EditText)findViewById(R.id.PhonenoEditText);
+        phoneno=(EditText)findViewById(R.id.MobileEditText);
         fullname=(EditText)findViewById(R.id.FirstNameEditText);
 
     }

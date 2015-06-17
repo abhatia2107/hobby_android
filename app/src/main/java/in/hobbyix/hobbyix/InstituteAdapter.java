@@ -1,17 +1,14 @@
 package in.hobbyix.hobbyix;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.ArrayList;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
+import java.util.ArrayList;
 
 /**
  * Created by Yashdeep Sharma on 14-06-2015.
@@ -68,11 +65,9 @@ public class InstituteAdapter extends ArrayAdapter<PostItems> {
         viewHolder.book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SamplePage.class);
-                context.startActivity(intent);
+
             }
         });
         return convertView;
     }
-
  }

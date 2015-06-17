@@ -149,9 +149,6 @@ public class LoginActivity extends ActionBarActivity {
         return aResultM;
     }
 
-<<<<<<< HEAD
-    class ConnectiontoInternet extends AsyncTask<String,String,String> {
-=======
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -169,8 +166,6 @@ public class LoginActivity extends ActionBarActivity {
 
 
     class Login_Details extends AsyncTask<String,String,String[]> {
->>>>>>> 81089da567d251f43ccfded0c851e885a49bcca0
-
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -235,6 +230,5 @@ public class LoginActivity extends ActionBarActivity {
 
             pDialog.dismiss();
         }
-
     }
 }

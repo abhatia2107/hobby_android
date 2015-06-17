@@ -28,6 +28,10 @@
             android:name=".SamplePage"
             android:label="@string/title_main"
             android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="in.hobbyix.hobbyix.SAMPLEPAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="in.hobbyix.hobbyix.MainActivity" />

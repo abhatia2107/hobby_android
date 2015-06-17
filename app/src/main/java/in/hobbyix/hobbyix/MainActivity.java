@@ -1,23 +1,14 @@
 package in.hobbyix.hobbyix;
 
 import android.content.Context;
-import android.content.Entity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -32,18 +23,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.jar.JarException;
 
 public class MainActivity extends ActionBarActivity {
-<<<<<<< HEAD
     private final String instituteUrl="http://192.168.10.101/Hobbyix/displaying_institute_details.php";
-=======
-    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
->>>>>>> 81089da567d251f43ccfded0c851e885a49bcca0
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
     @Override
