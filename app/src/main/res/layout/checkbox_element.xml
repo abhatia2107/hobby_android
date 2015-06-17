@@ -2,12 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff">
+    android:background="#ffffffff"
+    android:id="@+id/xxx"
+    android:weightSum="1">
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item"
         android:id="@+id/ItemCheckBox"
-        android:checked="false" />
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        />
+
+
 </LinearLayout>

@@ -103,7 +103,8 @@
             android:text="Reset"
             android:textColor="#ffffffff"
             android:id="@+id/ResetButton"
-            android:layout_weight="0.48">
+            android:layout_weight="0.48"
+            android:onClick="onclickreset">
         </Button>
 
         <Button
@@ -114,7 +115,9 @@
             android:textColor="#ffffffff"
             android:id="@+id/FilterButton"
             android:layout_marginLeft="25dp"
-            android:layout_weight="0.93">
+            android:layout_weight="0.93"
+            android:onClick="onclickfilter">
+
         </Button>
 
     </LinearLayout>
