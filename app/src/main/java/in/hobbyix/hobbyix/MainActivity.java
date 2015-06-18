@@ -31,14 +31,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.jar.JarException;
-
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
-
+    private final String instituteUrl="http://192.168.10.104/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
     @Override
@@ -63,7 +58,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public TextView institute_timing;
             public TextView institute_price;
             public Button book_now;
-        }
+         }
 
         ArrayList<PostItems> ArrayListPost;
         int resource;
@@ -105,14 +100,31 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             viewHolder.book_now.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    String Institutes [] = new String[5];
+                    Institutes[0]=ArrayListPost.get(position).getName();
+                    Institutes[1]=ArrayListPost.get(position).getClassType();
+                    Institutes[2]=ArrayListPost.get(position).getAddress();
+                    Institutes[3]=ArrayListPost.get(position).getTimings();
+                    Institutes[4]=ArrayListPost.get(position).getFees();
+                    bundle.putStringArray("Institutes",Institutes);
                     Intent intent = new Intent(MainActivity.this,SamplePage.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });
             viewHolder.institute_name.setOnClickListener(new View.OnClickListener() {
-                @Override
                 public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    String Institutes [] = new String[5];
+                    Institutes[0]=ArrayListPost.get(position).getName();
+                    Institutes[1]=ArrayListPost.get(position).getClassType();
+                    Institutes[2]=ArrayListPost.get(position).getAddress();
+                    Institutes[3]=ArrayListPost.get(position).getTimings();
+                    Institutes[4]=ArrayListPost.get(position).getFees();
+                    bundle.putStringArray("Institutes",Institutes);
                     Intent intent = new Intent(MainActivity.this,SamplePage.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });
@@ -180,7 +192,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar

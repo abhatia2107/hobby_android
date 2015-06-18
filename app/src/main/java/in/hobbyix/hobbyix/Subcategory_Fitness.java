@@ -133,6 +133,7 @@ public class Subcategory_Fitness  {
         @Override
         protected void onPostExecute(String[] result) {
             // TODO Auto-generated method stub
+
          super.onPostExecute(result);
 
            // pDialog.dismiss();

@@ -3,31 +3,28 @@ package in.hobbyix.hobbyix;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 
 import java.util.Calendar;
 
 
 public class SamplePage extends ActionBarActivity {
+    TextView InstituteName;
+    TextView InstituteClassType;
+    TextView InstituteAddress;
     Button proceedButton;
     Spinner spinner; String SessionNumber;
     ArrayAdapter<CharSequence> adpter;
@@ -78,6 +75,17 @@ public class SamplePage extends ActionBarActivity {
                 startActivity(PaymentIntent);
             }
         });
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null){
+            String InstituteDetails[] = new String[5];
+            InstituteDetails = extras.getStringArray("Institutes");
+            InstituteName = (TextView)findViewById(R.id.InstituteName);
+            InstituteName.setText(InstituteDetails[0]);
+            InstituteClassType=(TextView)findViewById(R.id.InstituteClassType);
+            InstituteClassType.setText(InstituteDetails[1]);
+            InstituteAddress = (TextView)findViewById(R.id.InstituteAddressHeader);
+            InstituteAddress.setText(InstituteDetails[2]);
+        }
     }
     @Override
     protected Dialog onCreateDialog(int id) {
