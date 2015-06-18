@@ -34,7 +34,7 @@ public class RegisterActivity extends ActionBarActivity {
     private ProgressDialog pDialog ;
     //url to get required guidelines
 
-    private static String url_of_adding_user = "http://192.168.137.1/Hobbyix/adding_user.php";
+    private static String url_of_adding_user = "http://192.168.10.104/Hobbyix/adding_user.php";
 
 
     String message = null;

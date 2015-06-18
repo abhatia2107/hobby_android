@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -25,8 +31,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity {
-    private final String instituteUrl="http://192.168.10.101/Hobbyix/displaying_institute_details.php";
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+    private final String instituteUrl="http://192.168.10.104/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
     @Override
@@ -36,9 +42,78 @@ public class MainActivity extends ActionBarActivity {
         postItemListView = (ListView)findViewById(R.id.listView);
         postItemArrayList = new ArrayList<>();
         new PostItemsAsyncTask().execute(instituteUrl);
+    }
 
+    @Override
+    public void onClick(View v) {
 
     }
+    class InstituteAdapter extends ArrayAdapter<PostItems> {
+
+         class ViewHolder{
+            public TextView institute_name;
+            public TextView institute_class_type;
+            public TextView institute_address;
+            public TextView institute_timing;
+            public TextView institute_price;
+            public Button book_now;
+        }
+
+        ArrayList<PostItems> ArrayListPost;
+        int resource;
+        Context context;
+        LayoutInflater layoutInflater;
+
+        public InstituteAdapter(Context context,int resource,ArrayList<PostItems> objects){
+            super(context,resource,objects);
+
+            ArrayListPost = objects;
+            this.resource = resource;
+            this.context=context;
+
+            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder ;
+            if(convertView == null){
+                convertView = layoutInflater.inflate(resource,null);
+                viewHolder = new ViewHolder();
+                viewHolder.book_now = (Button)convertView.findViewById(R.id.item_book_now_button);
+                viewHolder.institute_name = (TextView)convertView.findViewById(R.id.item_NameTextView);
+                viewHolder.institute_class_type = (TextView)convertView.findViewById(R.id.item_ClassTypeTextView);
+                viewHolder.institute_timing = (TextView)convertView.findViewById(R.id.item_TimingsTextView);
+                viewHolder.institute_price = (TextView)convertView.findViewById(R.id.item_FessTextView);
+                viewHolder.institute_address = (TextView)convertView.findViewById(R.id.item_AddressTextView);
+                convertView.setTag(viewHolder);
+            }
+            else{
+                viewHolder = (ViewHolder)convertView.getTag();
+            }
+            viewHolder.institute_name.setText(ArrayListPost.get(position).getName());
+            viewHolder.institute_address.setText(ArrayListPost.get(position).getAddress());
+            viewHolder.institute_price.setText("Fees Rs."+ ArrayListPost.get(position).getFees()+"/-");
+            viewHolder.institute_class_type.setText(ArrayListPost.get(position).getClassType());
+            viewHolder.institute_timing.setText(ArrayListPost.get(position).getTimings());
+            viewHolder.book_now.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(intent);
+                }
+            });
+            viewHolder.institute_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+    }
+
     public class PostItemsAsyncTask extends AsyncTask<String,Void,Boolean>{
 
         @Override
@@ -65,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
                         postItems.setClassType(jsonPostItem.getString("batch_category"));
                         postItems.setName(jsonPostItem.getString("institute"));
                         postItems.setFees(jsonPostItem.getString("batch_single_price"));
+
                         postItems.setAddress("Hi Tech City");
                         postItems.setTimings("4am-9pm");
                         postItems.setBookNow("BookNow");

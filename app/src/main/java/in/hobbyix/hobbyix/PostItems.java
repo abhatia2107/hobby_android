@@ -1,6 +1,6 @@
 package in.hobbyix.hobbyix;
 
-public class PostItems {
+public class PostItems{
     private String Name;
     private String ClassType;
     private String Address;
