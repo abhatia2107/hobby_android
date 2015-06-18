@@ -27,7 +27,7 @@ public class MyEditView extends EditText {
 
     private void init() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font.ttf");
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "icomoon.ttf");
             setTypeface(tf);
         }
     }

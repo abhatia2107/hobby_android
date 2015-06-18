@@ -37,7 +37,9 @@ public class LoginActivity extends ActionBarActivity {
 
 
     //url for checking
+
     public  String url_login="http://192.168.137.1/Hobbyix/logincheck.php";
+
     public String details_of_user[] =new String[100];
     String message = null;
 
@@ -155,8 +157,6 @@ public class LoginActivity extends ActionBarActivity {
         return aResultM;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -174,7 +174,6 @@ public class LoginActivity extends ActionBarActivity {
 
 
     class Login_Details extends AsyncTask<String,String,String[]> {
-
 
         @Override
         protected void onPreExecute() {
@@ -237,6 +236,5 @@ public class LoginActivity extends ActionBarActivity {
 
             pDialog.dismiss();
         }
-
     }
 }

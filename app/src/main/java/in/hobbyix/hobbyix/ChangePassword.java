@@ -2,10 +2,9 @@ package in.hobbyix.hobbyix;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +30,7 @@ EditText currentpassword,newpassword,email;
     String currpass,newpass,emailtext;
     Button submit;
     //url to get required guidelines
-    private static String url_for_change_password = "http://192.168.137.1/Hobbyix/change_password.php";
+    private static String url_for_change_password = "http://192.168.10.104/Hobbyix/change_password.php";
 
 
     String message = null;
@@ -44,7 +43,6 @@ EditText currentpassword,newpassword,email;
     //JSONArray(inbuilt) to extract the JSONArray
     JSONArray localitylines = null;
     TextView institute_name;
-    //-----------------------------------------------------------------------------------------------------------------------//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

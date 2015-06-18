@@ -24,22 +24,22 @@ public class MyProfile extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        email=(TextView)findViewById(R.id.email_name);
-        name=(TextView)findViewById(R.id.name_of_person);
-        mobileno=(TextView)findViewById(R.id.mobileno);
-        city=(TextView)findViewById(R.id.city_name);
-        set_profile_contents();
+      //  email=(TextView)findViewById(R.id.email_name);
+        //name=(TextView)findViewById(R.id.name_of_person);
+        //mobileno=(TextView)findViewById(R.id.mobileno);
+        //city=(TextView)findViewById(R.id.city_name);
+        //set_profile_contents();
     }
     public static void set_profile_contents()
     {
 
-        String name_person=user_details[0].concat(" ");
+     /*   String name_person=user_details[0].concat(" ");
         name_person=name_person.concat(user_details[1]);
         name.setText(name_person);
         Log.e("jfk", email+"");
         email.setText(user_details[4]);
         city.setText(user_details[2]);
-        mobileno.setText(user_details[3]);
+        mobileno.setText(user_details[3]);*/
     }
 
 

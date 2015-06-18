@@ -1,8 +1,6 @@
 package in.hobbyix.hobbyix;
 
-import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public class Location_batches  {
     //url to get required guidelines
-    private static String url_for_locality = "http://192.168.137.1/Hobbyix/displaying_localities.php";
+    private static String url_for_locality = "http://192.168.10.104/Hobbyix/displaying_localities.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";
