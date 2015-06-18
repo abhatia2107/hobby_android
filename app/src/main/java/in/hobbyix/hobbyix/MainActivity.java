@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    private final String instituteUrl="http://192.168.10.104/Hobbyix/displaying_institute_details.php";
+    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
     @Override

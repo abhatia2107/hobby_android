@@ -30,7 +30,7 @@ EditText currentpassword,newpassword,email;
     String currpass,newpass,emailtext;
     Button submit;
     //url to get required guidelines
-    private static String url_for_change_password = "http://192.168.10.104/Hobbyix/change_password.php";
+    private static String url_for_change_password = "http://192.168.137.1/Hobbyix/change_password.php";
 
 
     String message = null;
@@ -54,8 +54,65 @@ EditText currentpassword,newpassword,email;
         currentpassword=(EditText)findViewById(R.id.current_password);
         newpassword=(EditText)findViewById(R.id.new_password);
         email=(EditText)findViewById(R.id.email);
-        submit=(Button)findViewById(R.id.submit);
 
+        onclick();
+
+    }
+    public void onclick()
+    {
+        submit=(Button)findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int p=0;
+                currpass=currentpassword.getText().toString();
+                newpass=newpassword.getText().toString();
+                emailtext=email.getText().toString();
+                if (emailtext.equals("") == true || emailtext.equals("user@domain.com") == true) {
+                    Toast.makeText(getApplicationContext(), "please add your email", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (currpass.equals("") == true || currpass.equals("password") == true)
+                        Toast.makeText(getApplicationContext(), "please add your current pasword", Toast.LENGTH_SHORT).show();
+
+                    else {
+                        if (newpass.equals("") == true || newpass.equals("password") == true)
+                            Toast.makeText(getApplicationContext(), "please add your new  password", Toast.LENGTH_SHORT).show();
+
+                        else {
+                            if (newpass.equals(currpass) == true)
+                                Toast.makeText(getApplicationContext(), "new password should not be equal to current password", Toast.LENGTH_SHORT).show();
+                            else {
+                                p = 1;
+                            }
+                            if (p == 1) {
+                                Log.e("oioio", "popop");
+                                int m= status_of_change_password();
+                                if(m==0)
+                                    Toast.makeText(getApplicationContext(), "Wrong email or current password", Toast.LENGTH_SHORT).show();
+                                else
+                                {
+                                    if(m==1)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Congrats!! your password has been changed", Toast.LENGTH_SHORT).show();
+                                        Intent OpenLogin = new Intent(v.getContext(), LoginActivity.class);
+
+                                        startActivityForResult(OpenLogin, 0);
+                                    }
+                                }
+
+                            }
+
+                   /* if(k==1){
+                        Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                    Intent OpenLogin = new Intent(v.getContext(), Welcome.class);
+
+                    startActivityForResult(OpenLogin, 0);}*/
+                        }
+                    }
+                }
+                }
+
+        });
     }
 
     public int status_of_change_password() {

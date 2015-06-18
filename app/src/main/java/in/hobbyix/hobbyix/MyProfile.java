@@ -28,18 +28,18 @@ public class MyProfile extends ActionBarActivity {
         name=(TextView)findViewById(R.id.name);
         mobileno=(TextView)findViewById(R.id.mobile_number);
         city=(TextView)findViewById(R.id.city);
-        //set_profile_contents();
+        set_profile_contents();
     }
     public static void set_profile_contents()
     {
         String name_person=user_details[0].concat(" ");
         name_person=name_person.concat(user_details[1]);
-        name.setText(name_person);
+
         Log.e("jfk", email + "");
-        name.setText("NAME"+user_details[1]);
+        name.setText("NAME: "+name_person);
         email.setText("E-MAIL: "+user_details[4]);
-        city.setText("CITY"+user_details[2]);
-        mobileno.setText("MOBILE NUMBER : "+user_details[3]);
+        city.setText("CITY: "+user_details[2]);
+        mobileno.setText("MOBILE NUMBER: "+user_details[3]);
     }
 
 

@@ -215,6 +215,7 @@ public class LoginActivity extends ActionBarActivity {
                     user_detail[2] = c.getString("city");
                     user_detail[3] = c.getString("mobileno");
                     user_detail[4] = c.getString("email");
+                    Log.e("email",user_detail[4]+"");
 
 
                 }
