@@ -26,9 +26,9 @@ import java.util.List;
 
 
 public class RegisterActivity extends ActionBarActivity {
-    EditText email,password,phoneno,fullname;
+    EditText email,password,phoneno,fname,lname,city_name,confirmpassword;
     int firstemail=0,firstpassword=0,firstphoneno=0,firstfullname=0;
-    String emailtext,passwordtext,phonenotext,fullnametext;
+    String emailtext,passwordtext,phonenotext,fullnametext,firstname,lastname,cityname,confirm_password;
 
     //the progessdialog for progress bar
     private ProgressDialog pDialog ;
@@ -53,64 +53,117 @@ public class RegisterActivity extends ActionBarActivity {
         setContentView(R.layout.activity_register);
         email=(EditText)findViewById(R.id.EmailEditView);
         password=(EditText)findViewById(R.id.PasswordEditText);
-        phoneno=(EditText)findViewById(R.id.PhonenoEditText);
-        fullname=(EditText)findViewById(R.id.FirstNameEditText);
+        phoneno=(EditText)findViewById(R.id.MobileEditText);
+        fname=(EditText)findViewById(R.id.FirstNameEditText);
+        lname=(EditText)findViewById(R.id.LastNameEditTextView);
+        city_name=(EditText)findViewById(R.id.City);
+
+        confirmpassword=(EditText)findViewById(R.id.ConfirmPasswordEditTextView);
+          checkButtonClick();
 
     }
+    public void checkButtonClick() {
 
-    public void onclickregister(View v) throws UnsupportedEncodingException, JSONException {
+        Button register = (Button) findViewById(R.id.RegisterButton);
 
-        emailtext = email.getText().toString();
-        passwordtext = password.getText().toString();
-        fullnametext = fullname.getText().toString();
-        phonenotext = phoneno.getText().toString();
 
-        if (emailtext.equals("") == true || emailtext.equals("user@domain.com") == true) {
-            Toast.makeText(getApplicationContext(), "please add your email", Toast.LENGTH_SHORT).show();
-        } else {
-            if (passwordtext.equals("") == true || passwordtext.equals("password") == true) {
-                Toast.makeText(getApplicationContext(), "please add your password", Toast.LENGTH_SHORT).show();
-            } else {
+        register.setOnClickListener(new View.OnClickListener() {
 
-                if (fullnametext.equals("") == true || fullnametext.equals("John Smith") == true)
-                    Toast.makeText(getApplicationContext(), "please add your fullname", Toast.LENGTH_SHORT).show();
-                else if (phonenotext.equals("") == true || phonenotext.equals("+91-1234567890") == true)
-                    Toast.makeText(getApplicationContext(), "please add your phoneno", Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onClick(View v) {
+
+   int p=0;
+                emailtext = email.getText().toString();
+                passwordtext = password.getText().toString();
+                firstname = fname.getText().toString();
+                lastname = lname.getText().toString();
+                confirm_password = confirmpassword.getText().toString();
+                cityname = city_name.getText().toString();
+                phonenotext = phoneno.getText().toString();
+                Log.e("fkn",""+emailtext+"   "+passwordtext+"  "+firstname+"  "+lastname);
+               if (firstname.equals("") == true || firstname.equals("FIRST NAME") == true)
+                    Toast.makeText(getApplicationContext(), "please add your firstname", Toast.LENGTH_SHORT).show();
                 else {
-                    int p = 0;
+                    if (lastname.equals("") == true || lastname.equals("LAST NAME") == true)
+                        Toast.makeText(getApplicationContext(), "please add your firstname", Toast.LENGTH_SHORT).show();
 
-                    if (phonenotext.length() < 10 || phonenotext.length()> 10)
-                        Toast.makeText(getApplicationContext(), "Length of phoneno  should be 10", Toast.LENGTH_SHORT).show();
 
-                    char c;
-                    int k = 0;
-                    while (k != 10) {
-                        c = phonenotext.charAt(k);
+                    else {
+                        if (emailtext.equals("") == true || emailtext.equals("E-MAIL ID") == true)
+                            Toast.makeText(getApplicationContext(), "please add your email", Toast.LENGTH_SHORT).show();
 
-                        if (c ==' ') {
 
-                            p = 1;
-                            Toast.makeText(getApplicationContext(), "Phone no should not contain space", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        k++;
-                    }
+                        else {
+                            if (phonenotext.equals("") == true || phonenotext.equals("MOBILE NUMBER") == true)
+                                Toast.makeText(getApplicationContext(), "please add your phoneno", Toast.LENGTH_SHORT).show();
 
-                    if (p == 0) {
-                        Log.e("oioio", "popop");
-                        new LoadAllGuidelines().execute();
-                    }
+                            else {
+
+
+                                if (phonenotext.length() < 10 || phonenotext.length() > 10) {
+                                    Toast.makeText(getApplicationContext(), "Length of phoneno  should be 10", Toast.LENGTH_SHORT).show();
+                                } else {
+
+                                    char c;
+                                    int k = 0;
+                                    while (k != 10) {
+                                        c = phonenotext.charAt(k);
+
+                                        if (c == ' ') {
+
+                                            p = 1;
+                                            Toast.makeText(getApplicationContext(), "Phone no should not contain space", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }
+                                        k++;
+                                    }
+                                }
+                                if (cityname.equals("") == true || cityname.equals("CITY") == true)
+                                    Toast.makeText(getApplicationContext(), "please add your city name", Toast.LENGTH_SHORT).show();
+                                else {
+
+                                    if (passwordtext.equals("") == true || passwordtext.equals("PASSOWRD") == true)
+                                        Toast.makeText(getApplicationContext(), "please add your password", Toast.LENGTH_SHORT).show();
+                                    else {
+                                        if (confirm_password.equals("") == true || confirm_password.equals("CONFIRM PASSOWRD") == true)
+                                            Toast.makeText(getApplicationContext(), "please add your confirm password", Toast.LENGTH_SHORT).show();
+
+                                        else {
+                                            if (confirm_password.equals(passwordtext) == true)
+                                            {
+                                                Log.e("oioio", "popop");
+                                                new LoadAllGuidelines().execute();
+                                            }
+
+                                            else {
+                                                Toast.makeText(getApplicationContext(), " confirm password should be equal to password", Toast.LENGTH_SHORT).show();
+
+
+
+                                            }
 
                    /* if(k==1){
                         Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                     Intent OpenLogin = new Intent(v.getContext(), Welcome.class);
 
                     startActivityForResult(OpenLogin, 0);}*/
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
                 }
             }
+
+            });
         }
 
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,8 +209,11 @@ public class RegisterActivity extends ActionBarActivity {
             Log.e("diksdhdgshf","djhfkshgk");
             params.add(new BasicNameValuePair("Email",emailtext));
             params.add(new BasicNameValuePair("Pass",passwordtext));
-            params.add(new BasicNameValuePair("Name",fullnametext));
+            params.add(new BasicNameValuePair("fname",firstname));
+            params.add(new BasicNameValuePair("lname",lastname));
+            params.add(new BasicNameValuePair("city",cityname));
             params.add(new BasicNameValuePair("Phoneno",phonenotext));
+
 
             JSONObject json = jparser.makeHttpRequest(url_of_adding_user,"POST",params);
 
@@ -170,6 +226,7 @@ public class RegisterActivity extends ActionBarActivity {
             try {
                 if(json.getInt("success")==1)
                 {
+                    Log.e("dkf",""+json.getInt("success"));
                     /*guidelines = json.getJSONArray(TAG_CALAMITIES);
                     for(int i=0;i<guidelines.length();i++)
                     {

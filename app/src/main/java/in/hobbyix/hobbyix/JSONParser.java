@@ -44,6 +44,7 @@ public class JSONParser {
             if(method == "POST"){
                 // request method is POST
                 // defaultHttpClient
+                Log.e("hfhsgfhsgfhsjghf","POST");
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -51,6 +52,7 @@ public class JSONParser {
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
+                Log.e("dfjdsfk","respnse");
 
             }else if(method == "GET"){
                 // request method is GET
@@ -76,6 +78,7 @@ public class JSONParser {
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
+            Log.e("fjgkfgdf","opopopopo");
             String line = null;
             if(is!=null){
                 while ((line = reader.readLine()) != null) {
@@ -90,7 +93,7 @@ public class JSONParser {
         } catch (Exception e) {
             jObj=null;
         }
-
+        Log.d("JSON Parser", json);
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(json);

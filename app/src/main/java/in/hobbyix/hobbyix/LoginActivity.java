@@ -29,7 +29,7 @@ public class LoginActivity extends ActionBarActivity {
     Button LoginButton,RegisterButton;
     String emailtext,passwordtext;
     TextView forgetpassword;
-    EditText email,password;
+    EditText email_id,password;
     int firstemail=0,firstpassword=0;
 
     private ProgressDialog pDialog;
@@ -37,7 +37,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     //url for checking
-    public  String url_login="http://192.168.10.108/Hobbyix/logincheck.php";
+    public  String url_login="http://192.168.137.1/Hobbyix/logincheck.php";
     public String details_of_user[] =new String[100];
     String message = null;
 
@@ -54,62 +54,68 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email=(EditText)findViewById(R.id.EmailEditView);
+        email_id = (EditText) findViewById(R.id.EmailEditEditView);
 
-        password=(EditText)findViewById(R.id.PasswordEditText);
-        LoginButton = (Button)findViewById(R.id.LoginButton);
-        RegisterButton=(Button)findViewById(R.id.RegisterButton);
-        forgetpassword=(TextView)findViewById(R.id.ForgotPassword);
+        password = (EditText) findViewById(R.id.PasswordEditText);
+      /*  LoginButton = (Button) findViewById(R.id.LoginButton);
+        RegisterButton = (Button) findViewById(R.id.RegisterButton);*/
+        forgetpassword = (TextView) findViewById(R.id.ForgotPassword);
+        onclick();
+    }
+    public void onclick() {
+
+        Button register = (Button) findViewById(R.id.RegisterButton);
+        Button login = (Button) findViewById(R.id.LoginButton);
 
 
-
-        RegisterButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent OpenRegister = new Intent(v.getContext(),RegisterActivity.class);
-                startActivityForResult(OpenRegister,0);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent OpenRegister = new Intent(v.getContext(), RegisterActivity.class);
+                startActivityForResult(OpenRegister, 0);
             }
         });
-    }
-    public void onclicklogin(View v) throws UnsupportedEncodingException {
-        int m;
 
-        emailtext=email.getText().toString();
-        passwordtext=password.getText().toString();
-        if(emailtext.equals("")==true||emailtext.equals("user@domain.com")==true)
-        {
-            Toast.makeText(getApplicationContext(),"please fill email",Toast.LENGTH_SHORT).show();
-        }else {
-            if (passwordtext.equals("")==true||passwordtext.equals("password")==true) {
-                Toast.makeText(getApplicationContext(), "please fill password", Toast.LENGTH_SHORT).show();
-            } else {
 
-              /*  m=0;
-              //  m=Posting_on_server.Check(emailtext, passwordtext);
-                if(m==1){
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int m;
+                emailtext = email_id.getText().toString();
+                passwordtext = password.getText().toString();
 
-                    Log.e("oioio","popop");*/
-                details_of_user =set_user();
+                Log.e("dfksdkf",""+emailtext+" "+passwordtext);
+                if (emailtext.equals("") == true || emailtext.equals("user@domain.com") == true) {
+                    Toast.makeText(getApplicationContext(), "please fill email", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (passwordtext.equals("") == true || passwordtext.equals("password") == true) {
+                        Toast.makeText(getApplicationContext(), "please fill password", Toast.LENGTH_SHORT).show();
+                    } else {
 
-                MyProfile.user_details = details_of_user;
+                        details_of_user = set_user();
 
-               // MyProfile.set_profile_contents(details_of_user);
+                        MyProfile.user_details = details_of_user;
 
-            }
+
+
+
                 /*else
-                {
-                    Toast.makeText(getApplicationContext(),"Wrong Username/Password",Toast.LENGTH_SHORT).show();
+                        {
+                            Toast.makeText(getApplicationContext(),"Wrong Username/Password",Toast.LENGTH_SHORT).show();
 
-                    email.setText("");
-                    password.setText("");
+                            email.setText("");
+                            password.setText("");
 
-                }*/
-        }
-
+                        }*/
+                    }
+                }
+            }
+        } );
     }
     public void onclickforgetpassword(View view)
     {
         String emailtext,passwordtext;
-        emailtext=email.getText().toString();
+        emailtext=email_id.getText().toString();
         passwordtext=password.getText().toString();
         if(emailtext.equals("")==true||emailtext.equals("user@domain.com")==true)
         {
@@ -136,7 +142,7 @@ public class LoginActivity extends ActionBarActivity {
     }
    public String [] set_user()
     {
-        String[] aResultM = new String[30];
+        String[] aResultM =null;
         try {
             String params = null;
             Login_Details task = new Login_Details();
@@ -149,9 +155,8 @@ public class LoginActivity extends ActionBarActivity {
         return aResultM;
     }
 
-<<<<<<< HEAD
-    class ConnectiontoInternet extends AsyncTask<String,String,String> {
-=======
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -169,7 +174,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     class Login_Details extends AsyncTask<String,String,String[]> {
->>>>>>> 81089da567d251f43ccfded0c851e885a49bcca0
+
 
         @Override
         protected void onPreExecute() {
@@ -202,27 +207,24 @@ public class LoginActivity extends ActionBarActivity {
             }
 
             try {
-                if(json.getInt("success")==1)
-                {
-                    guidelines = json.getJSONArray("login");
-                    for(int i=0;i<guidelines.length();i++) {
-                        JSONObject c = guidelines.getJSONObject(i);
-                       user_detail[ 0]=c.getString("fname");
-                        user_detail[ 1]=c.getString("lname");
-                        user_detail[ 2]=c.getString("city");
-                       user_detail[ 3]=c.getString("mobileno");
-                         user_detail[ 4]=c.getString("email");
+                if (json.getInt("success") == 1) {
+                    guidelines = json.getJSONArray("user");
 
+                    JSONObject c = guidelines.getJSONObject(0);
+                    user_detail[0] = c.getString("fname");
+                    user_detail[1] = c.getString("lname");
+                    user_detail[2] = c.getString("city");
+                    user_detail[3] = c.getString("mobileno");
+                    user_detail[4] = c.getString("email");
 
-                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                    }
-
-                }else{
 
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+
+                catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
 
 
             return user_detail;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -24,17 +25,19 @@ public class MyProfile extends ActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         email=(TextView)findViewById(R.id.email_name);
-        name=(TextView)findViewById(R.id.email_name);
+        name=(TextView)findViewById(R.id.name_of_person);
         mobileno=(TextView)findViewById(R.id.mobileno);
         city=(TextView)findViewById(R.id.city_name);
         set_profile_contents();
     }
     public static void set_profile_contents()
     {
-        email.setText(user_details[4]);
+
         String name_person=user_details[0].concat(" ");
         name_person=name_person.concat(user_details[1]);
         name.setText(name_person);
+        Log.e("jfk", email+"");
+        email.setText(user_details[4]);
         city.setText(user_details[2]);
         mobileno.setText(user_details[3]);
     }
