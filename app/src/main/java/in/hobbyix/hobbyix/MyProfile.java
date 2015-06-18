@@ -1,9 +1,9 @@
 package in.hobbyix.hobbyix;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,22 +24,22 @@ public class MyProfile extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-      //  email=(TextView)findViewById(R.id.email_name);
-        //name=(TextView)findViewById(R.id.name_of_person);
-        //mobileno=(TextView)findViewById(R.id.mobileno);
-        //city=(TextView)findViewById(R.id.city_name);
+        email=(TextView)findViewById(R.id.email_id);
+        name=(TextView)findViewById(R.id.name);
+        mobileno=(TextView)findViewById(R.id.mobile_number);
+        city=(TextView)findViewById(R.id.city);
         //set_profile_contents();
     }
     public static void set_profile_contents()
     {
-
-     /*   String name_person=user_details[0].concat(" ");
+        String name_person=user_details[0].concat(" ");
         name_person=name_person.concat(user_details[1]);
         name.setText(name_person);
-        Log.e("jfk", email+"");
-        email.setText(user_details[4]);
-        city.setText(user_details[2]);
-        mobileno.setText(user_details[3]);*/
+        Log.e("jfk", email + "");
+        name.setText("NAME"+user_details[1]);
+        email.setText("E-MAIL: "+user_details[4]);
+        city.setText("CITY"+user_details[2]);
+        mobileno.setText("MOBILE NUMBER : "+user_details[3]);
     }
 
 
