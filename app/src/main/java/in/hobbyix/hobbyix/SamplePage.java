@@ -41,7 +41,7 @@ public class SamplePage extends ActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        spinner=(Spinner)findViewById(R.id.spinner);
+        spinner=(Spinner)findViewById(R.id.NumberOfSessionSpinner);
         adpter=ArrayAdapter.createFromResource(this,R.array.list_numbers,android.R.layout.simple_list_item_1);
         adpter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adpter);
@@ -79,11 +79,11 @@ public class SamplePage extends ActionBarActivity {
         if(extras!=null){
             String InstituteDetails[] = new String[5];
             InstituteDetails = extras.getStringArray("Institutes");
-            InstituteName = (TextView)findViewById(R.id.InstituteName);
+            InstituteName = (TextView)findViewById(R.id.HeaderInstituteName);
             InstituteName.setText(InstituteDetails[0]);
-            InstituteClassType=(TextView)findViewById(R.id.InstituteClassType);
+            InstituteClassType=(TextView)findViewById(R.id.HeaderInstituteClassType);
             InstituteClassType.setText(InstituteDetails[1]);
-            InstituteAddress = (TextView)findViewById(R.id.InstituteAddressHeader);
+            InstituteAddress = (TextView)findViewById(R.id.HeaderInstituteAddress);
             InstituteAddress.setText(InstituteDetails[2]);
         }
     }
