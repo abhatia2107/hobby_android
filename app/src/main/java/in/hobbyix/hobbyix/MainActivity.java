@@ -1,10 +1,12 @@
 package in.hobbyix.hobbyix;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +21,12 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,13 +34,38 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
-    ListView postItemListView;
-    ArrayList<PostItems> postItemArrayList;
-  //  SessionManagement session;
+
+    static ListView postItemListView;
+    static ArrayList<PostItems> postItemArrayList;
+    //the progessdialog for progress bar
+    private ProgressDialog pDialog;
+    //url to get required guidelines
+    private static String url_for_institute = "http://192.168.137.1/Hobbyix/filter.php";
+    // desc of all important strings : names of columns
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_INSTITUTE = "institute";
+    public static String[] subcategory_filter=new String[100];
+    static int sub_length=0;
+    static int local_length=0;
+    public static String[] locality_filter=new String[100];
+    static String message = null;
+    //object for JSONParser class
+    static JSONParser jparser = new JSONParser();
+    //button to start the syncing of databases
+    Button btn;
+    // ArrayList of HashMaps to store the JSONArray of mapped values
+
+    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
+    //JSONArray(inbuilt) to extract the JSONArray
+    static JSONArray guidelines = null;
+    static String[][] institute_list=new String[100][100];
+
+    //  SessionManagement session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         postItemListView = (ListView)findViewById(R.id.listView);
         postItemArrayList = new ArrayList<>();
        // session.checkLogin();
-        new PostItemsAsyncTask().execute(instituteUrl);
+        new PostItemsAsyncTask().execute();
     }
 
     @Override
@@ -134,13 +163,35 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             return convertView;
         }
     }
+    public static void get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
+    {
+        subcategory_filter=subcategory;
+        locality_filter=locality;
+        sub_length=size_of_subcategory;
+        local_length=size_of_locality;
+      new PostItemsAsyncTask().execute();
+    }
+    public void status(Boolean result)
+    {
+        if(result == false){
+            Context context = getApplicationContext();
+            CharSequence text = "Internet Connection Not Available.";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else{
+            InstituteAdapter adapter = new InstituteAdapter(getApplicationContext(),R.layout.item_view,postItemArrayList);
+            postItemListView.setAdapter(adapter);
+        }
+    }
 
-    public class PostItemsAsyncTask extends AsyncTask<String,Void,Boolean>{
 
-        @Override
-        protected Boolean doInBackground(String... params) {
+    public static class PostItemsAsyncTask extends AsyncTask<String,Void,Boolean>{
 
-            try{
+
+
+         /*   try{
                 HttpClient client = new DefaultHttpClient();
                 HttpPost post =new HttpPost(params[0]);
                 HttpResponse response = client.execute(post);
@@ -149,11 +200,85 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 if(status==200){
                     HttpEntity entity = response.getEntity();
-                    String Data = EntityUtils.toString(entity);
+                    String Data = EntityUtils.toString(entity);*/
 
-                    JSONObject jsonObject = new JSONObject(Data);
+//                    JSONObject jsonObject = new JSONObject(Data);
+            @Override
+            protected void onPreExecute() {
+                // TODO Auto-generated method stub
+                super.onPreExecute();
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("institutes");
+            }
+
+            @Override
+            protected Boolean doInBackground(String... arg0) {
+
+                // TODO Auto-generated method stub
+                JSONArray jArr1= new JSONArray();
+                for(int i=0;i<sub_length;i++){
+                    Log.e("jhjr",subcategory_filter[i]+" ");
+
+                    jArr1.put(subcategory_filter[i]);}
+
+                JSONArray jArr2= new JSONArray();
+                for(int i=0;i<local_length;i++){
+                    Log.e("dkfklkfslk",locality_filter[i]+"");
+                    jArr2.put(locality_filter[i]);}
+
+
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                if(sub_length==0&&local_length>0)
+                {
+                    params.add(new BasicNameValuePair("subcategories",""));
+                    params.add(new BasicNameValuePair("locality",jArr2.toString()));
+
+
+                }
+                else
+                {
+                    if(local_length==0&&sub_length>0)
+                    {
+                        params.add(new BasicNameValuePair("subcategories",jArr1.toString()));
+
+                        params.add(new BasicNameValuePair("locality",""));
+
+                    }
+                    else
+                    {
+                        if(local_length>0&&sub_length>0)
+                        {
+                            params.add(new BasicNameValuePair("subcategories",jArr1.toString()));
+
+                            params.add(new BasicNameValuePair("locality",jArr2.toString()));
+                        }
+                        else
+                        {
+                          if(local_length==0&&sub_length==0)
+                          {
+                              params.add(new BasicNameValuePair("subcategories",""));
+
+                              params.add(new BasicNameValuePair("locality",""));
+                          }
+                        }
+                    }
+                }
+
+
+                Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
+
+                JSONObject json = jparser.makeHttpRequest(url_for_institute, "POST", params);
+                if (json == null) {
+                    message = "No internet connection... please try later";
+                    Log.v("tushita", "The Json Object was Null");
+                    return null;
+                }
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    int k=0;
+
+                    JSONArray jsonArray = json.getJSONArray("institutes");
 
                     for(int i=0;i<jsonArray.length();i++){
                         PostItems postItems = new PostItems();
@@ -169,10 +294,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     }
                     return true;
                 }
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -182,17 +303,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(result == false){
-                Context context = getApplicationContext();
-                CharSequence text = "Internet Connection Not Available.";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-            else{
-                InstituteAdapter adapter = new InstituteAdapter(getApplicationContext(),R.layout.item_view,postItemArrayList);
-                postItemListView.setAdapter(adapter);
-            }
+
         }
     }
     @Override
@@ -210,6 +321,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 this.startActivity(FilterIntent);
                 break;
             case R.id.MyProfile:
+
                 Intent MyProfileIntent = new Intent(this, MyProfile.class);
                 this.startActivity(MyProfileIntent);
                 break;

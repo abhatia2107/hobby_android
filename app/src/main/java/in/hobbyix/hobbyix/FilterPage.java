@@ -276,7 +276,7 @@ int l=k;
                         k++;
                     }
                 }
-                Filter_page_backend.get_codes(subcategory,locality,l,k);
+                MainActivity.get_codes(subcategory,locality,l,k);
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();

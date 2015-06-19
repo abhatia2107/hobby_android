@@ -2,6 +2,7 @@ package in.hobbyix.hobbyix;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -45,13 +46,16 @@ public class LoginActivity extends ActionBarActivity {
 
     //object for JSONParser class
     JSONParser jparser = new JSONParser();
-
+    static boolean hasLoggedIn;
 
     // ArrayList of HashMaps to store the JSONArray of mapped values
     ArrayList<HashMap<String,String>> guidelist;
     //JSONArray(inbuilt) to extract the JSONArray
     JSONArray guidelines = null;
-    static SessionManagement session;
+    static SessionManagement session,session1;
+
+    public static final String PREFS_NAME = "MyPrefsFile";
+    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,8 @@ public class LoginActivity extends ActionBarActivity {
       /*  LoginButton = (Button) findViewById(R.id.LoginButton);
         RegisterButton = (Button) findViewById(R.id.RegisterButton);*/
         forgetpassword = (TextView) findViewById(R.id.ForgotPassword);
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        settings.getBoolean("hasLoggedIn", false);
         onclick();
     }
     public void onclick() {
@@ -99,11 +105,16 @@ public class LoginActivity extends ActionBarActivity {
                         details_of_user = set_user();
                         if(details_of_user[5].equals("1")==true) {
 
-
+                          hasLoggedIn=true;
                            MyProfile.user_details=details_of_user;
                             Log.e("jhvd",details_of_user[0]+" "+details_of_user[1]+"");
                             //String name= details_of_user[0]+"  "+details_of_user[1];
-                            //session.createLoginSession(name, details_of_user[4],details_of_user[2],details_of_user[3]);
+                            session.createLoginSession( details_of_user[4],details_of_user[3]);
+                            SharedPreferences.Editor editor1 = settings.edit();
+
+                            //Set "hasLoggedIn" to true
+                            editor1.putBoolean("hasLoggedIn", true);
+                            editor1.commit();
                             Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
                            startActivityForResult(OpenLogin, 0);
 
@@ -129,6 +140,7 @@ public class LoginActivity extends ActionBarActivity {
 
         MyProfile.user_details=null;
     }
+
     public void onclickforgetpassword(View view)
     {
         String emailtext,passwordtext;
