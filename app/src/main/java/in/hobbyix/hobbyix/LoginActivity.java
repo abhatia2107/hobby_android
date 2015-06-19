@@ -40,7 +40,7 @@ public class LoginActivity extends ActionBarActivity {
 
     public  String url_login="http://192.168.137.1/Hobbyix/logincheck.php";
 
-    public String details_of_user[] =new String[100];
+    public static String[] details_of_user =new String[100];
     String message = null;
 
     //object for JSONParser class
@@ -51,14 +51,16 @@ public class LoginActivity extends ActionBarActivity {
     ArrayList<HashMap<String,String>> guidelist;
     //JSONArray(inbuilt) to extract the JSONArray
     JSONArray guidelines = null;
-
+    static SessionManagement session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         email_id = (EditText) findViewById(R.id.EmailEditEditView);
 
         password = (EditText) findViewById(R.id.PasswordEditText);
+        session = new SessionManagement(getApplicationContext());
       /*  LoginButton = (Button) findViewById(R.id.LoginButton);
         RegisterButton = (Button) findViewById(R.id.RegisterButton);*/
         forgetpassword = (TextView) findViewById(R.id.ForgotPassword);
@@ -95,24 +97,37 @@ public class LoginActivity extends ActionBarActivity {
                     } else {
 
                         details_of_user = set_user();
-
-                        MyProfile.user_details = details_of_user;
-
+                        if(details_of_user[5].equals("1")==true) {
 
 
+                           MyProfile.user_details=details_of_user;
+                            Log.e("jhvd",details_of_user[0]+" "+details_of_user[1]+"");
+                            //String name= details_of_user[0]+"  "+details_of_user[1];
+                            //session.createLoginSession(name, details_of_user[4],details_of_user[2],details_of_user[3]);
+                            Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+                           startActivityForResult(OpenLogin, 0);
 
-                /*else
+                        }
+                        else
                         {
                             Toast.makeText(getApplicationContext(),"Wrong Username/Password",Toast.LENGTH_SHORT).show();
 
-                            email.setText("");
+                            email_id.setText("");
                             password.setText("");
+                        }
 
-                        }*/
+
+
                     }
                 }
             }
         } );
+    }
+    public static void logout()
+    {
+        session.logoutUser();
+
+        MyProfile.user_details=null;
     }
     public void onclickforgetpassword(View view)
     {
@@ -179,12 +194,7 @@ public class LoginActivity extends ActionBarActivity {
         protected void onPreExecute() {
             // TODO Auto-generated method stub
             super.onPreExecute();
-            Log.e("opopo", "oiioi");
-            pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("please wait....");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+
 
         }
         @Override
@@ -215,7 +225,9 @@ public class LoginActivity extends ActionBarActivity {
                     user_detail[2] = c.getString("city");
                     user_detail[3] = c.getString("mobileno");
                     user_detail[4] = c.getString("email");
-                    Log.e("email",user_detail[4]+"");
+                    user_detail[5]=Integer.toString(json.getInt("success"));
+
+                    Log.e("email",user_detail[5]+"");
 
 
                 }
@@ -235,7 +247,7 @@ public class LoginActivity extends ActionBarActivity {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 
-            pDialog.dismiss();
+//            pDialog.dismiss();
         }
     }
 }

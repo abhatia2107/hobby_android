@@ -36,12 +36,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private final String instituteUrl="http://192.168.137.1/Hobbyix/displaying_institute_details.php";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
+  //  SessionManagement session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       // session = new SessionManagement(getApplicationContext());
         postItemListView = (ListView)findViewById(R.id.listView);
         postItemArrayList = new ArrayList<>();
+       // session.checkLogin();
         new PostItemsAsyncTask().execute(instituteUrl);
     }
 
@@ -222,6 +225,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Intent LoginIntent = new Intent(this, LoginActivity.class);
                 this.startActivity(LoginIntent);
                 break;
+            case R.id.Logout:
+               LoginActivity.logout();
             default:
                 return super.onOptionsItemSelected(item);
         }

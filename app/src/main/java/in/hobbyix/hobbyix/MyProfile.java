@@ -16,6 +16,7 @@ public class MyProfile extends ActionBarActivity {
     static TextView mobileno;
     static TextView city;
     static String[] user_details = new String[100];
+  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +29,31 @@ public class MyProfile extends ActionBarActivity {
         name=(TextView)findViewById(R.id.name);
         mobileno=(TextView)findViewById(R.id.mobile_number);
         city=(TextView)findViewById(R.id.city);
-        set_profile_contents();
+       set_profile_contents();
     }
     public static void set_profile_contents()
     {
-        String name_person=user_details[0].concat(" ");
-        name_person=name_person.concat(user_details[1]);
+        String name_person=null;
+        if(user_details!=null) {
+            name_person = user_details[0].concat(" ");
+            name_person = name_person.concat(user_details[1]);
 
-        Log.e("jfk", email + "");
-        name.setText("NAME: "+name_person);
-        email.setText("E-MAIL: "+user_details[4]);
-        city.setText("CITY: "+user_details[2]);
-        mobileno.setText("MOBILE NUMBER: "+user_details[3]);
+            name.setText("NAME: " + name_person);
+            email.setText("E-MAIL: " + user_details[4]);
+            city.setText("CITY: " + user_details[2]);
+            mobileno.setText("MOBILE NUMBER: " + user_details[3]);
+        }
+        else
+
+        {
+
+            name.setText("NAME: " );
+            email.setText("E-MAIL: " );
+            city.setText("CITY: " );
+            mobileno.setText("MOBILE NUMBER: " );
+
+        }
+
     }
 
 
@@ -68,6 +82,8 @@ public class MyProfile extends ActionBarActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.Logout:
+                LoginActivity.logout();
             default:
                 return super.onOptionsItemSelected(item);
         }

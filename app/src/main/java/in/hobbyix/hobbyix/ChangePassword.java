@@ -207,6 +207,7 @@ EditText currentpassword,newpassword,email;
             case android.R.id.home:
                 this.finish();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
