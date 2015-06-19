@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class Subcategory_Fitness  {
     //url to get required guidelines
-    private static String url_for_subcategory = "http://192.168.10.104/Hobbyix/displaying_subcategory_details.php";
+    private static String url_for_subcategory = "http://192.168.137.1/Hobbyix/displaying_subcategory_details.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_SUBCATEGORY = "subcategory";
@@ -37,9 +37,9 @@ public class Subcategory_Fitness  {
     TextView institute_name;
     //-----------------------------------------------------------------------------------------------------------------------//
 
-    public String[] store_details_of_subcategory() {
+    public String[][] store_details_of_subcategory() {
 
-        String[] aResultM = new String[30];
+        String[][] aResultM = new String[30][2];
         try {
             String params = null;
             LoadAllSubcategory task = new LoadAllSubcategory();
@@ -58,7 +58,7 @@ public class Subcategory_Fitness  {
 }
 
     //======================================================Class LoadAllGuidelines==============================================//
-    class LoadAllSubcategory extends AsyncTask<String, String, String[]> {
+    class LoadAllSubcategory extends AsyncTask<String, String, String[][]> {
 
 
         @Override
@@ -73,13 +73,13 @@ public class Subcategory_Fitness  {
 
         }
         @Override
-        protected String[] doInBackground(String... arg0) {
+        protected String[][] doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
-            String subcategory[] = new String[0];
+            String subcategory[][] = new String[0][0];
             JSONObject json = jparser.makeHttpRequest(url_for_subcategory, "GET", params);
             if(json==null){
                 message = "No internet connection... please try later";
@@ -94,8 +94,8 @@ public class Subcategory_Fitness  {
                     Log.e("jkjhkjgdh","success");
                     subcategorylines =  json.getJSONArray("subcategories");
 
-                    subcategory = new  String[subcategorylines.length()+1];
-                    subcategory[0]=Integer.toString(subcategorylines.length());
+                    subcategory = new  String[subcategorylines.length()+1][2];
+                    subcategory[0][0]=Integer.toString(subcategorylines.length());
                     Log.e("djfjk","ooio"+subcategory[0]+"");
                     int j;
                     for(int i=0;i<subcategorylines.length();i++)
@@ -103,12 +103,12 @@ public class Subcategory_Fitness  {
                         j=i+1;
                      JSONObject c =  subcategorylines.getJSONObject(i);
 
-                        // Integer id = c.getInt(TAG_ID);
+                        Integer id = c.getInt("id");
                         String name_of_subcategory = c.getString(TAG_SUBCATEGORY);
-
+                       String id_sub=Integer.toString(id);
                         Log.e("dhkajhdj",""+name_of_subcategory+"");
-                           subcategory[j]=name_of_subcategory;
-
+                           subcategory[j][0]=name_of_subcategory;
+                           subcategory[j][1]=id_sub;
 
                     }
                     //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
@@ -131,7 +131,7 @@ public class Subcategory_Fitness  {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(String[][] result) {
             // TODO Auto-generated method stub
 
          super.onPostExecute(result);

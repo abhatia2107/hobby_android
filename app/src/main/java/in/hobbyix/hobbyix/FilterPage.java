@@ -28,8 +28,8 @@ public class FilterPage extends ActionBarActivity {
     MyListAdapter2 adapter2;
 
 
-    String load_locality_details[] = new String[100];
-    String load_subcategory_details[] = new String[100];
+    String load_locality_details[][] = new String[100][2];
+    String load_subcategory_details[][] = new String[100][2];
     ArrayList<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     ArrayList<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
 
@@ -60,11 +60,12 @@ public class FilterPage extends ActionBarActivity {
     public void populatecheckBoxList() {
 
 
-        for (int i = 0; i < Integer.valueOf(load_subcategory_details[0]); i++) {
-            checkBoxList.add(new CheckBoxString(load_subcategory_details[i + 1], false));
+        for (int i = 0; i < Integer.valueOf(load_subcategory_details[0][0]); i++) {
+            checkBoxList.add(new CheckBoxString(load_subcategory_details[i + 1][0],load_subcategory_details[i + 1][1], false));
+            Log.e("opopop"," "+load_subcategory_details[i + 1][1]);
         }
-        for (int i = 0; i < Integer.valueOf(load_locality_details[0]); i++) {
-            checkBoxList2.add(new CheckBoxString(load_locality_details[i + 1], false));
+        for (int i = 0; i < Integer.valueOf(load_locality_details[0][0]); i++) {
+            checkBoxList2.add(new CheckBoxString(load_locality_details[i + 1][0],load_locality_details[i + 1][1], false));
         }
         adapter = new MyListAdapter(this,
                 R.layout.checkbox_element, checkBoxList);
@@ -79,7 +80,7 @@ public class FilterPage extends ActionBarActivity {
                 // When clicked, show a toast with the TextView text
                 CheckBoxString checkbox1 = (CheckBoxString) parent.getItemAtPosition(position);
                 Toast.makeText(getApplicationContext(),
-                        "Clicked on Row: " + checkbox1.getName(),
+                        "Clicked on Row: " + checkbox1.getName()+" "+checkbox1.getCode(),
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -221,7 +222,7 @@ public class FilterPage extends ActionBarActivity {
             }
 
             CheckBoxString checkBoxString1 = checkboxlist.get(position);
-
+             Log.e("kjk",""+checkBoxString1.getCode()+"");
             holder.name.setText(checkBoxString1.getName());
             holder.name.setChecked(checkBoxString1.isSelected());
             holder.name.setTag(checkBoxString1);
@@ -235,6 +236,8 @@ public class FilterPage extends ActionBarActivity {
 
         Button filter = (Button) findViewById(R.id.FilterButton);
         Button reset=(Button) findViewById(R.id.ResetButton);
+        final String subcategory[]= new String[100];
+        final String locality[]=new String[100];
 
         filter.setOnClickListener(new View.OnClickListener() {
 
@@ -246,28 +249,34 @@ public class FilterPage extends ActionBarActivity {
                 responseText.append("Selected Countries are...\n");
 
                 ArrayList<CheckBoxString> checkboxlists = adapter.checkboxlist;
+                int k=0;
 
                 for (int i = 0; i < checkboxlists.size(); i++) {
                     CheckBoxString check = checkboxlists.get(i);
 
                     if (check.isSelected()) {
-                        responseText.append("\n" + check.getName());
+                        responseText.append("\n" + check.getCode());
+                        subcategory[k]=check.getCode();
+                        k++;
                     }
                 }
-
+int l=k;
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
 
-
+                   k=0;
                 ArrayList<CheckBoxString> checkboxlists2 = adapter2.checkboxlist;
 
                 for (int i = 0; i < checkboxlists2.size(); i++) {
                     CheckBoxString check = checkboxlists2.get(i);
 
                     if (check.isSelected()) {
-                        responseText.append("\n" + check.getName());
+                        responseText.append("\n" + check.getCode());
+                        locality[k]=check.getCode();
+                        k++;
                     }
                 }
+                MainActivity.get_codes(subcategory,locality,l,k);
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
@@ -309,8 +318,7 @@ public class FilterPage extends ActionBarActivity {
                 }
 
 
-                Toast.makeText(getApplicationContext(), responseText,
-                        Toast.LENGTH_LONG).show();
+
                 Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
 
                 startActivityForResult(OpenLogin, 0);

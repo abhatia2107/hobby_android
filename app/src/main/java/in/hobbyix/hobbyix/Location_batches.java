@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Location_batches  {
     //url to get required guidelines
-    private static String url_for_locality = "http://192.168.10.104/Hobbyix/displaying_localities.php";
+    private static String url_for_locality = "http://192.168.137.1/Hobbyix/displaying_localities.php";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";
@@ -39,9 +39,9 @@ public class Location_batches  {
     JSONArray localitylines = null;
     TextView institute_name;
     //-----------------------------------------------------------------------------------------------------------------------//
-    public String[] store_details_of_locality() {
+    public String[][] store_details_of_locality() {
 
-        String[] aResultM = new String[30];
+        String[][] aResultM = new String[100][2];
         try {
             String params = null;
             LoadAllLOCALITY task = new LoadAllLOCALITY();
@@ -57,7 +57,7 @@ public class Location_batches  {
 
 
     //======================================================Class LoadAllGuidelines==============================================//
-    class LoadAllLOCALITY extends AsyncTask<String, String, String[]> {
+    class LoadAllLOCALITY extends AsyncTask<String, String, String[][]> {
 
 
         @Override
@@ -72,10 +72,10 @@ public class Location_batches  {
 
         }
         @Override
-        protected String[] doInBackground(String... arg0) {
+        protected String[][] doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
-                 String locality_details_list[] = new String[0];
+                 String locality_details_list[][] = new String[0][0];
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
 
@@ -93,21 +93,22 @@ public class Location_batches  {
                     Log.e("jkjhkjgdh","success");
 
                     localitylines =  json.getJSONArray(TAG_LOCALITY );
-                    locality_details_list=new String[localitylines.length()+1];
+                    locality_details_list=new String[localitylines.length()+1][2];
                     Log.e("jjkfdsffffkkk",localitylines.length()+"");
                    int j;
-                    locality_details_list[0]=Integer.toString(localitylines.length());
+                    locality_details_list[0][0]=Integer.toString(localitylines.length());
                     for(int i=0;i<localitylines.length();i++)
                     {
                         j=i+1;
                      JSONObject c=  localitylines.getJSONObject(i);
 
-                        // Integer id = c.getInt(TAG_ID);
+                         Integer id = c.getInt("id");
                         String name_of_locality = c.getString("locality");
-
+                        String id_local=Integer.toString(id);
                         Log.e("dhkajhdj",""+name_of_locality+"");
 
-                    locality_details_list[j]=name_of_locality;
+                    locality_details_list[j][0]=name_of_locality;
+                        locality_details_list[j][1]=id_local;
 
                     }
                     //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
@@ -130,7 +131,7 @@ public class Location_batches  {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(String[][] result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 
