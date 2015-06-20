@@ -11,18 +11,13 @@ public class CheckBoxString {
     String name = null;
     boolean selected = false;
 
-    public CheckBoxString( String name,String code, boolean selected) {
+    public CheckBoxString( String name, boolean selected) {
         super();
-        this.code=code;
+
         this.name = name;
         this.selected = selected;
     }
-    public String getCode() {
-        return code;
-    }
-    public void setCode(String code) {
-        this.code = code;
-    }
+
 
     public String getName() {
         return name;

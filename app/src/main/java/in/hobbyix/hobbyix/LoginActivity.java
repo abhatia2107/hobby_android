@@ -2,7 +2,6 @@ package in.hobbyix.hobbyix;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -41,35 +40,28 @@ public class LoginActivity extends ActionBarActivity {
 
     public  String url_login="http://192.168.137.1/Hobbyix/logincheck.php";
 
-    public static String[] details_of_user =new String[100];
+    public String details_of_user[] =new String[100];
     String message = null;
 
     //object for JSONParser class
     JSONParser jparser = new JSONParser();
-    static boolean hasLoggedIn;
+
 
     // ArrayList of HashMaps to store the JSONArray of mapped values
     ArrayList<HashMap<String,String>> guidelist;
     //JSONArray(inbuilt) to extract the JSONArray
     JSONArray guidelines = null;
-    static SessionManagement session,session1;
 
-    public static final String PREFS_NAME = "MyPrefsFile";
-    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         email_id = (EditText) findViewById(R.id.EmailEditEditView);
 
         password = (EditText) findViewById(R.id.PasswordEditText);
-        session = new SessionManagement(getApplicationContext());
       /*  LoginButton = (Button) findViewById(R.id.LoginButton);
         RegisterButton = (Button) findViewById(R.id.RegisterButton);*/
         forgetpassword = (TextView) findViewById(R.id.ForgotPassword);
-        settings = getSharedPreferences(PREFS_NAME, 0);
-        settings.getBoolean("hasLoggedIn", false);
         onclick();
     }
     public void onclick() {
@@ -103,44 +95,25 @@ public class LoginActivity extends ActionBarActivity {
                     } else {
 
                         details_of_user = set_user();
-                        if(details_of_user[5].equals("1")==true) {
 
-                          hasLoggedIn=true;
-                           MyProfile.user_details=details_of_user;
-                            Log.e("jhvd",details_of_user[0]+" "+details_of_user[1]+"");
-                            //String name= details_of_user[0]+"  "+details_of_user[1];
-                            session.createLoginSession( details_of_user[4],details_of_user[3]);
-                            SharedPreferences.Editor editor1 = settings.edit();
+                        MyProfile.user_details = details_of_user;
 
-                            //Set "hasLoggedIn" to true
-                            editor1.putBoolean("hasLoggedIn", true);
-                            editor1.commit();
-                            Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
-                           startActivityForResult(OpenLogin, 0);
 
-                        }
-                        else
+
+
+                /*else
                         {
                             Toast.makeText(getApplicationContext(),"Wrong Username/Password",Toast.LENGTH_SHORT).show();
 
-                            email_id.setText("");
+                            email.setText("");
                             password.setText("");
-                        }
 
-
-
+                        }*/
                     }
                 }
             }
         } );
     }
-    public static void logout()
-    {
-        session.logoutUser();
-
-        MyProfile.user_details=null;
-    }
-
     public void onclickforgetpassword(View view)
     {
         String emailtext,passwordtext;
@@ -206,7 +179,12 @@ public class LoginActivity extends ActionBarActivity {
         protected void onPreExecute() {
             // TODO Auto-generated method stub
             super.onPreExecute();
-
+            Log.e("opopo", "oiioi");
+            pDialog = new ProgressDialog(LoginActivity.this);
+            pDialog.setMessage("please wait....");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
 
         }
         @Override
@@ -237,9 +215,6 @@ public class LoginActivity extends ActionBarActivity {
                     user_detail[2] = c.getString("city");
                     user_detail[3] = c.getString("mobileno");
                     user_detail[4] = c.getString("email");
-                    user_detail[5]=Integer.toString(json.getInt("success"));
-
-                    Log.e("email",user_detail[5]+"");
 
 
                 }
@@ -259,7 +234,7 @@ public class LoginActivity extends ActionBarActivity {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 
-//            pDialog.dismiss();
+            pDialog.dismiss();
         }
     }
 }

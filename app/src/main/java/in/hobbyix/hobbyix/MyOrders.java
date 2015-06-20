@@ -94,8 +94,6 @@ public class MyOrders extends ActionBarActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.Logout:
-                LoginActivity.logout();
             default:
                 return super.onOptionsItemSelected(item);
         }
