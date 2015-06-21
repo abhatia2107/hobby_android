@@ -291,6 +291,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         postItems.setName(jsonPostItem.getString("institute"));
                         postItems.setFees(jsonPostItem.getString("batch_single_price"));
 
+
+
                         postItems.setAddress("Hi Tech City");
                         postItems.setTimings("4am-9pm");
                         postItems.setBookNow("BookNow");

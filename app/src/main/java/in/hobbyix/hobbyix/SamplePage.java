@@ -1,6 +1,5 @@
 package in.hobbyix.hobbyix;
 
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,18 +16,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+<<<<<<< HEAD
 import android.widget.EditText;
+=======
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+>>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.Calendar;
-
 
 public class SamplePage extends ActionBarActivity {
     TextView InstituteName;
     TextView InstituteClassType;
     TextView InstituteAddress;
-    Button proceedButton;
     Spinner spinner; String SessionNumber;
     ArrayAdapter<CharSequence> adpter;
     private TextView Output,total_amount;
@@ -45,7 +46,7 @@ public class SamplePage extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fitness_classes);
+        setContentView(R.layout.activity_sample_page);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -58,10 +59,14 @@ public class SamplePage extends ActionBarActivity {
         Institute_Mobileno=(TextView)findViewById(R.id.InstituteMobileNumberText);
         Institute_timings=(TextView)findViewById(R.id.textView);
 
+<<<<<<< HEAD
         basic_price=(TextView)findViewById(R.id.textView10);
         spinner=(Spinner)findViewById(R.id.spinner);
         promo=(EditText)findViewById(R.id.editText);
         total_amount=(TextView)findViewById(R.id.textView11);
+=======
+        spinner=(Spinner)findViewById(R.id.NumberOfSessionSpinner);
+>>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
         adpter=ArrayAdapter.createFromResource(this,R.array.list_numbers,android.R.layout.simple_list_item_1);
         adpter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adpter);
@@ -80,19 +85,17 @@ public class SamplePage extends ActionBarActivity {
             }
         });
         Output = (TextView) findViewById(R.id.editText4);
-        // Get current date by calender
-
         final Calendar c = Calendar.getInstance();
         year  = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day   = c.get(Calendar.DAY_OF_MONTH);
-
         Output.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 showDialog(DATE_PICKER_ID);
 
             }
         });
+<<<<<<< HEAD
 
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,17 +128,37 @@ public class SamplePage extends ActionBarActivity {
                 no_of_sessions = spinner.getSelectedItem().toString();
                 Intent PaymentIntent = new Intent(v.getContext(), PaymentPage.class);
                 startActivity(PaymentIntent);
+=======
+        Button proceedButton = (Button)findViewById(R.id.ProceedButton);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout BookingView = (RelativeLayout)findViewById(R.id.BookingView);
+                BookingView.setVisibility(View.GONE);
+                LinearLayout PaymentView  = (LinearLayout)findViewById(R.id.PaymentView);
+                PaymentView.setVisibility(View.VISIBLE);
+            }
+        });
+        Button BackToPayment = (Button)findViewById(R.id.BackToPayment);
+        BackToPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout BookingView = (RelativeLayout)findViewById(R.id.BookingView);
+                BookingView.setVisibility(View.VISIBLE);
+                LinearLayout PaymentView  = (LinearLayout)findViewById(R.id.PaymentView);
+                PaymentView.setVisibility(View.GONE);
+>>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
             }
         });
      /*   Bundle extras = getIntent().getExtras();
         if(extras!=null){
             String InstituteDetails[] = new String[5];
             InstituteDetails = extras.getStringArray("Institutes");
-            InstituteName = (TextView)findViewById(R.id.InstituteName);
+            InstituteName = (TextView)findViewById(R.id.HeaderInstituteName);
             InstituteName.setText(InstituteDetails[0]);
-            InstituteClassType=(TextView)findViewById(R.id.InstituteClassType);
+            InstituteClassType=(TextView)findViewById(R.id.HeaderInstituteClassType);
             InstituteClassType.setText(InstituteDetails[1]);
-            InstituteAddress = (TextView)findViewById(R.id.InstituteAddressHeader);
+            InstituteAddress = (TextView)findViewById(R.id.HeaderInstituteAddress);
             InstituteAddress.setText(InstituteDetails[2]);
         }*/
         set_everything(details);
@@ -157,15 +180,11 @@ public class SamplePage extends ActionBarActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
                 case DATE_PICKER_ID:
-                // open datepicker dialog.
-                // set date picker for current date
-                // add pickerListener listner to date picker
                 return new DatePickerDialog(this, pickerListener, year, month,day);
             }
         return null;
         }
         private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
-         // when dialog box is closed, below method will be called.
         @Override
         public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
             year = selectedYear;
@@ -178,7 +197,6 @@ public class SamplePage extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_fitness_classes, menu);
         return super.onCreateOptionsMenu(menu);
