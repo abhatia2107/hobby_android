@@ -97,6 +97,9 @@ public class SamplePage extends ActionBarActivity {
                 // open datepicker dialog.
                 // set date picker for current date
                 // add pickerListener listner to date picker
+<<<<<<< HEAD
+>>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
+=======
 >>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
                 return new DatePickerDialog(this, pickerListener, year, month,day);
         }
@@ -107,6 +110,9 @@ public class SamplePage extends ActionBarActivity {
 =======
         private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
          // when dialog box is closed, below method will be called.
+<<<<<<< HEAD
+>>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
+=======
 >>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
         @Override
         public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
