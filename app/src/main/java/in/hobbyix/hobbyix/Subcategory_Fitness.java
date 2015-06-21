@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class Subcategory_Fitness  {
     //url to get required guidelines
-    private static String url_for_subcategory = "http://192.168.137.1/Hobbyix/displaying_subcategory_details.php";
+    private static String url_for_subcategory = "http://hobbyix.com/json/subcategories";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_SUBCATEGORY = "subcategory";
@@ -39,7 +40,7 @@ public class Subcategory_Fitness  {
 
     public String[][] store_details_of_subcategory() {
 
-        String[][] aResultM = new String[30][2];
+        String[][] aResultM = new String[400][2];
         try {
             String params = null;
             LoadAllSubcategory task = new LoadAllSubcategory();
@@ -78,57 +79,54 @@ public class Subcategory_Fitness  {
             // TODO Auto-generated method stub
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
             String subcategory[][] = new String[0][0];
             JSONObject json = jparser.makeHttpRequest(url_for_subcategory, "GET", params);
-            if(json==null){
+            if (json == null) {
                 message = "No internet connection... please try later";
-                Log.v("tushita","The Json Object was Null");
+                Log.v("tushita", "The Json Object was Null");
                 return null;
             }
-            try
-            {
-                int success = json.getInt(TAG_SUCCESS);
-                if(success==1)
-                {
-                    Log.e("jkjhkjgdh","success");
-                    subcategorylines =  json.getJSONArray("subcategories");
+            try {
 
-                    subcategory = new  String[subcategorylines.length()+1][2];
-                    subcategory[0][0]=Integer.toString(subcategorylines.length());
-                    Log.e("djfjk","ooio"+subcategory[0]+"");
-                    int j;
-                    for(int i=0;i<subcategorylines.length();i++)
-                    {
-                        j=i+1;
-                     JSONObject c =  subcategorylines.getJSONObject(i);
+                Log.e("jkjhkjgdh", "success");
 
-                        Integer id = c.getInt("id");
-                        String name_of_subcategory = c.getString(TAG_SUBCATEGORY);
-                       String id_sub=Integer.toString(id);
-                        Log.e("dhkajhdj",""+name_of_subcategory+"");
-                           subcategory[j][0]=name_of_subcategory;
-                           subcategory[j][1]=id_sub;
+                subcategorylines = json.getJSONArray("subcategories");
+                subcategory = new String[ subcategorylines.length()+ 100][3];
+                subcategory[0][0] = Integer.toString(subcategorylines.length());
+                Log.e("djfjk", "ooio" + subcategory[0][0] + "");
+                int j;
 
-                    }
-                    //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //startActivity(in);
 
-                }else{
-                    Log.v("tush","success was 0");
-                    //Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //finish();
-                    //startActivity(in);
+                for (int i = 0; i < subcategorylines.length(); i++) {
+
+                    j = i + 1;
+
+                    //subcategorylines = json.getJSONArray(Integer.toString(i));
+                    JSONObject c = subcategorylines.getJSONObject(i);
+
+                    Integer id = c.getInt("id");
+                    String name_of_subcategory = c.getString("subcategory");
+                    String id_sub = Integer.toString(id);
+                    Log.e("dhkajhdj", "" + name_of_subcategory + "");
+                    subcategory[j][0] = name_of_subcategory;
+                    subcategory[j][1] = id_sub;
                 }
-
-            }catch(JSONException e){
-                e.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
             }
+
+
+            //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
+            //in.putExtra("guidelist",guidelist);
+            //startActivity(in);
+
 
             return subcategory;
         }
+
 
         @Override
         protected void onPostExecute(String[][] result) {

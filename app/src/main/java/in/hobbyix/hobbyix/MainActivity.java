@@ -1,9 +1,12 @@
 package in.hobbyix.hobbyix;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +48,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     static ArrayList<PostItems> postItemArrayList;
     //the progessdialog for progress bar
     private ProgressDialog pDialog;
-    //url to get required guidelines
-    private static String url_for_institute = "http://192.168.137.1/Hobbyix/filter.php";
+    //url to get required guideline
+    private static String url_for_institute = "http://hobbyix.com/json/filter";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_INSTITUTE = "institute";
@@ -306,16 +310,79 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         }
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu( final Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+       /* searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // hide action item
+                if (menu != null) {
+                    menu.findItem(R.id.action_login).setVisible(false);
+                    menu.findItem(R.id.action_filter).setVisible(false);
+                }
+
+            }
+        });*/
+       /*searchView .setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+              //  adapter.getFilter().filter("");
+                // re-show the action button
+                if (menu != null) {
+
+                    menu.findItem(R.id.action_filter).setVisible(true);
+                    menu.findItem(R.id.action_login).setVisible(true);
+                    menu.findItem(R.id.action_filter).setVisible(true);
+
+                }
+                return false;
+
+            }
+        });*/
+
+        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                // this is your adapter that will be filtered
+                // myAdapter.getFilter().filter(newText);
+                //System.out.println("on text chnge text: "+newText);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                Search_Backend.get_search(query);
+                // this is your adapter that will be filtered
+                // myAdapter.getFilter().filter(query);
+
+
+                System.out.println("on query submit: "+query);
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(textChangeListener);
+
+
+        return true;
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+
+
             case R.id.action_filter:
                 Intent FilterIntent = new Intent(this, FilterPage.class);
                 this.startActivity(FilterIntent);

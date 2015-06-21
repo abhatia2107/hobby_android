@@ -4,9 +4,11 @@ package in.hobbyix.hobbyix;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,11 +31,17 @@ public class SamplePage extends ActionBarActivity {
     Button proceedButton;
     Spinner spinner; String SessionNumber;
     ArrayAdapter<CharSequence> adpter;
-    private TextView Output;
+    private TextView Output,total_amount;
     private int year;
     private int month;
     private int day;
+    TextView payment;
+    String booking_date;
+    EditText promo;
+    String no_of_sessions;
     static final int DATE_PICKER_ID = 1111;
+    String details[]= new String[100];
+    TextView basic_price,Institute_name,Institute_categories,Institute_Address,Institute__Address,Institute_Mobileno,Institute_timings,Institute_Location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +49,31 @@ public class SamplePage extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        payment=(TextView)findViewById(R.id.textView10);
+        Institute_Address=(TextView)findViewById(R.id.InstituteAddressHeader);
+        Institute_categories=(TextView)findViewById(R.id.InstituteClassType);
+        Institute_name=(TextView)findViewById(R.id.InstituteName);
+        Institute__Address=(TextView)findViewById(R.id.InstituteAddress);
+        Institute_Location=(TextView)findViewById(R.id.LocationTextView);
+        Institute_Mobileno=(TextView)findViewById(R.id.InstituteMobileNumberText);
+        Institute_timings=(TextView)findViewById(R.id.textView);
 
+        basic_price=(TextView)findViewById(R.id.textView10);
         spinner=(Spinner)findViewById(R.id.spinner);
+        promo=(EditText)findViewById(R.id.editText);
+        total_amount=(TextView)findViewById(R.id.textView11);
         adpter=ArrayAdapter.createFromResource(this,R.array.list_numbers,android.R.layout.simple_list_item_1);
         adpter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adpter);
+      details= Smple_page_backend.store_details();
+        for(int i=0;i<14;i++)
+            Log.e("op", "" + details[i]);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SessionNumber = parent.getItemAtPosition(position) + "";
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -65,17 +90,44 @@ public class SamplePage extends ActionBarActivity {
         Output.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 showDialog(DATE_PICKER_ID);
+
             }
         });
+
+        payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // String promo_code=promo.getText().toString();
+                String after_applying_promo_code = null;
+
+                //total_amount.setText(after_applying_promo_code);
+
+            }
+            });
+
+
+    /*   public String [] send_order_details()
+        {
+            String [] details=new String[5];
+            details[0]=;
+            details[1]=no_of_sessions;
+            details[2]=booking_date;
+            details[3]=;
+
+
+        }*/
+
         proceedButton = (Button)findViewById(R.id.ProceedButton);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                booking_date=Output.getText().toString();
+                no_of_sessions = spinner.getSelectedItem().toString();
                 Intent PaymentIntent = new Intent(v.getContext(), PaymentPage.class);
                 startActivity(PaymentIntent);
             }
         });
-        Bundle extras = getIntent().getExtras();
+     /*   Bundle extras = getIntent().getExtras();
         if(extras!=null){
             String InstituteDetails[] = new String[5];
             InstituteDetails = extras.getStringArray("Institutes");
@@ -85,7 +137,21 @@ public class SamplePage extends ActionBarActivity {
             InstituteClassType.setText(InstituteDetails[1]);
             InstituteAddress = (TextView)findViewById(R.id.InstituteAddressHeader);
             InstituteAddress.setText(InstituteDetails[2]);
-        }
+        }*/
+        set_everything(details);
+    }
+    public void set_everything(String detail[])
+    {
+        Institute_name.setText(detail[0]);
+        Institute_categories.setText(detail[1]);
+        Institute_Address.setText(detail[2]);
+        Institute__Address.setText(detail[2]);
+        basic_price.setText("Rs."+detail[3]);
+        Institute_Location.setText(detail[4]);
+        Institute_Mobileno.setText(detail[13]);
+        Institute_timings.setText(detail[12]);
+
+
     }
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -106,8 +172,10 @@ public class SamplePage extends ActionBarActivity {
             month = selectedMonth;
             day = selectedDay;
             Output.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
+
             }
         };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar

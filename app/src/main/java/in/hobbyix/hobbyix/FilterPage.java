@@ -28,8 +28,8 @@ public class FilterPage extends ActionBarActivity {
     MyListAdapter2 adapter2;
 
 
-    String load_locality_details[][] = new String[100][2];
-    String load_subcategory_details[][] = new String[100][2];
+    String load_locality_details[][] = new String[500][3];
+    String load_subcategory_details[][] = new String[500][3];
     ArrayList<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     ArrayList<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
 
@@ -236,14 +236,15 @@ public class FilterPage extends ActionBarActivity {
 
         Button filter = (Button) findViewById(R.id.FilterButton);
         Button reset=(Button) findViewById(R.id.ResetButton);
-        final String subcategory[]= new String[100];
-        final String locality[]=new String[100];
+
 
         filter.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
+                final String subcategory[]= new String[100];
+                final String locality[]=new String[100];
 
                 StringBuffer responseText = new StringBuffer();
                 responseText.append("Selected Countries are...\n");
@@ -280,6 +281,10 @@ int l=k;
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
+                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+
+                startActivityForResult(OpenLogin, 0);
+
             }
 
 

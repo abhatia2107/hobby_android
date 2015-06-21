@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Location_batches  {
     //url to get required guidelines
-    private static String url_for_locality = "http://192.168.137.1/Hobbyix/displaying_localities.php";
+    private static String url_for_locality = "http://hobbyix.com/json/localities";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";
@@ -87,45 +87,36 @@ public class Location_batches  {
             }
             try
             {
-                int success = json.getInt(TAG_SUCCESS);
-                if(success==1)
-                {
-                    Log.e("jkjhkjgdh","success");
+               int success = json.getInt(TAG_SUCCESS);
+                if(success==1) {
+                    Log.e("jkjhkjgdh", "success");
 
-                    localitylines =  json.getJSONArray(TAG_LOCALITY );
-                    locality_details_list=new String[localitylines.length()+1][2];
-                    Log.e("jjkfdsffffkkk",localitylines.length()+"");
-                   int j;
-                    locality_details_list[0][0]=Integer.toString(localitylines.length());
-                    for(int i=0;i<localitylines.length();i++)
-                    {
-                        j=i+1;
-                     JSONObject c=  localitylines.getJSONObject(i);
+                    localitylines = json.getJSONArray("localities");
+                    locality_details_list = new String[localitylines.length() + 10][3];
+                    Log.e("jjkfdsffffkkk", localitylines.length() + "");
+                    int j;
+                    locality_details_list[0][0] = Integer.toString(localitylines.length());
+                    for (int i = 0; i < localitylines.length(); i++) {
 
-                         Integer id = c.getInt("id");
+                        j = i + 1;
+                        JSONObject c = localitylines.getJSONObject(i);
+
+                        Integer id = c.getInt("id");
                         String name_of_locality = c.getString("locality");
-                        String id_local=Integer.toString(id);
-                        Log.e("dhkajhdj",""+name_of_locality+"");
+                        String id_local = Integer.toString(id);
+                        Log.e("dhkajhdj", "" + name_of_locality + "");
 
-                    locality_details_list[j][0]=name_of_locality;
-                        locality_details_list[j][1]=id_local;
-
+                        locality_details_list[j][0] = name_of_locality;
+                        locality_details_list[j][1] = id_local;
                     }
-                    //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //startActivity(in);
-
-                }else{
-
-                    //Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //finish();
-                    //startActivity(in);
                 }
-
-            }catch(JSONException e){
-                e.printStackTrace();
+                    } catch (JSONException e1) {
+                e1.printStackTrace();
             }
+            //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
+                    //in.putExtra("guidelist",guidelist);
+                    //startActivity(in);
+
 
             return locality_details_list;
         }

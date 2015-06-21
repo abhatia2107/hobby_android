@@ -32,7 +32,7 @@ public class LoginActivity extends ActionBarActivity {
     TextView forgetpassword;
     EditText email_id,password;
     int firstemail=0,firstpassword=0;
-
+       static String email_person;
     private ProgressDialog pDialog;
     //the progessdialog for progress bar
 
@@ -104,7 +104,7 @@ public class LoginActivity extends ActionBarActivity {
 
                         details_of_user = set_user();
                         if(details_of_user[5].equals("1")==true) {
-
+                           email_person=details_of_user[4];
                           hasLoggedIn=true;
                            MyProfile.user_details=details_of_user;
                             Log.e("jhvd",details_of_user[0]+" "+details_of_user[1]+"");
@@ -140,6 +140,7 @@ public class LoginActivity extends ActionBarActivity {
 
         MyProfile.user_details=null;
     }
+
 
     public void onclickforgetpassword(View view)
     {

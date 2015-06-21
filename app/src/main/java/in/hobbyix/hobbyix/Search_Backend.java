@@ -16,14 +16,22 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Created by Diks on 6/21/2015.
+ */
+
+
+
+
+/**
  * Created by Diks on 6/19/2015.
  */
-public class Order_backend {
+
+public class Search_Backend {
 
         //the progessdialog for progress bar
         private ProgressDialog pDialog;
         //url to get required guidelines
-        private static String url_for_institute = "http://192.168.137.1/Hobbyix/orders.php";
+        private static String url_for_institute = "http://hobbyix.com/json/filter/search";
         // desc of all important strings : names of columns
         private static final String TAG_SUCCESS = "success";
         private static final String TAG_INSTITUTE = "institute";
@@ -32,6 +40,7 @@ public class Order_backend {
         static int local_length;
         public static String[] locality_filter=new String[100];
         static String message = null;
+    static String get_keyword;
         //object for JSONParser class
         static JSONParser jparser = new JSONParser();
         //button to start the syncing of databases
@@ -58,7 +67,20 @@ public class Order_backend {
             return aResultM;
 
         }
+    public static void get_search(String query) {
+        get_keyword=query;
+        store_details();
 
+    }
+
+        public static void get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
+        {
+            subcategory_filter=subcategory;
+            locality_filter=locality;
+            sub_length=size_of_subcategory;
+            local_length=size_of_locality;
+            String x[][]=store_details();
+        }
 
 
         static class Load_Filter_Details extends AsyncTask<String, String,String[][]> {
@@ -74,18 +96,17 @@ public class Order_backend {
 
                 // TODO Auto-generated method stub
 
-                String email=LoginActivity.email_person;
 
-                            List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-                           params.add(new BasicNameValuePair("email",email));
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
 
+                    params.add(new BasicNameValuePair("keyword",get_keyword));
 
 
 
                 Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
 
-                JSONObject json = jparser.makeHttpRequest(url_for_institute, "POST", params);
+                JSONObject json = jparser.makeHttpRequest(url_for_institute, "GET", params);
                 if (json == null) {
                     message = "No internet connection... please try later";
                     Log.v("tushita", "The Json Object was Null");
@@ -95,33 +116,61 @@ public class Order_backend {
                     int success = json.getInt(TAG_SUCCESS);
                     if (success == 1) {
                         int k=0;
-                        guidelines = json.getJSONArray("institutes");
-                        institute_list[0][0]=Integer.toString(guidelines.length());
-                        int j=0;
+                        int j;
+                        guidelines = json.getJSONArray("institute");
                         for (int i = 0; i < guidelines.length(); i++) {
                             k=0;
+                            j=i+1;
                             JSONObject c = guidelines.getJSONObject(i);
-                            // Integer id = c.getInt(TAG_ID);
-                            String payment = c.getString("payment");
-                            String booking_date = c.getString("booking_date");
-                             String no_of_sessions = c.getString("no_of_sessions");
-                            int order_id = c.getInt("order_id");
-                            String created_at=c.getString("created_at");
+                            String name_of_institute = c.getString("institute");
+                            String batch_category = c.getString("subcategory");
+                            String venue_address = c.getString("venue_address");
+                            String venue_landmark = c.getString("venue_landmark");
+                            String locality=c.getString("locality");
+                            String location=c.getString("location");
+                       /* String =c.getString("");
+                        String =c.getString("");
+                        String =c.getString("");*/
+                            Integer price = c.getInt("batch_single_price");
+                            Integer shower_room = c.getInt("shower_room");
+                            Integer air_conditioning = c.getInt("air_conditioning");
+                            Integer cafe = c.getInt("cafe");
+                            Integer changing_room = c.getInt("changing_room");
+                            String batch_price=price.toString();
+                            String batch_shower_room=shower_room.toString();
+                            String batch_air_conditioning=air_conditioning.toString();
+                            String batch_cafe=cafe.toString();
+                            String batch_changing_room =changing_room.toString();
+
                             // String schedule_start_time = c.getString("schedule_start_time");
 
                             // String schedule_end_time = c.getString("schedule_end_time");
 
-                              j=i+1;
-                            institute_list[j][k]=payment;
+                            institute_list[j][k]=name_of_institute;
                             k++;
-                            institute_list[j][k]=booking_date;
+                            institute_list[j][k]=batch_category;
                             k++;
-
-                            institute_list[j][k]=no_of_sessions;
+                            institute_list[j][k]=venue_address;
                             k++;
-                            institute_list[j][k]=Integer.toString(order_id);
+                            institute_list[j][k]=venue_landmark;
                             k++;
-                            institute_list[j][k]=created_at;
+                            institute_list[j][k]=locality;
+                            k++;
+                            institute_list[j][k]=location;
+                            k++;
+                            institute_list[j][k]=batch_price;
+                            k++;
+                            institute_list[j][k]=batch_shower_room;
+                            k++;
+                            institute_list[j][k]=batch_air_conditioning;
+                            k++;
+                            institute_list[j][k]=batch_cafe;
+                            k++;
+                            institute_list[j][k]=batch_changing_room;
+                            k++;
+                            institute_list[j][k]=c.getString("batch_tagline");
+                            k++;
+                            institute_list[j][k]=c.getString("venue_contact_no");
                             k++;
 
                        /* HashMap<String, String> map = new HashMap<String, String>();
