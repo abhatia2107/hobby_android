@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,9 +34,10 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    private final String instituteUrl="http://192.168.10.104/Hobbyix/displaying_institute_details.php";
+    private final String instituteUrl="http://104.236.85.67/json/filter/categories/Fitness/locations/Hyderabad";
     ListView postItemListView;
     ArrayList<PostItems> postItemArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,27 +145,25 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 HttpResponse response = client.execute(post);
 
                 int status=response.getStatusLine().getStatusCode();
-
+                Log.e("Yashdeep",status+"");
                 if(status==200){
                     HttpEntity entity = response.getEntity();
                     String Data = EntityUtils.toString(entity);
 
                     JSONObject jsonObject = new JSONObject(Data);
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("institutes");
+                    JSONArray jsonArray = jsonObject.getJSONArray("institute");
 
                     for(int i=0;i<jsonArray.length();i++){
                         PostItems postItems = new PostItems();
                         JSONObject jsonPostItem=jsonArray.getJSONObject(i);
-                        postItems.setClassType(jsonPostItem.getString("batch_category"));
+                        //postItems.setClassType(jsonPostItem.getString("batch_category"));
                         postItems.setName(jsonPostItem.getString("institute"));
-                        postItems.setFees(jsonPostItem.getString("batch_single_price"));
+                        //postItems.setFees(jsonPostItem.getString("batch_single_price"));
 
-
-
-                        postItems.setAddress("Hi Tech City");
-                        postItems.setTimings("4am-9pm");
-                        postItems.setBookNow("BookNow");
+                      //  postItems.setAddress("Hi Tech City");
+                      //  postItems.setTimings("4am-9pm");
+                       // postItems.setBookNow("BookNow");
                         postItemArrayList.add(postItems);
                     }
                     return true;
