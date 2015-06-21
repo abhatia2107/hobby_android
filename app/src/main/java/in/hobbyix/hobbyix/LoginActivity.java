@@ -3,8 +3,8 @@ package in.hobbyix.hobbyix;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,7 @@ public class LoginActivity extends ActionBarActivity {
     TextView forgetpassword;
     EditText email_id,password;
     int firstemail=0,firstpassword=0;
-
+       static String email_person;
     private ProgressDialog pDialog;
     //the progessdialog for progress bar
 
@@ -102,6 +101,25 @@ public class LoginActivity extends ActionBarActivity {
 
 
                 /*else
+=======
+                        if(details_of_user[5].equals("1")==true) {
+                           email_person=details_of_user[4];
+                          hasLoggedIn=true;
+                           MyProfile.user_details=details_of_user;
+                            Log.e("jhvd",details_of_user[0]+" "+details_of_user[1]+"");
+                            //String name= details_of_user[0]+"  "+details_of_user[1];
+                            session.createLoginSession( details_of_user[4],details_of_user[3]);
+                            SharedPreferences.Editor editor1 = settings.edit();
+
+                            //Set "hasLoggedIn" to true
+                            editor1.putBoolean("hasLoggedIn", true);
+                            editor1.commit();
+                            Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+                           startActivityForResult(OpenLogin, 0);
+
+                        }
+                        else
+>>>>>>> 5541e41d7e1ac1cc0ffdbf22a1ea592684fdcc76
                         {
                             Toast.makeText(getApplicationContext(),"Wrong Username/Password",Toast.LENGTH_SHORT).show();
 
@@ -114,6 +132,14 @@ public class LoginActivity extends ActionBarActivity {
             }
         } );
     }
+    public static void logout()
+    {
+        //session.logoutUser();
+
+        MyProfile.user_details=null;
+    }
+
+
     public void onclickforgetpassword(View view)
     {
         String emailtext,passwordtext;

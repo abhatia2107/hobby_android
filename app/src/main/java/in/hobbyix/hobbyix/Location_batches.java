@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Location_batches  {
     //url to get required guidelines
-    private static String url_for_locality = "http://192.168.10.104/Hobbyix/displaying_localities.php";
+    private static String url_for_locality = "http://hobbyix.com/json/localities";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";
@@ -107,24 +107,21 @@ public class Location_batches  {
 
                         Log.e("dhkajhdj",""+name_of_locality+"");
 
-                    locality_details_list[j]=name_of_locality;
+                       locality_details_list[j]=name_of_locality;
+                       //String id_local = Integer.toString(id);
+                        Log.e("dhkajhdj", "" + name_of_locality + "");
 
+                        //locality_details_list[j][0] = name_of_locality;
+                        //locality_details_list[j][1] = id_local;
                     }
-                    //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //startActivity(in);
-
-                }else{
-
-                    //Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                    //in.putExtra("guidelist",guidelist);
-                    //finish();
-                    //startActivity(in);
                 }
-
-            }catch(JSONException e){
-                e.printStackTrace();
+                    } catch (JSONException e1) {
+                e1.printStackTrace();
             }
+            //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
+                    //in.putExtra("guidelist",guidelist);
+                    //startActivity(in);
+
 
             return locality_details_list;
         }

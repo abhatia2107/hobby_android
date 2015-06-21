@@ -2,12 +2,11 @@ package in.hobbyix.hobbyix;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FilterPage extends ActionBarActivity {
     MyListAdapter adapter;
     MyListAdapter2 adapter2;
-
-
-    String load_locality_details[] = new String[100];
-    String load_subcategory_details[] = new String[100];
+    String load_locality_detail[] = new String[100];
+    String load_subcategory_detail[] = new String[100];
+   //String load_locality_details[][] = new String[500][3];
+   // String load_subcategory_details[][] = new String[500][3];
     ArrayList<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     ArrayList<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
 
@@ -44,8 +41,8 @@ public class FilterPage extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         reset = (Button) findViewById(R.id.ResetButton);
         filter = (Button) findViewById(R.id.FilterButton);
-        load_locality_details = new Location_batches().store_details_of_locality();
-        load_subcategory_details = new Subcategory_Fitness().store_details_of_subcategory();
+        load_locality_detail = new Location_batches().store_details_of_locality();
+        load_subcategory_detail = new Subcategory_Fitness().store_details_of_subcategory();
         populatecheckBoxList();
 
         checkButtonClick();
@@ -60,11 +57,11 @@ public class FilterPage extends ActionBarActivity {
     public void populatecheckBoxList() {
 
 
-        for (int i = 0; i < Integer.valueOf(load_subcategory_details[0]); i++) {
-            checkBoxList.add(new CheckBoxString(load_subcategory_details[i + 1], false));
+        for (int i = 0; i < Integer.valueOf(load_subcategory_detail[0]); i++) {
+            checkBoxList.add(new CheckBoxString(load_subcategory_detail[i + 1], false));
         }
-        for (int i = 0; i < Integer.valueOf(load_locality_details[0]); i++) {
-            checkBoxList2.add(new CheckBoxString(load_locality_details[i + 1], false));
+        for (int i = 0; i < Integer.valueOf(load_locality_detail[0]); i++) {
+            checkBoxList2.add(new CheckBoxString(load_locality_detail[i + 1], false));
         }
         adapter = new MyListAdapter(this,
                 R.layout.checkbox_element, checkBoxList);
@@ -241,6 +238,8 @@ public class FilterPage extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
+                final String subcategory[]= new String[100];
+                final String locality[]=new String[100];
 
                 StringBuffer responseText = new StringBuffer();
                 responseText.append("Selected Countries are...\n");
@@ -271,6 +270,10 @@ public class FilterPage extends ActionBarActivity {
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
+                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+
+                startActivityForResult(OpenLogin, 0);
+
             }
 
 

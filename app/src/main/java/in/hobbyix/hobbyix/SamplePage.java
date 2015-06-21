@@ -97,20 +97,20 @@ public class SamplePage extends ActionBarActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
-                case DATE_PICKER_ID:
+            case DATE_PICKER_ID:
                 return new DatePickerDialog(this, pickerListener, year, month,day);
-            }
-        return null;
         }
-        private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+        return null;
+    }
+    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
             Output.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-            }
-        };
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

@@ -53,9 +53,9 @@ public class Subcategory_Fitness  {
 
     }
     public void store(ArrayList<HashMap<String, String>> result)
-{
-    Log.e("ghg",""+result+"");
-}
+    {
+        Log.e("ghg",""+result+"");
+    }
 
     //======================================================Class LoadAllGuidelines==============================================//
     class LoadAllSubcategory extends AsyncTask<String, String, String[]> {
@@ -101,13 +101,13 @@ public class Subcategory_Fitness  {
                     for(int i=0;i<subcategorylines.length();i++)
                     {
                         j=i+1;
-                     JSONObject c =  subcategorylines.getJSONObject(i);
+                        JSONObject c =  subcategorylines.getJSONObject(i);
 
                         // Integer id = c.getInt(TAG_ID);
                         String name_of_subcategory = c.getString(TAG_SUBCATEGORY);
 
                         Log.e("dhkajhdj",""+name_of_subcategory+"");
-                           subcategory[j]=name_of_subcategory;
+                        subcategory[j]=name_of_subcategory;
 
 
                     }
@@ -134,9 +134,9 @@ public class Subcategory_Fitness  {
         protected void onPostExecute(String[] result) {
             // TODO Auto-generated method stub
 
-         super.onPostExecute(result);
+            super.onPostExecute(result);
 
-           // pDialog.dismiss();
+            // pDialog.dismiss();
         }
 
     }

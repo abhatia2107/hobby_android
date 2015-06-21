@@ -1,12 +1,11 @@
 package in.hobbyix.hobbyix;
 
+import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,195 +14,218 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+public class MainActivity extends ActionBarActivity  {
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    private final String instituteUrl="http://104.236.85.67/json/filter/categories/Fitness/locations/Hyderabad";
     ListView postItemListView;
-    ArrayList<PostItems> postItemArrayList;
+    private List<PostItems> PostItemsList = new ArrayList<PostItems>();
 
-    @Override
+    private ProgressDialog pDialog;
+    //url to get required guideline
+    private static String url_for_institute = "http://hobbyix.com/json/filter";
+    // desc of all important strings : names of columns
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_INSTITUTE = "institute";
+    public static String[] subcategory_filter=new String[100];
+    static int sub_length=0;
+    static int local_length=0;
+    public static String[] locality_filter=new String[100];
+    static String message = null;
+    //object for JSONParser class
+    static JSONParser jparser = new JSONParser();
+    //button to start the syncing of databases
+    Button btn;
+    // ArrayList of HashMaps to store the JSONArray of mapped values
+
+    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
+    //JSONArray(inbuilt) to extract the JSONArray
+    static JSONArray guidelines = null;
+    static String[][] institute_list=new String[100][100];
+
+    //  SessionManagement session;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        postItemListView = (ListView)findViewById(R.id.listView);
-        postItemArrayList = new ArrayList<>();
-        new PostItemsAsyncTask().execute(instituteUrl);
-    }
-
-    @Override
-    public void onClick(View v) {
+        populatePostItemsList();
+        populatePostItemsListView();
 
     }
-    class InstituteAdapter extends ArrayAdapter<PostItems> {
 
-         class ViewHolder{
-            public TextView institute_name;
-            public TextView institute_class_type;
-            public TextView institute_address;
-            public TextView institute_timing;
-            public TextView institute_price;
-            public Button book_now;
-         }
+    private void populatePostItemsList() {
+        for(int i=0;i<10;i++){
+            PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+        }
+    }
 
-        ArrayList<PostItems> ArrayListPost;
-        int resource;
-        Context context;
-        LayoutInflater layoutInflater;
+    private void populatePostItemsListView() {
+        ArrayAdapter<PostItems> adapter = new PostItemListAdapter();
+        ListView PostItemsListView = (ListView)findViewById(R.id.PostItemListView);
+        PostItemsListView.setAdapter(adapter);
+    }
+    private class PostItemListAdapter extends  ArrayAdapter<PostItems>{
 
-        public InstituteAdapter(Context context,int resource,ArrayList<PostItems> objects){
-            super(context,resource,objects);
-
-            ArrayListPost = objects;
-            this.resource = resource;
-            this.context=context;
-
-            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public PostItemListAdapter() {
+            super(MainActivity.this, R.layout.item_view);
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder ;
-            if(convertView == null){
-                convertView = layoutInflater.inflate(resource,null);
-                viewHolder = new ViewHolder();
-                viewHolder.book_now = (Button)convertView.findViewById(R.id.item_book_now_button);
-                viewHolder.institute_name = (TextView)convertView.findViewById(R.id.item_NameTextView);
-                viewHolder.institute_class_type = (TextView)convertView.findViewById(R.id.item_ClassTypeTextView);
-                viewHolder.institute_timing = (TextView)convertView.findViewById(R.id.item_TimingsTextView);
-                viewHolder.institute_price = (TextView)convertView.findViewById(R.id.item_FessTextView);
-                viewHolder.institute_address = (TextView)convertView.findViewById(R.id.item_AddressTextView);
-                convertView.setTag(viewHolder);
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = convertView;
+            if(itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.item_view,parent,false);
             }
-            else{
-                viewHolder = (ViewHolder)convertView.getTag();
-            }
-            viewHolder.institute_name.setText(ArrayListPost.get(position).getName());
-            viewHolder.institute_address.setText(ArrayListPost.get(position).getAddress());
-            viewHolder.institute_price.setText("Fees Rs."+ ArrayListPost.get(position).getFees()+"/-");
-            viewHolder.institute_class_type.setText(ArrayListPost.get(position).getClassType());
-            viewHolder.institute_timing.setText(ArrayListPost.get(position).getTimings());
-            viewHolder.book_now.setOnClickListener(new View.OnClickListener() {
+            PostItems CurrentPost = PostItemsList.get(position);
+
+            TextView InstituteName = (TextView)findViewById(R.id.item_NameTextView);
+            TextView InstituteClassType = (TextView)findViewById(R.id.item_ClassTypeTextView);
+            TextView InstituteTimings = (TextView)findViewById(R.id.item_TimingsTextView);
+            TextView InstituteAddress = (TextView)findViewById(R.id.item_AddressTextView);
+            TextView InstituteFees = (TextView)findViewById(R.id.item_FessTextView);
+            TextView InstituteCredit = (TextView)findViewById(R.id.CreditTextView);
+            Button BookNowButton = (Button)findViewById(R.id.item_book_now_button);
+
+            InstituteName.setText(CurrentPost.getName());
+            InstituteClassType.setText(CurrentPost.getClassType());
+            InstituteTimings.setText(CurrentPost.getTimings());
+            InstituteAddress.setText(CurrentPost.getAddress());
+            InstituteFees.setText(CurrentPost.getFees());
+            InstituteCredit.setText(CurrentPost.getCredit());
+            BookNowButton.setText(CurrentPost.getBookNow());
+            InstituteName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    String Institutes [] = new String[5];
-                    Institutes[0]=ArrayListPost.get(position).getName();
-                    Institutes[1]=ArrayListPost.get(position).getClassType();
-                    Institutes[2]=ArrayListPost.get(position).getAddress();
-                    Institutes[3]=ArrayListPost.get(position).getTimings();
-                    Institutes[4]=ArrayListPost.get(position).getFees();
-                    bundle.putStringArray("Institutes",Institutes);
-                    Intent intent = new Intent(MainActivity.this,SamplePage.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
                 }
             });
-            viewHolder.institute_name.setOnClickListener(new View.OnClickListener() {
+            InstituteClassType.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    String Institutes [] = new String[5];
-                    Institutes[0]=ArrayListPost.get(position).getName();
-                    Institutes[1]=ArrayListPost.get(position).getClassType();
-                    Institutes[2]=ArrayListPost.get(position).getAddress();
-                    Institutes[3]=ArrayListPost.get(position).getTimings();
-                    Institutes[4]=ArrayListPost.get(position).getFees();
-                    bundle.putStringArray("Institutes",Institutes);
-                    Intent intent = new Intent(MainActivity.this,SamplePage.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
                 }
             });
-            return convertView;
-        }
-    }
-
-    public class PostItemsAsyncTask extends AsyncTask<String,Void,Boolean>{
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-
-            try{
-                HttpClient client = new DefaultHttpClient();
-                HttpPost post =new HttpPost(params[0]);
-                HttpResponse response = client.execute(post);
-
-                int status=response.getStatusLine().getStatusCode();
-                Log.e("Yashdeep",status+"");
-                if(status==200){
-                    HttpEntity entity = response.getEntity();
-                    String Data = EntityUtils.toString(entity);
-
-                    JSONObject jsonObject = new JSONObject(Data);
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("institute");
-
-                    for(int i=0;i<jsonArray.length();i++){
-                        PostItems postItems = new PostItems();
-                        JSONObject jsonPostItem=jsonArray.getJSONObject(i);
-                        //postItems.setClassType(jsonPostItem.getString("batch_category"));
-                        postItems.setName(jsonPostItem.getString("institute"));
-                        //postItems.setFees(jsonPostItem.getString("batch_single_price"));
-
-                      //  postItems.setAddress("Hi Tech City");
-                      //  postItems.setTimings("4am-9pm");
-                       // postItems.setBookNow("BookNow");
-                        postItemArrayList.add(postItems);
-                    }
-                    return true;
+            InstituteTimings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
                 }
-            } catch (ClientProtocolException e){
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
+            });
+            InstituteAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteFees.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            BookNowButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if(result == false){
-                Context context = getApplicationContext();
-                CharSequence text = "Internet Connection Not Available.";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-            else{
-                InstituteAdapter adapter = new InstituteAdapter(getApplicationContext(),R.layout.item_view,postItemArrayList);
-                postItemListView.setAdapter(adapter);
-            }
+            return itemView;
         }
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu( final Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+       /* searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // hide action item
+                if (menu != null) {
+                    menu.findItem(R.id.action_login).setVisible(false);
+                    menu.findItem(R.id.action_filter).setVisible(false);
+                }
+
+            }
+        });*/
+       /*searchView .setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+              //  adapter.getFilter().filter("");
+                // re-show the action button
+                if (menu != null) {
+
+                    menu.findItem(R.id.action_filter).setVisible(true);
+                    menu.findItem(R.id.action_login).setVisible(true);
+                    menu.findItem(R.id.action_filter).setVisible(true);
+
+                }
+                return false;
+
+            }
+        });*/
+
+        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                // this is your adapter that will be filtered
+                // myAdapter.getFilter().filter(newText);
+                //System.out.println("on text chnge text: "+newText);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                Search_Backend.get_search(query);
+                // this is your adapter that will be filtered
+                // myAdapter.getFilter().filter(query);
+
+
+                System.out.println("on query submit: "+query);
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(textChangeListener);
+
+
+        return true;
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+
+
             case R.id.action_filter:
                 Intent FilterIntent = new Intent(this, FilterPage.class);
                 this.startActivity(FilterIntent);

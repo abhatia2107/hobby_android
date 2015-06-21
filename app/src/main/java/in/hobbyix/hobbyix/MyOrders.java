@@ -19,6 +19,7 @@ import java.util.List;
 
 public class MyOrders extends ActionBarActivity {
     private List<OrderItems> OrderList=new ArrayList<OrderItems>();
+    String order_details[][]=new String[100][100];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +27,14 @@ public class MyOrders extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        order_details=Order_backend.store_details();
         populateOrderList();
         populateOrderListView();
     }
     private void populateOrderList() {
-        for(int i=1;i<=25;i++){
-            OrderList.add(new OrderItems("Order Number  : "+i,"Price Per Session : Rs.100"+i+"/-","Date : 14 - 05 - 2015     Time : 10:45am"," Order Booked For Date : 17 - 05- 2015 ","Number Of Sessions: "+i,"Total Price : Rs.500"+i+"/-"));
+        for(int i=0;i<Integer.valueOf(order_details[0][0]);i++){
+            String value=Integer.toString(Integer.valueOf(order_details[i+1][0])*Integer.valueOf(order_details[i+1][0]));
+            OrderList.add(new OrderItems("Order Number  : "+order_details[i+1][3],"Price Per Session : Rs."+order_details[i+1][0]+"/-","Created-at :"+order_details[i+1][4] ," Order Booked For Date :"+ order_details[i+1][1],"Number Of Sessions: "+order_details[i+1][2],"Total Price : Rs."+value+"/-"));
         }
     }
     private void populateOrderListView() {
