@@ -136,7 +136,6 @@ public class RegisterActivity extends ActionBarActivity {
                                             {
                                                 Log.e("oioio", "popop");
                                                 new LoadAllGuidelines().execute();
-
                                             }
 
                                             else {
@@ -146,7 +145,11 @@ public class RegisterActivity extends ActionBarActivity {
 
                                             }
 
+                   /* if(k==1){
+                        Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                    Intent OpenLogin = new Intent(v.getContext(), Welcome.class);
 
+                    startActivityForResult(OpenLogin, 0);}*/
                                         }
                                     }
                                 }

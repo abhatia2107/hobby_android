@@ -1,7 +1,6 @@
 package in.hobbyix.hobbyix;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -17,8 +16,6 @@ public class MyProfile extends ActionBarActivity {
     static TextView mobileno;
     static TextView city;
     static String[] user_details = new String[100];
-    public static final String PREFS_NAME = "MyPrefsFile";
-    SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,34 +28,18 @@ public class MyProfile extends ActionBarActivity {
         name=(TextView)findViewById(R.id.name);
         mobileno=(TextView)findViewById(R.id.mobile_number);
         city=(TextView)findViewById(R.id.city);
-        settings = getSharedPreferences(PREFS_NAME, 0);
-        boolean hasLoggedIn =settings.getBoolean("hasLoggedIn", false);
-        if(hasLoggedIn==true)
-           set_profile_contents();
+        //set_profile_contents();
     }
     public static void set_profile_contents()
     {
-        String name_person=null;
-        if(user_details!=null) {
-            name_person = user_details[0].concat(" ");
-            name_person = name_person.concat(user_details[1]);
-
-            name.setText("NAME: " + name_person);
-            email.setText("E-MAIL: " + user_details[4]);
-            city.setText("CITY: " + user_details[2]);
-            mobileno.setText("MOBILE NUMBER: " + user_details[3]);
-        }
-        else
-
-        {
-
-            name.setText("NAME: " );
-            email.setText("E-MAIL: " );
-            city.setText("CITY: " );
-            mobileno.setText("MOBILE NUMBER: " );
-
-        }
-
+        String name_person=user_details[0].concat(" ");
+        name_person=name_person.concat(user_details[1]);
+        name.setText(name_person);
+        Log.e("jfk", email + "");
+        name.setText("NAME"+user_details[1]);
+        email.setText("E-MAIL: "+user_details[4]);
+        city.setText("CITY"+user_details[2]);
+        mobileno.setText("MOBILE NUMBER : "+user_details[3]);
     }
 
 
@@ -87,8 +68,6 @@ public class MyProfile extends ActionBarActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.Logout:
-                LoginActivity.logout();
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends ActionBarActivity  {
+<<<<<<< HEAD
 PostItemListAdapter adapter;
   int length;
     int used;
@@ -269,6 +269,135 @@ PostItemListAdapter adapter;
             });
 
             return convertView;
+=======
+
+    ListView postItemListView;
+    private List<PostItems> PostItemsList = new ArrayList<PostItems>();
+
+    private ProgressDialog pDialog;
+    //url to get required guideline
+    private static String url_for_institute = "http://hobbyix.com/json/filter";
+    // desc of all important strings : names of columns
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_INSTITUTE = "institute";
+    public static String[] subcategory_filter=new String[100];
+    static int sub_length=0;
+    static int local_length=0;
+    public static String[] locality_filter=new String[100];
+    static String message = null;
+    //object for JSONParser class
+    static JSONParser jparser = new JSONParser();
+    //button to start the syncing of databases
+    Button btn;
+    // ArrayList of HashMaps to store the JSONArray of mapped values
+
+    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
+    //JSONArray(inbuilt) to extract the JSONArray
+    static JSONArray guidelines = null;
+    static String[][] institute_list=new String[100][100];
+
+    //  SessionManagement session;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        populatePostItemsList();
+        populatePostItemsListView();
+
+    }
+
+    private void populatePostItemsList() {
+        for(int i=0;i<10;i++){
+            PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+        }
+    }
+
+    private void populatePostItemsListView() {
+        ArrayAdapter<PostItems> adapter = new PostItemListAdapter();
+        ListView PostItemsListView = (ListView)findViewById(R.id.PostItemListView);
+        PostItemsListView.setAdapter(adapter);
+    }
+    private class PostItemListAdapter extends  ArrayAdapter<PostItems>{
+
+        public PostItemListAdapter() {
+            super(MainActivity.this, R.layout.item_view);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = convertView;
+            if(itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.item_view,parent,false);
+            }
+            PostItems CurrentPost = PostItemsList.get(position);
+
+            TextView InstituteName = (TextView)findViewById(R.id.item_NameTextView);
+            TextView InstituteClassType = (TextView)findViewById(R.id.item_ClassTypeTextView);
+            TextView InstituteTimings = (TextView)findViewById(R.id.item_TimingsTextView);
+            TextView InstituteAddress = (TextView)findViewById(R.id.item_AddressTextView);
+            TextView InstituteFees = (TextView)findViewById(R.id.item_FessTextView);
+            TextView InstituteCredit = (TextView)findViewById(R.id.CreditTextView);
+            Button BookNowButton = (Button)findViewById(R.id.item_book_now_button);
+
+            InstituteName.setText(CurrentPost.getName());
+            InstituteClassType.setText(CurrentPost.getClassType());
+            InstituteTimings.setText(CurrentPost.getTimings());
+            InstituteAddress.setText(CurrentPost.getAddress());
+            InstituteFees.setText(CurrentPost.getFees());
+            InstituteCredit.setText(CurrentPost.getCredit());
+            BookNowButton.setText(CurrentPost.getBookNow());
+            InstituteName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteClassType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteTimings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteFees.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            InstituteCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+            BookNowButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this,SamplePage.class);
+                    startActivity(BookNowSamplePageIntent);
+                }
+            });
+
+            return itemView;
+>>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
         }
     }
 

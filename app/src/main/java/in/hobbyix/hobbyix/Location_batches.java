@@ -39,9 +39,9 @@ public class Location_batches  {
     JSONArray localitylines = null;
     TextView institute_name;
     //-----------------------------------------------------------------------------------------------------------------------//
-    public String[][] store_details_of_locality() {
+    public String[] store_details_of_locality() {
 
-        String[][] aResultM = new String[100][2];
+        String[] aResultM = new String[30];
         try {
             String params = null;
             LoadAllLOCALITY task = new LoadAllLOCALITY();
@@ -57,7 +57,7 @@ public class Location_batches  {
 
 
     //======================================================Class LoadAllGuidelines==============================================//
-    class LoadAllLOCALITY extends AsyncTask<String, String, String[][]> {
+    class LoadAllLOCALITY extends AsyncTask<String, String, String[]> {
 
 
         @Override
@@ -72,10 +72,10 @@ public class Location_batches  {
 
         }
         @Override
-        protected String[][] doInBackground(String... arg0) {
+        protected String[] doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
-                 String locality_details_list[][] = new String[0][0];
+                 String locality_details_list[] = new String[0];
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
 
@@ -87,27 +87,32 @@ public class Location_batches  {
             }
             try
             {
-               int success = json.getInt(TAG_SUCCESS);
-                if(success==1) {
-                    Log.e("jkjhkjgdh", "success");
+                int success = json.getInt(TAG_SUCCESS);
+                if(success==1)
+                {
+                    Log.e("jkjhkjgdh","success");
 
-                    localitylines = json.getJSONArray("localities");
-                    locality_details_list = new String[localitylines.length() + 10][3];
-                    Log.e("jjkfdsffffkkk", localitylines.length() + "");
-                    int j;
-                    locality_details_list[0][0] = Integer.toString(localitylines.length());
-                    for (int i = 0; i < localitylines.length(); i++) {
+                    localitylines =  json.getJSONArray(TAG_LOCALITY );
+                    locality_details_list=new String[localitylines.length()+1];
+                    Log.e("jjkfdsffffkkk",localitylines.length()+"");
+                   int j;
+                    locality_details_list[0]=Integer.toString(localitylines.length());
+                    for(int i=0;i<localitylines.length();i++)
+                    {
+                        j=i+1;
+                     JSONObject c=  localitylines.getJSONObject(i);
 
-                        j = i + 1;
-                        JSONObject c = localitylines.getJSONObject(i);
-
-                        Integer id = c.getInt("id");
+                        // Integer id = c.getInt(TAG_ID);
                         String name_of_locality = c.getString("locality");
-                        String id_local = Integer.toString(id);
+
+                        Log.e("dhkajhdj",""+name_of_locality+"");
+
+                       locality_details_list[j]=name_of_locality;
+                       //String id_local = Integer.toString(id);
                         Log.e("dhkajhdj", "" + name_of_locality + "");
 
-                        locality_details_list[j][0] = name_of_locality;
-                        locality_details_list[j][1] = id_local;
+                        //locality_details_list[j][0] = name_of_locality;
+                        //locality_details_list[j][1] = id_local;
                     }
                 }
                     } catch (JSONException e1) {
@@ -122,7 +127,7 @@ public class Location_batches  {
         }
 
         @Override
-        protected void onPostExecute(String[][] result) {
+        protected void onPostExecute(String[] result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 
