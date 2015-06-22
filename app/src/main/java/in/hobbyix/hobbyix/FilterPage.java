@@ -267,10 +267,8 @@ public class FilterPage extends ActionBarActivity {
                         responseText.append("\n" + check.getName());
                     }
                 }
-<<<<<<< HEAD
-                Filter_page_backend.get_codes(subcategory,locality,l,k);
-=======
->>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
+
+               // Filter_page_backend.get_codes(subcategory,locality,l,k);
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();

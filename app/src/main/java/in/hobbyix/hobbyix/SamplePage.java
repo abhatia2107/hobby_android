@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,15 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-<<<<<<< HEAD
+
 
 import android.widget.EditText;
 
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-=======
->>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
+
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,12 +42,12 @@ public class SamplePage extends ActionBarActivity {
     private int month;
     private int day;
     static final int DATE_PICKER_ID = 1111;
-<<<<<<< HEAD
+
     String details[]= new String[100];
     String id;
     TextView basic_price,Institute_name,Institute_categories,Institute_Address,Institute__Address,Institute_Mobileno,Institute_timings,Institute_Location;
-=======
->>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
+    private TextView payment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class SamplePage extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-<<<<<<< HEAD
+
         payment=(TextView)findViewById(R.id.textView10);
         Institute_Address=(TextView)findViewById(R.id.HeaderInstituteAddress);
         Institute_categories=(TextView)findViewById(R.id.HeaderInstituteClassType);
@@ -68,8 +68,8 @@ public class SamplePage extends ActionBarActivity {
 
         basic_price=(TextView)findViewById(R.id.PricePerSessionTextView);
 
-        promo=(EditText)findViewById(R.id.editText);
-        total_amount=(TextView)findViewById(R.id.textView11);
+       /* promo=(EditText)findViewById(R.id.editText);
+        total_amount=(TextView)findViewById(R.id.textView11);*/
 
         spinner=(Spinner)findViewById(R.id.NumberOfSessionSpinner);
 
@@ -80,13 +80,12 @@ public class SamplePage extends ActionBarActivity {
         for(int i=0;i<14;i++)
             Log.e("op", "" + details[i]);
 
-=======
 
         spinner=(Spinner)findViewById(R.id.NumberOfSessionSpinner);
         adpter=ArrayAdapter.createFromResource(this,R.array.list_numbers,android.R.layout.simple_list_item_1);
         adpter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adpter);
->>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -109,7 +108,7 @@ public class SamplePage extends ActionBarActivity {
                 showDialog(DATE_PICKER_ID);
             }
         });
-<<<<<<< HEAD
+
 
 
         payment.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +137,7 @@ public class SamplePage extends ActionBarActivity {
 
 
 
-        Button proceedButton = (Button)findViewById(R.id.ProceedButton);
+       /* Button proceedButton = (Button)findViewById(R.id.ProceedButton);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +157,7 @@ public class SamplePage extends ActionBarActivity {
                 PaymentView.setVisibility(View.GONE);
 
             }
-        });
+        });*/
      /*   Bundle extras = getIntent().getExtras();
 =======
         proceedButton = (Button)findViewById(R.id.ProceedButton);
@@ -184,95 +183,87 @@ public class SamplePage extends ActionBarActivity {
         }*/
         set_everything(details);
     }
-    public void set_everything(String detail[])
-    {
+    public void set_everything(String detail[]) {
         Institute_name.setText(detail[0]);
         Institute_categories.setText(detail[1]);
         Institute_Address.setText(detail[2]);
         Institute__Address.setText(detail[2]);
-        basic_price.setText("Rs."+detail[6]);
+        basic_price.setText("Rs." + detail[6]);
         Institute_Location.setText(detail[4]);
         Institute_Mobileno.setText(detail[12]);
         Institute_timings.setText(detail[11]);
-
-
-=======
-        }
->>>>>>> e505c5ff76a83514ecedc0f2986a1d5936e9a959
     }
-    public void set_id()
-    {
-        Intent in=getIntent();
-        id=in.getExtras().getString("id");
+
+    public void set_id() {
+        Intent in = getIntent();
+        id = in.getExtras().getString("id");
     }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
-<<<<<<< HEAD
+
             case DATE_PICKER_ID:
-=======
-                case DATE_PICKER_ID:
-                // open datepicker dialog.
+                 // open datepicker dialog.
                 // set date picker for current date
                 // add pickerListener listner to date picker
-<<<<<<< HEAD
->>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
-=======
->>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
-                return new DatePickerDialog(this, pickerListener, year, month,day);
+
+                return new DatePickerDialog(this, pickerListener, year, month, day);
         }
-<<<<<<< HEAD
+
         return null;
     }
-    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
-=======
-        private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
-         // when dialog box is closed, below method will be called.
-<<<<<<< HEAD
->>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
-=======
->>>>>>> parent of 83c57a3... VISIBILITY = VISIBLE AND VISIBILITY = GONE MADE SAMPLE PAGE MODIFIED
-        @Override
-        public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-            Output.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
-        }
-    };
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_fitness_classes, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.action_login:
-                Intent LoginIntent = new Intent(this, LoginActivity.class);
-                this.startActivity(LoginIntent);
-                break;
-            case R.id.MyProfile:
-                Intent MyProfileIntent = new Intent(this, MyProfile.class);
-                this.startActivity(MyProfileIntent);
-                break;
-            case R.id.ChangePassword:
-                Intent ChangePasswordIntent = new Intent(this, ChangePassword.class);
-                this.startActivity(ChangePasswordIntent);
-                break;
-            case R.id.MyOrders:
-                Intent MyOrdersIntent = new Intent(this, MyOrders.class);
-                this.startActivity(MyOrdersIntent);
-                break;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+
+
+        private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+            // when dialog box is closed, below method will be called.
+
+            @Override
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                year = selectedYear;
+                month = selectedMonth;
+                day = selectedDay;
+                Output.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
+            }
+
+
+
+    };
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu items for use in the action bar
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_fitness_classes, menu);
+            return super.onCreateOptionsMenu(menu);
         }
-        return true;
-    }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_login:
+                    Intent LoginIntent = new Intent(this, LoginActivity.class);
+                    this.startActivity(LoginIntent);
+                    break;
+                case R.id.MyProfile:
+                    Intent MyProfileIntent = new Intent(this, MyProfile.class);
+                    this.startActivity(MyProfileIntent);
+                    break;
+                case R.id.ChangePassword:
+                    Intent ChangePasswordIntent = new Intent(this, ChangePassword.class);
+                    this.startActivity(ChangePasswordIntent);
+                    break;
+                case R.id.MyOrders:
+                    Intent MyOrdersIntent = new Intent(this, MyOrders.class);
+                    this.startActivity(MyOrdersIntent);
+                    break;
+                case android.R.id.home:
+                    this.finish();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+            return true;
+        }
+
 }
