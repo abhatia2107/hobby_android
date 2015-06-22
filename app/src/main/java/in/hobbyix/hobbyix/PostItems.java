@@ -7,7 +7,17 @@ public class PostItems{
     private String Timings;
     private String Fees;
     private String BookNow;
-    public PostItems(){
+    private String Credit;
+    private  String Id;
+    public PostItems(String name,String classtype,String address,String fees,String timings,String credit,String booknow,String id){
+        BookNow=booknow;
+        Name=name;
+        ClassType=classtype;
+        Address=address;
+        Fees=fees;
+        Timings=timings;
+        Credit=credit;
+        Id=id;
 
     }
 
@@ -15,47 +25,41 @@ public class PostItems{
         return BookNow;
     }
 
-    public void setBookNow(String bookNow) {
-        BookNow = bookNow;
-    }
+
     public String getName() {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
+
 
     public String getClassType() {
         return ClassType;
     }
 
-    public void setClassType(String classType) {
-        ClassType = classType;
-    }
+
 
     public String getAddress() {
         return Address;
     }
 
-    public void setAddress(String address) {
-        Address = address;
-    }
+
 
     public String getTimings() {
         return Timings;
     }
-
-    public void setTimings(String timings) {
-        Timings = timings;
+    public String getId() {
+        return Id;
     }
+
+
 
     public String getFees() {
         return Fees;
     }
-
-    public void setFees(String fees) {
-        Fees = fees;
+    public String getCredit() {
+        return Credit;
     }
+
+
 
 }

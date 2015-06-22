@@ -1,7 +1,10 @@
 package in.hobbyix.hobbyix;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
@@ -26,7 +29,7 @@ import java.util.List;
  * Created by Diks on 6/19/2015.
  */
 
-public class Search_Backend {
+public class Search_Backend  {
 
         //the progessdialog for progress bar
         private ProgressDialog pDialog;
@@ -50,11 +53,20 @@ public class Search_Backend {
         ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
         //JSONArray(inbuilt) to extract the JSONArray
         static JSONArray guidelines = null;
-        static String[][] institute_list=new String[100][100];
+       static   String[][] institute_list=new String[100][100];
+   /* protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent i=getIntent();
+        get_keyword=  i.getExtras().getString("guidelist");
+        institute_list=store_details();
+        set_all_details(institute_list);
 
-        public static String[][] store_details() {
 
-            String[][] aResultM = new String[0][];
+    }*/
+        public static String[][] store_details(String x) {
+            get_keyword=x;
+
+            String[][] aResultM = new String[100][100];
             try {
                 String params = null;
                 Load_Filter_Details task = new Load_Filter_Details();
@@ -67,20 +79,32 @@ public class Search_Backend {
             return aResultM;
 
         }
-    public static void get_search(String query) {
-        get_keyword=query;
-        store_details();
 
-    }
+    /*public  void set_all_details(String[][]institute)
+    {
+        int j;
+       for(int i=0;i<Integer.valueOf(institute[0][0]);i++) {
+           j=i+1;
+           HashMap<String, String> map = new HashMap<String, String>();
+           map.put(TAG_INSTITUTE, institute[j][0]);
+           map.put("batch_category",institute[j][1] );
+           map.put("venue_address", institute[j][2]);
+           map.put("batch_price", institute[j][3]);
+           map.put("batch_comment", institute[j][4]);
+           map.put("id", institute[j][5]);
+           //map.put(schedule_start_time, schedule_start_time);
+           //map.put(schedule_end_time, schedule_end_time);
 
-        public static void get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
-        {
-            subcategory_filter=subcategory;
-            locality_filter=locality;
-            sub_length=size_of_subcategory;
-            local_length=size_of_locality;
-            String x[][]=store_details();
-        }
+           guidelist.add(map);
+       }
+        Intent in = new Intent(getApplicationContext(),MainActivity.class);
+        in.putExtra("guidelist",guidelist);
+        in.putExtra("length",institute[0][0]);
+        finish();
+        startActivity(in);
+
+    }*/
+
 
 
         static class Load_Filter_Details extends AsyncTask<String, String,String[][]> {
@@ -118,6 +142,7 @@ public class Search_Backend {
                         int k=0;
                         int j;
                         guidelines = json.getJSONArray("institute");
+                        institute_list[0][0]=Integer.toString(guidelines.length());
                         for (int i = 0; i < guidelines.length(); i++) {
                             k=0;
                             j=i+1;
@@ -141,7 +166,8 @@ public class Search_Backend {
                             String batch_air_conditioning=air_conditioning.toString();
                             String batch_cafe=cafe.toString();
                             String batch_changing_room =changing_room.toString();
-
+                            String batch_comment=c.getString("batch_comment");
+                            String id=c.getString("id");
                             // String schedule_start_time = c.getString("schedule_start_time");
 
                             // String schedule_end_time = c.getString("schedule_end_time");
@@ -152,7 +178,14 @@ public class Search_Backend {
                             k++;
                             institute_list[j][k]=venue_address;
                             k++;
-                            institute_list[j][k]=venue_landmark;
+                            institute_list[j][k]=batch_price;
+                            k++;
+                            institute_list[j][k]=batch_comment;
+                            k++;
+                            institute_list[j][k]=id;
+                            k++;
+
+                           /* institute_list[j][k]=venue_landmark;
                             k++;
                             institute_list[j][k]=locality;
                             k++;
@@ -171,29 +204,15 @@ public class Search_Backend {
                             institute_list[j][k]=c.getString("batch_tagline");
                             k++;
                             institute_list[j][k]=c.getString("venue_contact_no");
-                            k++;
+                            k++;*/
 
-                       /* HashMap<String, String> map = new HashMap<String, String>();
-                        map.put(TAG_INSTITUTE, name_of_institute);
 
-                        map.put("batch_category", batch_category);
-                        map.put("venue_address", venue_address);
-                        map.put("batch_price", batch_price);*/
-                            //map.put(schedule_start_time, schedule_start_time);
-                            //map.put(schedule_end_time, schedule_end_time);
-
-                            // guidelist.add(map);
                         }
-                        // Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                        //in.putExtra("guidelist",guidelist);
-                        //startActivity(in);
+                        //tore_all_details();
 
                     } else {
                         Log.v("tush", "success was 0");
-                        //Intent in = new Intent(getApplicationContext(),SQLtry.class);
-                        //in.putExtra("guidelist",guidelist);
-                        //finish();
-                        //startActivity(in);
+
                     }
 
                 } catch (JSONException e) {
@@ -202,6 +221,9 @@ public class Search_Backend {
 
                 return institute_list;
             }
+
+
+
 
             @Override
             protected void onPostExecute(String[][] result) {

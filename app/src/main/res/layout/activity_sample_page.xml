@@ -385,7 +385,7 @@
                         android:layout_marginLeft="6dp"
                         android:layout_below="@+id/View5"
                         android:padding="5dp"
-                        android:id="@+id/InstituteAddressDetail"/>
+                        android:id="@+id/InstituteAddressDetails"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>

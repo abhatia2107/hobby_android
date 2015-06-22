@@ -16,12 +16,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-<<<<<<< HEAD
+
 import android.widget.EditText;
-=======
+
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
->>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
+
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.Calendar;
@@ -42,6 +42,7 @@ public class SamplePage extends ActionBarActivity {
     String no_of_sessions;
     static final int DATE_PICKER_ID = 1111;
     String details[]= new String[100];
+    String id;
     TextView basic_price,Institute_name,Institute_categories,Institute_Address,Institute__Address,Institute_Mobileno,Institute_timings,Institute_Location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,26 +52,26 @@ public class SamplePage extends ActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         payment=(TextView)findViewById(R.id.textView10);
-        Institute_Address=(TextView)findViewById(R.id.InstituteAddressHeader);
-        Institute_categories=(TextView)findViewById(R.id.InstituteClassType);
-        Institute_name=(TextView)findViewById(R.id.InstituteName);
-        Institute__Address=(TextView)findViewById(R.id.InstituteAddress);
-        Institute_Location=(TextView)findViewById(R.id.LocationTextView);
-        Institute_Mobileno=(TextView)findViewById(R.id.InstituteMobileNumberText);
-        Institute_timings=(TextView)findViewById(R.id.textView);
+        Institute_Address=(TextView)findViewById(R.id.HeaderInstituteAddress);
+        Institute_categories=(TextView)findViewById(R.id.HeaderInstituteClassType);
+        Institute_name=(TextView)findViewById(R.id.HeaderInstituteName);
+        Institute__Address=(TextView)findViewById(R.id.InstituteAddressDetail);
+        Institute_Location=(TextView)findViewById(R.id.InstituteAddressDetails);
+        Institute_Mobileno=(TextView)findViewById(R.id.InstituteContactNumberDetails);
+        Institute_timings=(TextView)findViewById(R.id.InstituteTimingsDetail);
+        set_id();
 
-<<<<<<< HEAD
-        basic_price=(TextView)findViewById(R.id.textView10);
-        spinner=(Spinner)findViewById(R.id.spinner);
+        basic_price=(TextView)findViewById(R.id.PricePerSessionTextView);
+
         promo=(EditText)findViewById(R.id.editText);
         total_amount=(TextView)findViewById(R.id.textView11);
-=======
+
         spinner=(Spinner)findViewById(R.id.NumberOfSessionSpinner);
->>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
+
         adpter=ArrayAdapter.createFromResource(this,R.array.list_numbers,android.R.layout.simple_list_item_1);
         adpter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adpter);
-      details= Smple_page_backend.store_details();
+      details= Smple_page_backend.store_details(id);
         for(int i=0;i<14;i++)
             Log.e("op", "" + details[i]);
 
@@ -95,7 +96,7 @@ public class SamplePage extends ActionBarActivity {
 
             }
         });
-<<<<<<< HEAD
+
 
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,15 +121,9 @@ public class SamplePage extends ActionBarActivity {
 
         }*/
 
-        proceedButton = (Button)findViewById(R.id.ProceedButton);
-        proceedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                booking_date=Output.getText().toString();
-                no_of_sessions = spinner.getSelectedItem().toString();
-                Intent PaymentIntent = new Intent(v.getContext(), PaymentPage.class);
-                startActivity(PaymentIntent);
-=======
+
+
+
         Button proceedButton = (Button)findViewById(R.id.ProceedButton);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +142,7 @@ public class SamplePage extends ActionBarActivity {
                 BookingView.setVisibility(View.VISIBLE);
                 LinearLayout PaymentView  = (LinearLayout)findViewById(R.id.PaymentView);
                 PaymentView.setVisibility(View.GONE);
->>>>>>> 83c57a36168a6c3a8b46b8ee24d5645aa4e7428a
+
             }
         });
      /*   Bundle extras = getIntent().getExtras();
@@ -169,12 +164,17 @@ public class SamplePage extends ActionBarActivity {
         Institute_categories.setText(detail[1]);
         Institute_Address.setText(detail[2]);
         Institute__Address.setText(detail[2]);
-        basic_price.setText("Rs."+detail[3]);
+        basic_price.setText("Rs."+detail[6]);
         Institute_Location.setText(detail[4]);
-        Institute_Mobileno.setText(detail[13]);
-        Institute_timings.setText(detail[12]);
+        Institute_Mobileno.setText(detail[12]);
+        Institute_timings.setText(detail[11]);
 
 
+    }
+    public void set_id()
+    {
+        Intent in=getIntent();
+        id=in.getExtras().getString("id");
     }
     @Override
     protected Dialog onCreateDialog(int id) {

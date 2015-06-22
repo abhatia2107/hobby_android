@@ -277,11 +277,15 @@ int l=k;
                         k++;
                     }
                 }
-                MainActivity.get_codes(subcategory,locality,l,k);
+                Filter_page_backend.get_codes(subcategory,locality,l,k);
 
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
-                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+                Intent OpenLogin = new Intent(v.getContext(), Filter_page_backend.class);
+                OpenLogin.putExtra("subcategory",subcategory);
+                OpenLogin.putExtra("locality",locality);
+                OpenLogin.putExtra("length_subcategory",subcategory);
+                OpenLogin.putExtra("length_localities",subcategory);
 
                 startActivityForResult(OpenLogin, 0);
 

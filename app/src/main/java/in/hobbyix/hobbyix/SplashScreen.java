@@ -18,7 +18,7 @@ public class SplashScreen extends Activity {
                     e.printStackTrace();
                 }
                 finally {
-                    Intent openTermsCondition = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent openTermsCondition = new Intent(getApplicationContext(),Institute_Details.class);
                     startActivity(openTermsCondition);
                     finish();
                 }

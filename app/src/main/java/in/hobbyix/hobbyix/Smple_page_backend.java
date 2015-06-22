@@ -3,6 +3,7 @@ package in.hobbyix.hobbyix;
 /**
  * Created by Diks on 6/19/2015.
  */
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,12 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class Smple_page_backend {
+public class Smple_page_backend  {
 
     //the progessdialog for progress bar
     private ProgressDialog pDialog;
     //url to get required guidelines
-    private static String url_for_sample_page = "http://hobbyix.com/json/batches/show/2";
+    private static String url_for_sample_page = "http://hobbyix.com/json/batches/show";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_INSTITUTE = "institute";
@@ -38,13 +39,14 @@ public class Smple_page_backend {
     //button to start the syncing of databases
     Button btn;
     // ArrayList of HashMaps to store the JSONArray of mapped values
-
+    static String id1;
     ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
     //JSONArray(inbuilt) to extract the JSONArray
     static JSONArray guidelines = null;
     static String[] institute_list=new String[100];
 
-    public static String[] store_details() {
+    public static String[] store_details( String id) {
+        id1=id;
 
         String[] aResultM = new String[100];
         try {
@@ -59,6 +61,7 @@ public class Smple_page_backend {
         return aResultM;
 
     }
+
    /* public static void get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
     {
         subcategory_filter=subcategory;
@@ -125,10 +128,10 @@ public class Smple_page_backend {
                 }
             }
 */
-
+           String url_for_sample_page1 =url_for_sample_page+"/"+id1;
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
 
-            JSONObject json = jparser.makeHttpRequest(url_for_sample_page, "GET", params);
+            JSONObject json = jparser.makeHttpRequest(url_for_sample_page1, "GET", params);
             if (json == null) {
                 message = "No internet connection... please try later";
                 Log.v("tushita", "The Json Object was Null");
@@ -189,11 +192,11 @@ public class Smple_page_backend {
                     k++;
                     institute_list[k]=batch_changing_room;
                     k++;
-                    institute_list[k]=c.getString("batch_tagline");
+                    institute_list[k]=c.getString("batch_comment");
                     k++;
                     institute_list[k]=c.getString("venue_contact_no");
                     k++;
-
+                        Log.e("sjfhjskd",institute_list[12]);
                        /* HashMap<String, String> map = new HashMap<String, String>();
                         map.put(TAG_INSTITUTE, name_of_institute);
 
