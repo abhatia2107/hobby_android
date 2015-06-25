@@ -27,21 +27,21 @@ public class Location_batches  {
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_LOCALITY = "localities";
-
-    String message = null;
+       static int length;
+    static String message = null;
     //object for JSONParser class
-    JSONParser jparser = new JSONParser();
+    static JSONParser jparser = new JSONParser();
     //button to start the syncing of databases
     Button btn;
     // ArrayList of HashMaps to store the JSONArray of mapped values
-    ArrayList<HashMap<String,String>> localitylist;
+    static ArrayList<HashMap<String,String>> guidelist=new ArrayList<HashMap<String, String>>();
     //JSONArray(inbuilt) to extract the JSONArray
-    JSONArray localitylines = null;
+    static JSONArray localitylines = null;
     TextView institute_name;
     //-----------------------------------------------------------------------------------------------------------------------//
-    public String[] store_details_of_locality() {
+    public static ArrayList<HashMap<String, String>>  store_details_of_locality() {
 
-        String[] aResultM = new String[30];
+        ArrayList<HashMap<String, String>>  aResultM = new ArrayList<HashMap<String, String>>();
         try {
             String params = null;
             LoadAllLOCALITY task = new LoadAllLOCALITY();
@@ -57,7 +57,7 @@ public class Location_batches  {
 
 
     //======================================================Class LoadAllGuidelines==============================================//
-    class LoadAllLOCALITY extends AsyncTask<String, String, String[]> {
+    static class LoadAllLOCALITY extends AsyncTask<String, String, ArrayList<HashMap<String, String>> > {
 
 
         @Override
@@ -72,7 +72,7 @@ public class Location_batches  {
 
         }
         @Override
-        protected String[] doInBackground(String... arg0) {
+        protected ArrayList<HashMap<String, String>>  doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
                  String locality_details_list[] = new String[0];
@@ -94,7 +94,7 @@ public class Location_batches  {
 
                     localitylines =  json.getJSONArray(TAG_LOCALITY );
                     locality_details_list=new String[localitylines.length()+1];
-                    Log.e("jjkfdsffffkkk",localitylines.length()+"");
+                    length=localitylines.length();
                    int j;
                     locality_details_list[0]=Integer.toString(localitylines.length());
                     for(int i=0;i<localitylines.length();i++)
@@ -105,11 +105,15 @@ public class Location_batches  {
                         // Integer id = c.getInt(TAG_ID);
                         String name_of_locality = c.getString("locality");
 
-                        Log.e("dhkajhdj",""+name_of_locality+"");
+                        String id=c.getString("id");
 
-                       locality_details_list[j]=name_of_locality;
-                       //String id_local = Integer.toString(id);
-                        Log.e("dhkajhdj", "" + name_of_locality + "");
+
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("locality", name_of_locality);
+                        map.put("id",id );
+                        guidelist.add(map);
+
+
 
                         //locality_details_list[j][0] = name_of_locality;
                         //locality_details_list[j][1] = id_local;
@@ -123,11 +127,11 @@ public class Location_batches  {
                     //startActivity(in);
 
 
-            return locality_details_list;
+            return guidelist;
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(ArrayList<HashMap<String, String>>  result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
 

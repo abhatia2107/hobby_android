@@ -33,9 +33,10 @@ public class MainActivity extends ActionBarActivity  {
 PostItemListAdapter adapter;
   int length;
     int used;
-      String details[][] =new String[100][100];
+      String details[] =new String[10000];
     private List<PostItems> PostItemsList = new ArrayList<PostItems>();
     ListView postlist;
+    int k;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,9 @@ PostItemListAdapter adapter;
 
             if (length>10){
                 for (i = used; i < used + 10; i++) {
-                    PostItemsList.add(new PostItems(details[i][1], details[i][2], details[i][3], details[1][4], details[i][5], "Credit", "Book Now",details[i][0]));
+                    PostItemsList.add(new PostItems(details[k+1], details[k+2], details[k+3], details[k+4], details[k+5], "Credit", "Book Now",details[k]));
+                    // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                    k=k+6;
                     // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
                 }
                 length=length-10;
@@ -73,8 +76,9 @@ PostItemListAdapter adapter;
             } else {
                 if (length  > 0 && length <= 10) {
                     for (i = used; i <  length+used; i++) {
-                        PostItemsList.add(new PostItems(details[i][1], details[i][2], details[i][3], details[1][4], details[i][5], "Credit", "Book Now",details[i][0]));
+                        PostItemsList.add(new PostItems(details[k+1], details[k+2], details[k+3], details[k+4], details[k+5], "Credit", "Book Now",details[k]));
                         // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                        k=k+6;
                     }
                     used=used+length;
                     length=0;
@@ -99,45 +103,55 @@ PostItemListAdapter adapter;
 
         Log.e("dskjfhds"," "+length);
         HashMap<String, String>[] mylist;
-        int i=0;
+        int i=0,k=0;
         int j;
-        for(HashMap<String, String> map: arl) {
+        if(length==0){
+            PostItemsList.add(new PostItems("no such value for this combination","","","","", "", "",""));
 
-            j=0;
-            for(Map.Entry<String, String> mapEntry: map.entrySet()) {
-                String key = mapEntry.getKey();
-                String value = mapEntry.getValue();
-                details[i][j]=mapEntry.getValue();
-                Log.e("kjdf","   "+details[i][j]+"     "+value+"    "+i+"   "+j   );
-                j++;
-
-            }
-            i++;
         }
-        used=0;
-        if(length>10) {
-            for (i = 0; i < 10; i++) {
-                PostItemsList.add(new PostItems(details[i][1], details[i][2], details[i][3], details[1][4], details[i][5], "Credit", "Book Now",details[i][0]));
-                // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
-            }
+        else {
 
-            used=10;
+            for (HashMap<String, String> map : arl) {
 
-            length=length-10;
-            Log.e("dkjfjds","  "+length+ "   "+used);
-        }
-        else
-        {
-            if(length>0&&length<=10) {
-                for (i = 0; i < length; i++) {
-                    PostItemsList.add(new PostItems(details[i][1], details[i][2], details[i][3], details[1][4], details[i][5], "Credit", "Book Now",details[i][0]));
-                    // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                    String key = mapEntry.getKey();
+                    //key=
+                    String value = mapEntry.getValue();
+                    details[k] = value;
+                    Log.e("kjdf", "   " + key + "     " + value + "    " + i + "   " + details[k]);
+
+                    k++;
                 }
-                used=length;
-                length=0;
 
             }
+            k = 0;
+            used = 0;
+            if (length > 10) {
+                for (i = 0; i < 10; i++) {
+                    PostItemsList.add(new PostItems(details[k + 1], details[k + 2], details[k + 3], details[k + 4], details[k + 5], "Credit", "Book Now", details[k]));
+                    // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                    k = k + 6;
+                }
 
+                used = 10;
+
+                length = length - 10;
+                Log.e("dkjfjds", "  " + length + "   " + used);
+            } else {
+                if (length > 0 && length <= 10) {
+                    for (i = 0; i < length; i++) {
+                        PostItemsList.add(new PostItems(details[k + 1], details[k + 2], details[k + 3], details[k + 4], details[k + 5], "Credit", "Book Now", details[k]));
+                        // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                        k = k + 6;
+
+                        // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                    }
+                    used = length;
+                    length = 0;
+
+                }
+
+            }
         }
     }
 

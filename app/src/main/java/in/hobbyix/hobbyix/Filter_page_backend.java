@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -27,7 +28,7 @@ public class Filter_page_backend extends Activity {
     //the progessdialog for progress bar
     private ProgressDialog pDialog;
     //url to get required guidelines
-    private static String url_for_institute = "http://192.168.137.1/Hobbyix/filter.php";
+    private static String url_for_institute = "http://hobbyix.com/json/filter";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_INSTITUTE = "institute";
@@ -38,25 +39,26 @@ public class Filter_page_backend extends Activity {
     static String message = null;
     //object for JSONParser class
     static JSONParser jparser = new JSONParser();
+    static int length;
     //button to start the syncing of databases
     Button btn;
     // ArrayList of HashMaps to store the JSONArray of mapped values
 
-    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
+    static ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
     //JSONArray(inbuilt) to extract the JSONArray
     static JSONArray guidelines = null;
     static String[][] institute_list=new String[100][100];
-    protected void onCreate(Bundle savedInstanceState) {
+   /* protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         institute_list=store_details();
         set_all_details();
 
 
-    }
+    }*/
 
-    public static String[][] store_details() {
+    public static    ArrayList<HashMap<String, String>> store_details() {
 
-        String[][] aResultM = new String[0][];
+        ArrayList<HashMap<String, String>> aResultM = new    ArrayList<HashMap<String, String>>();
         try {
             String params = null;
             Load_Filter_Details task = new Load_Filter_Details();
@@ -69,7 +71,7 @@ public class Filter_page_backend extends Activity {
         return aResultM;
 
     }
-    public  void set_all_details()
+    /*public  void set_all_details()
     {
         int j;
         for(int i=0;i<Integer.valueOf(institute_list[0][0]);i++) {
@@ -92,18 +94,20 @@ public class Filter_page_backend extends Activity {
         finish();
         startActivity(in);
 
-    }
-    public static void get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
+    }*/
+    public static    ArrayList<HashMap<String, String>> get_codes(String subcategory[], String locality[], int size_of_subcategory, int size_of_locality)
     {
         subcategory_filter=subcategory;
         locality_filter=locality;
         sub_length=size_of_subcategory;
         local_length=size_of_locality;
-        String x[][]=store_details();
+        ArrayList<HashMap<String, String>> x=store_details();
+        return x;
+
     }
 
 
-    static class Load_Filter_Details extends AsyncTask<String, String,String[][]> {
+    static class Load_Filter_Details extends AsyncTask<String, String,   ArrayList<HashMap<String, String>>> {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -112,8 +116,8 @@ public class Filter_page_backend extends Activity {
         }
 
         @Override
-        protected String[][] doInBackground(String... arg0) {
-
+        protected    ArrayList<HashMap<String, String>> doInBackground(String... arg0) {
+                   String url_end=null;
             // TODO Auto-generated method stub
             JSONArray jArr1= new JSONArray();
      for(int i=0;i<sub_length;i++){
@@ -126,43 +130,71 @@ public class Filter_page_backend extends Activity {
           Log.e("dkfklkfslk",locality_filter[i]+"");
               jArr2.put(locality_filter[i]);}
 
-
+           String url_for_sub,url_for_loc;
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            if(sub_length==0&&local_length>0)
+           if(sub_length>0&&local_length>0)
             {
-                params.add(new BasicNameValuePair("subcategories",""));
-                params.add(new BasicNameValuePair("locality",jArr2.toString()));
+         url_for_sub=url_for_institute+"/";
+                for(int i=0;i<sub_length;i++) {
+                    if(i<sub_length-1)
+                    url_for_sub=url_for_sub+subcategory_filter[i]+",";
+                    else
+                        url_for_sub=url_for_sub+subcategory_filter[i];
+                }
+                url_for_sub=url_for_sub+"/";
+                url_for_loc=url_for_sub;
+                for(int i=0;i<local_length;i++) {
+                    if(i<local_length-1)
+                    url_for_loc=url_for_loc+locality_filter[i]+",";
+                    else
+                        url_for_loc=url_for_loc+subcategory_filter[i];
+                }
 
 
+       url_end=url_for_loc+"/1/1";
             }
             else
             {
                 if(local_length==0&&sub_length>0)
                 {
-                    params.add(new BasicNameValuePair("subcategories",jArr1.toString()));
-
-                    params.add(new BasicNameValuePair("locality",""));
-
+                    url_for_sub=url_for_institute+"/subcategory/";
+                    Log.e("dfhjkdhfdhfkfhdjghfjgf", ""+url_for_sub);
+                    for(int i=0;i<sub_length;i++) {
+                        if(i<sub_length-1)
+                            url_for_sub=url_for_sub+subcategory_filter[i]+",";
+                        else
+                            url_for_sub=url_for_sub+subcategory_filter[i];
+                    }
+                    url_end=url_for_sub;
                 }
                 else
                 {
-                    if(local_length>0&&sub_length>0)
+                    if(local_length>0&&sub_length==0)
                     {
-                        params.add(new BasicNameValuePair("subcategories",jArr1.toString()));
+                        url_for_loc=url_for_institute+"/locality/";
+                        for(int i=0;i<local_length;i++) {
+                            if(i<local_length-1)
+                                url_for_loc=url_for_loc+locality_filter[i]+",";
+                            else
+                                url_for_loc=url_for_loc+subcategory_filter[i];
+                        }
+                        url_end=url_for_loc;
 
-                        params.add(new BasicNameValuePair("locality",jArr2.toString()));
                     }
                     else
                     {
-
+                       /* Toast.makeText(getApplicationContext(), responseText,
+                                Toast.LENGTH_LONG).show();*/
                     }
                 }
             }
 
 
             Log.v("tushita", "The Json Object was Nukjcxvxcjvkcxvkcvll");
+         //   for(i=0;i<sub_length)
 
-            JSONObject json = jparser.makeHttpRequest(url_for_institute, "POST", params);
+                       Log.e("dfj",url_end+" ");
+            JSONObject json = jparser.makeHttpRequest(url_end, "GET", params);
             if (json == null) {
                 message = "No internet connection... please try later";
                 Log.v("tushita", "The Json Object was Null");
@@ -172,44 +204,54 @@ public class Filter_page_backend extends Activity {
                 int success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     int k=0;
-                    guidelines = json.getJSONArray("institutes");
-                    for (int i = 0; i < guidelines.length(); i++) {
-                        k=0;
-                        JSONObject c = guidelines.getJSONObject(i);
-                        // Integer id = c.getInt(TAG_ID);
-                        String name_of_institute = c.getString(TAG_INSTITUTE);
-                        String batch_category = c.getString("batch_category");
-                        String venue_address = c.getString("venue_address");
-                        Integer price = c.getInt("batch_single_price");
-                        String batch_comment = c.getString("batch_comment");
-                        String batch_price=price.toString();
-                        // String schedule_start_time = c.getString("schedule_start_time");
+                    guidelines = json.getJSONArray("institute");
 
-                        // String schedule_end_time = c.getString("schedule_end_time");
-                        Log.e("dhkajhdj", "" + name_of_institute + "");
+                    length=guidelines.length();
+                    if(guidelines.length()==0)
+                    {
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put(TAG_INSTITUTE, "no such institute");
+                        guidelist.add(map);
+                       /* map.put("batch_category","no such category");
+                        map.put("venue_address", "no valuw for addres");
+                        map.put("batch_price", batch_price);
+                        map.put("batch_comment", batch_comment);
+                        map.put("id", id);*/
 
-                        institute_list[i][k]=name_of_institute;
-                        k++;
-                        institute_list[i][k]=batch_category;
-                        k++;
-                        institute_list[i][k]=venue_address;
-                        k++;
-                        institute_list[i][k]=batch_price;
-                        k++;
-                        institute_list[i][k]=batch_comment;
-                        k++;
+                    }
+                    else {
+                        Log.e("length", ""+length);
+                        for (int i = 0; i < guidelines.length(); i++) {
+                            k = 0;
+                            JSONObject c = guidelines.getJSONObject(i);
+
+                            String name_of_institute = c.getString(TAG_INSTITUTE);
+                            String batch_category = c.getString("subcategory");
+                            String venue_address = c.getString("venue_address");
+                            String batch_comment = c.getString("batch_comment");
+                            Integer price = c.getInt("batch_single_price");
+                            String batch_price = price.toString();
+                            String id = c.getString("id");
+
+                            Log.e("dhkajhdj", "" + name_of_institute + "");
 
 
-                       /* HashMap<String, String> map = new HashMap<String, String>();
-                        map.put(TAG_INSTITUTE, name_of_institute);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put(TAG_INSTITUTE, name_of_institute);
+                            map.put("batch_category", batch_category);
+                            map.put("venue_address", venue_address);
+                            map.put("batch_price", batch_price);
+                            map.put("batch_comment", batch_comment);
+                            map.put("id", id);
 
-                        map.put("batch_category", batch_category);
-                        map.put("venue_address", venue_address);
-                        map.put("batch_price", batch_price);*/
-                        //map.put(schedule_start_time, schedule_start_time);
-                        //map.put(schedule_end_time, schedule_end_time);
 
-                        // guidelist.add(map);
+                            //map.put(schedule_start_time, schedule_start_time);
+                            //map.put(schedule_end_time, schedule_end_time);
+
+                            guidelist.add(map);
+
+
+                        }
                     }
                     // Intent in = new Intent(getApplicationContext(),SQLtry.class);
                     //in.putExtra("guidelist",guidelist);
@@ -227,11 +269,11 @@ public class Filter_page_backend extends Activity {
                 e.printStackTrace();
             }
 
-            return institute_list;
+            return guidelist;
         }
 
         @Override
-        protected void onPostExecute(String[][] result) {
+        protected void onPostExecute(   ArrayList<HashMap<String, String>> result) {
             // TODO Auto-generated method stub
 
             // new MainActivity().populatePostList(result);

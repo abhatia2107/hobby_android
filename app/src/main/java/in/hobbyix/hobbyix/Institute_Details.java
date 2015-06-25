@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Institute_Details extends Activity {
@@ -38,17 +39,18 @@ public class Institute_Details extends Activity {
     ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
     //JSONArray(inbuilt) to extract the JSONArray
     JSONArray guidelines = null;
+    String length;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        institute_list=store_details();
-        set_all_details(institute_list);
+        guidelist=store_details();
+        set_all_details(guidelist);
 
 
     }
-    public String[][] store_details() {
+    public ArrayList<HashMap<String,String>> store_details() {
 
-        String[][] aResultM = new String[0][];
+        ArrayList<HashMap<String,String>> aResultM = new ArrayList<HashMap<String,String>>();
         try {
             String params = null;
             Load_Institiute_Details task = new Load_Institiute_Details();
@@ -63,34 +65,31 @@ public class Institute_Details extends Activity {
     }
 
 
-    public  void set_all_details(String institute[][])
+    public  void set_all_details(ArrayList<HashMap<String,String>> guidelist)
     {
-        int j;
-        for(int i=0;i<Integer.valueOf(institute[0][0]);i++) {
-            j=i+1;
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put(TAG_INSTITUTE, institute[j][0]);
-            map.put("batch_category",institute[j][1] );
-            map.put("venue_address", institute[j][2]);
-            map.put("batch_price", institute[j][3]);
-            map.put("batch_comment", institute[j][4]);
-            map.put("id", institute[j][5]);
-             Log.e("ewrwe",""+institute[j][0]+""+institute[j][5]+""+institute[j][2]);
 
-            //map.put(schedule_start_time, schedule_start_time);
-            //map.put(schedule_end_time, schedule_end_time);
-
-            guidelist.add(map);
-        }
 
         Intent in = new Intent(getApplicationContext(),MainActivity.class);
+        for(HashMap<String, String> map: guidelist) {
+           // j=0;
+            for(Map.Entry<String, String> mapEntry: map.entrySet()) {
+                String key = mapEntry.getKey();
+                //key=
+                String value = mapEntry.getValue();
+               // details[i][j]=mapEntry.getValue();
+                Log.e("kjdf","   "+key+"     "+value+"    "   );
+                //j++;
+
+            }
+            //i++;
+        }
         in.putExtra("guidelist",guidelist);
-        in.putExtra("length",institute[0][0]);
+        in.putExtra("length",length);
         finish();
         startActivity(in);
 
     }
-    class Load_Institiute_Details extends AsyncTask<String, String,String[][]> {
+    class Load_Institiute_Details extends AsyncTask<String, String, ArrayList<HashMap<String, String>>> {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -99,7 +98,7 @@ public class Institute_Details extends Activity {
         }
 
         @Override
-        public String[][] doInBackground(String... arg0) {
+        public ArrayList<HashMap<String, String>> doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -117,7 +116,7 @@ public class Institute_Details extends Activity {
                     guidelines = json.getJSONArray("institute");
                     int k;
                     int j=0;
-                    institute_list[0][0]=Integer.toString(guidelines.length());
+                    length=Integer.toString(guidelines.length());
                     for (int i = 0; i < guidelines.length(); i++) {
                         k=0;
                         j=i+1;
@@ -134,7 +133,7 @@ public class Institute_Details extends Activity {
 
                        // String schedule_end_time = c.getString("schedule_end_time");
                         Log.e("dhkajhdj", "" + name_of_institute + "");
-                       institute_list[j][k]=name_of_institute;
+                       /*institute_list[j][k]=name_of_institute;
                         k++;
                         institute_list[j][k]=batch_category;
                         k++;
@@ -145,7 +144,7 @@ public class Institute_Details extends Activity {
                         institute_list[j][k]=batch_comment;
                         k++;
                         institute_list[j][k]=id;
-                        k++;
+                        k++;*/
 
                        /* HashMap<String, String> map = new HashMap<String, String>();
                         map.put(TAG_INSTITUTE, name_of_institute);
@@ -157,6 +156,19 @@ public class Institute_Details extends Activity {
                         //map.put(schedule_end_time, schedule_end_time);
 
                        // guidelist.add(map);
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put(TAG_INSTITUTE, name_of_institute);
+                        map.put("batch_category",batch_category );
+                        map.put("venue_address", venue_address);
+                        map.put("batch_price", batch_price);
+                        map.put("batch_comment", batch_comment);
+                        map.put("id", id);
+
+
+                        //map.put(schedule_start_time, schedule_start_time);
+                        //map.put(schedule_end_time, schedule_end_time);
+
+                        guidelist.add(map);
                     }
                     //  Intent in = new Intent(getApplicationContext(),SQLtry.class);
                     //in.putExtra("guidelist",guidelist);
@@ -174,11 +186,11 @@ public class Institute_Details extends Activity {
                 e.printStackTrace();
             }
 
-            return institute_list;
+            return guidelist;
         }
 
         @Override
-        protected void onPostExecute(String[][] result) {
+        protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
             // TODO Auto-generated method stub
 
            super.onPostExecute(result);

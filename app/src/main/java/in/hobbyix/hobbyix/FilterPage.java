@@ -18,17 +18,21 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FilterPage extends ActionBarActivity {
     MyListAdapter adapter;
     MyListAdapter2 adapter2;
-    String load_locality_detail[] = new String[100];
-    String load_subcategory_detail[] = new String[100];
-   //String load_locality_details[][] = new String[500][3];
+    ArrayList<HashMap<String, String>>  load_locality_detail = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>>  load_subcategory_detail = new ArrayList<HashMap<String, String>>();
+    //String load_locality_details[][] = new String[500][3];
    // String load_subcategory_details[][] = new String[500][3];
     ArrayList<CheckBoxString> checkBoxList = new ArrayList<CheckBoxString>();
     ArrayList<CheckBoxString> checkBoxList2 = new ArrayList<CheckBoxString>();
+    int length_sub;
+    int length_local;
 
     Button reset, filter;
 
@@ -41,8 +45,10 @@ public class FilterPage extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         reset = (Button) findViewById(R.id.ResetButton);
         filter = (Button) findViewById(R.id.FilterButton);
-        load_locality_detail = new Location_batches().store_details_of_locality();
-        load_subcategory_detail = new Subcategory_Fitness().store_details_of_subcategory();
+        load_locality_detail =  Location_batches.store_details_of_locality();
+        load_subcategory_detail =  Subcategory_Fitness.store_details_of_subcategory();
+        length_sub=Subcategory_Fitness.length;
+        length_local=Location_batches.length;
         populatecheckBoxList();
 
         checkButtonClick();
@@ -55,14 +61,41 @@ public class FilterPage extends ActionBarActivity {
 
 
     public void populatecheckBoxList() {
+        String name=null,id=null;
+
+        for(HashMap<String, String> map: load_subcategory_detail) {
+
+            for(Map.Entry<String, String> mapEntry: map.entrySet()) {
+                String key = mapEntry.getKey();
+                //key=
+                String value = mapEntry.getValue();
+                if(key=="subcategory")
+                    name=value;
+                else
+                    id=value;
 
 
-        for (int i = 0; i < Integer.valueOf(load_subcategory_detail[0]); i++) {
-            checkBoxList.add(new CheckBoxString(load_subcategory_detail[i + 1], false));
+                }
+
+            checkBoxList.add(new CheckBoxString(name,id, false));
         }
-        for (int i = 0; i < Integer.valueOf(load_locality_detail[0]); i++) {
-            checkBoxList2.add(new CheckBoxString(load_locality_detail[i + 1], false));
+        for(HashMap<String, String> map: load_locality_detail) {
+
+            for(Map.Entry<String, String> mapEntry: map.entrySet()) {
+                String key = mapEntry.getKey();
+                //key=
+                String value = mapEntry.getValue();
+                if(key=="locality")
+                    name=value;
+                else
+                    id=value;
+
+
+            }
+
+            checkBoxList2.add(new CheckBoxString(name,id, false));
         }
+
         adapter = new MyListAdapter(this,
                 R.layout.checkbox_element, checkBoxList);
         ListView list = (ListView) findViewById(R.id.SubCategoriesListView);
@@ -243,13 +276,16 @@ public class FilterPage extends ActionBarActivity {
 
                 StringBuffer responseText = new StringBuffer();
                 responseText.append("Selected Countries are...\n");
-
+                    int k=0;
                 ArrayList<CheckBoxString> checkboxlists = adapter.checkboxlist;
 
                 for (int i = 0; i < checkboxlists.size(); i++) {
                     CheckBoxString check = checkboxlists.get(i);
 
                     if (check.isSelected()) {
+                        subcategory[k++]=check.getCode();
+
+                        Log.e("dhdfhdfhdfhf","   "+check.getCode());
                         responseText.append("\n" + check.getName());
                     }
                 }
@@ -257,28 +293,39 @@ public class FilterPage extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
 
-
+                   int l=0;
                 ArrayList<CheckBoxString> checkboxlists2 = adapter2.checkboxlist;
 
                 for (int i = 0; i < checkboxlists2.size(); i++) {
                     CheckBoxString check = checkboxlists2.get(i);
 
                     if (check.isSelected()) {
+                        locality[l++]=check.getCode();
+                        Log.e("uriir","  "+check.getCode());
                         responseText.append("\n" + check.getName());
                     }
                 }
+                ArrayList<HashMap<String, String>> guidelist=new             ArrayList<HashMap<String, String>>();
 
-               // Filter_page_backend.get_codes(subcategory,locality,l,k);
+               guidelist= Filter_page_backend.get_codes(subcategory,locality,k,l);
+                for(HashMap<String, String> map:guidelist )
 
-                Toast.makeText(getApplicationContext(), responseText,
+                    for(Map.Entry<String, String> mapEntry: map.entrySet()) {
+                        String key = mapEntry.getKey();
+                        //key=
+                        String value = mapEntry.getValue();
+                        Log.e("fjgdf", "   "+key+"     "+value);
+
+
+                    }
+String length=Integer.toString(Filter_page_backend.length);
+              Toast.makeText(getApplicationContext(), responseText,
                         Toast.LENGTH_LONG).show();
-                Intent OpenLogin = new Intent(v.getContext(), Filter_page_backend.class);
-                OpenLogin.putExtra("subcategory",subcategory);
-                OpenLogin.putExtra("locality",locality);
-                OpenLogin.putExtra("length_subcategory",subcategory);
-                OpenLogin.putExtra("length_localities",subcategory);
-
+                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+                OpenLogin.putExtra("guidelist",guidelist);
+               OpenLogin.putExtra("length",length);
                 startActivityForResult(OpenLogin, 0);
+
 
             }
 

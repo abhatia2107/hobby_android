@@ -11,9 +11,9 @@ public class CheckBoxString {
     String name = null;
     boolean selected = false;
 
-    public CheckBoxString( String name, boolean selected) {
+    public CheckBoxString( String name,String code, boolean selected) {
         super();
-
+            this.code=code;
         this.name = name;
         this.selected = selected;
     }
@@ -25,7 +25,12 @@ public class CheckBoxString {
     public void setName(String name) {
         this.name = name;
     }
-
+    public String getCode() {
+    return code;
+    }
+    public void setCode(String name) {
+        this.code = code;
+    }
     public boolean isSelected() {
         return selected;
     }

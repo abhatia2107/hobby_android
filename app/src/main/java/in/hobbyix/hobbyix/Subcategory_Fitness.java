@@ -20,26 +20,27 @@ import java.util.List;
  */
 public class Subcategory_Fitness  {
     //url to get required guidelines
-    private static String url_for_subcategory = "http://192.168.10.104/Hobbyix/displaying_subcategory_details.php";
+    private static String url_for_subcategory = "http://hobbyix.com/json/subcategories";
     // desc of all important strings : names of columns
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_SUBCATEGORY = "subcategory";
 
-    String message = null;
+    static String message = null;
     //object for JSONParser class
-    JSONParser jparser = new JSONParser();
+    static JSONParser jparser = new JSONParser();
     //button to start the syncing of databases
     Button btn;
     // ArrayList of HashMaps to store the JSONArray of mapped values
-    ArrayList<HashMap<String,String>> subcategorylist;
+    static ArrayList<HashMap<String,String>> guidelist=new ArrayList<HashMap<String, String>>();
     //JSONArray(inbuilt) to extract the JSONArray
-    JSONArray subcategorylines = null;
+    static JSONArray subcategorylines = null;
+    static int length;
     TextView institute_name;
     //-----------------------------------------------------------------------------------------------------------------------//
 
-    public String[] store_details_of_subcategory() {
+    public static ArrayList<HashMap<String,String>> store_details_of_subcategory() {
 
-        String[] aResultM = new String[30];
+        ArrayList<HashMap<String,String>> aResultM = new   ArrayList<HashMap<String,String>>();
         try {
             String params = null;
             LoadAllSubcategory task = new LoadAllSubcategory();
@@ -58,7 +59,7 @@ public class Subcategory_Fitness  {
     }
 
     //======================================================Class LoadAllGuidelines==============================================//
-    class LoadAllSubcategory extends AsyncTask<String, String, String[]> {
+    static class LoadAllSubcategory extends AsyncTask<String, String,   ArrayList<HashMap<String,String>>> {
 
 
         @Override
@@ -73,7 +74,7 @@ public class Subcategory_Fitness  {
 
         }
         @Override
-        protected String[] doInBackground(String... arg0) {
+        protected   ArrayList<HashMap<String,String>> doInBackground(String... arg0) {
 
             // TODO Auto-generated method stub
 
@@ -95,6 +96,7 @@ public class Subcategory_Fitness  {
                     subcategorylines =  json.getJSONArray("subcategories");
 
                     subcategory = new  String[subcategorylines.length()+1];
+                    length=subcategorylines.length();
                     subcategory[0]=Integer.toString(subcategorylines.length());
                     Log.e("djfjk","ooio"+subcategory[0]+"");
                     int j;
@@ -104,10 +106,14 @@ public class Subcategory_Fitness  {
                         JSONObject c =  subcategorylines.getJSONObject(i);
 
                         // Integer id = c.getInt(TAG_ID);
-                        String name_of_subcategory = c.getString(TAG_SUBCATEGORY);
+                        String name_of_subcategory = c.getString("subcategory");
+                        String id=c.getString("id");
 
                         Log.e("dhkajhdj",""+name_of_subcategory+"");
-                        subcategory[j]=name_of_subcategory;
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("subcategory", name_of_subcategory);
+                        map.put("id",id );
+                        guidelist.add(map);
 
 
                     }
@@ -127,11 +133,11 @@ public class Subcategory_Fitness  {
                 e.printStackTrace();
             }
 
-            return subcategory;
+            return guidelist;
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(ArrayList<HashMap<String, String>> result) {
             // TODO Auto-generated method stub
 
             super.onPostExecute(result);
