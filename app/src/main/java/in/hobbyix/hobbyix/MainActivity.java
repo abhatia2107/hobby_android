@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -105,52 +106,57 @@ PostItemListAdapter adapter;
         HashMap<String, String>[] mylist;
         int i=0,k=0;
         int j;
-        if(length==0){
-            PostItemsList.add(new PostItems("no such value for this combination","","","","", "", "",""));
+        if(length==-1){
+            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
 
         }
         else {
-
-            for (HashMap<String, String> map : arl) {
-
-                for (Map.Entry<String, String> mapEntry : map.entrySet()) {
-                    String key = mapEntry.getKey();
-                    //key=
-                    String value = mapEntry.getValue();
-                    details[k] = value;
-                    Log.e("kjdf", "   " + key + "     " + value + "    " + i + "   " + details[k]);
-
-                    k++;
-                }
-
-            }
-            k = 0;
-            used = 0;
-            if (length > 10) {
-                for (i = 0; i < 10; i++) {
-                    PostItemsList.add(new PostItems(details[k + 1], details[k + 2], details[k + 3], details[k + 4], details[k + 5], "Credit", "Book Now", details[k]));
-                    // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
-                    k = k + 6;
-                }
-
-                used = 10;
-
-                length = length - 10;
-                Log.e("dkjfjds", "  " + length + "   " + used);
+            if (length == 0) {
+                //PostItemsList.add(new PostItems("no such value for this combination", "", "", "", "", "", "", ""));
+                Toast.makeText(getApplicationContext(), "Sorry,No results found", Toast.LENGTH_SHORT).show();
             } else {
-                if (length > 0 && length <= 10) {
-                    for (i = 0; i < length; i++) {
+
+                for (HashMap<String, String> map : arl) {
+
+                    for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                        String key = mapEntry.getKey();
+                        //key=
+                        String value = mapEntry.getValue();
+                        details[k] = value;
+                        Log.e("kjdf", "   " + key + "     " + value + "    " + i + "   " + details[k]);
+
+                        k++;
+                    }
+
+                }
+                k = 0;
+                used = 0;
+                if (length > 10) {
+                    for (i = 0; i < 10; i++) {
                         PostItemsList.add(new PostItems(details[k + 1], details[k + 2], details[k + 3], details[k + 4], details[k + 5], "Credit", "Book Now", details[k]));
                         // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
                         k = k + 6;
-
-                        // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
                     }
-                    used = length;
-                    length = 0;
+
+                    used = 10;
+
+                    length = length - 10;
+                    Log.e("dkjfjds", "  " + length + "   " + used);
+                } else {
+                    if (length > 0 && length <= 10) {
+                        for (i = 0; i < length; i++) {
+                            PostItemsList.add(new PostItems(details[k + 1], details[k + 2], details[k + 3], details[k + 4], details[k + 5], "Credit", "Book Now", details[k]));
+                            // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                            k = k + 6;
+
+                            // PostItemsList.add(new PostItems("Name of Institute"+i,"ClassType"+i,"Address"+i,"Timings"+i,"Fees"+i,"Credit"+i,"Book Now"));
+                        }
+                        used = length;
+                        length = 0;
+
+                    }
 
                 }
-
             }
         }
     }
@@ -226,57 +232,121 @@ PostItemListAdapter adapter;
                 @Override
                 public void onClick(View v) {
                     Log.e("lfkdjsflk", "popopo");
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
             holder.InstituteClassType.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.InstituteTimings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.InstituteAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.InstituteFees.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.InstituteCredit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivity(BookNowSamplePageIntent);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.BookNowButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent BookNowSamplePageIntent = new Intent(getApplicationContext(), SamplePage.class);
-                    BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
-                    startActivityForResult(BookNowSamplePageIntent, 0);
+                    ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                    Boolean x=c.isConnectingToInternet();
+                    if(x==true){
+
+                        Intent BookNowSamplePageIntent = new Intent(MainActivity.this, SamplePage.class);
+                        BookNowSamplePageIntent.putExtra("id", CurrentPost.getId());
+                        startActivity(BookNowSamplePageIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -334,35 +404,29 @@ PostItemListAdapter adapter;
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         String institute[][] = new String[200][100];
-                        institute = Search_Backend.store_details(query);
-                        Log.e("jhjk", " " + institute[0][0]);
-                        // this is your adapter that will be filtered
-                        // myAdapter.getFilter().filter(query);
-                        ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
-                        int j;
-                        for (int i = 0; i < Integer.valueOf(institute[0][0]); i++) {
-                            j = i + 1;
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            map.put("institute", institute[j][0]);
-                            map.put("batch_category", institute[j][1]);
-                            map.put("venue_address", institute[j][2]);
-                            map.put("batch_price", institute[j][3]);
-                            map.put("batch_comment", institute[j][4]);
-                            map.put("id", institute[j][5]);
-                            //map.put(schedule_start_time, schedule_start_time);
-                            //map.put(schedule_end_time, schedule_end_time);
+                        ConnectionDetector c = new ConnectionDetector(getApplicationContext());
+                        Boolean x = c.isConnectingToInternet();
+                        if (x == true) {
+                            ArrayList<HashMap<String, String>>  guidelist = Search_Backend.store_details(query);
+                            String length=Search_Backend.length;
+                            Log.e("jhjk", " " + institute[0][0]);
 
-                            guidelist.add(map);
+
+                            Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                            in.putExtra("guidelist", guidelist);
+                            in.putExtra("length", length);
+                            finish();
+                            startActivity(in);
+
+
+                            System.out.println("on query submit: " + query);
+                            return true;
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                            return true;
                         }
-                        Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                        in.putExtra("guidelist", guidelist);
-                        in.putExtra("length", institute[0][0]);
-                        finish();
-                        startActivity(in);
 
-
-                        System.out.println("on query submit: " + query);
-                        return true;
                     }
                 };
                 searchView.setOnQueryTextListener(textChangeListener);
@@ -373,28 +437,76 @@ PostItemListAdapter adapter;
             }
             @Override
             public boolean onOptionsItemSelected (MenuItem item){
+                ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+                Boolean x;
                 switch (item.getItemId()) {
 
 
                     case R.id.action_filter:
+
+                      x=c.isConnectingToInternet();
+                        if(x==true){
                         Intent FilterIntent = new Intent(this, FilterPage.class);
-                        this.startActivity(FilterIntent);
+                        this.startActivity(FilterIntent);}
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.MyProfile:
-                        Intent MyProfileIntent = new Intent(this, MyProfile.class);
-                        this.startActivity(MyProfileIntent);
+                        x=c.isConnectingToInternet();
+                        if(x==true){
+                            Intent MyProfileIntent = new Intent(this, MyProfile.class);
+                            this.startActivity(MyProfileIntent);
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                        }
                         break;
+
                     case R.id.ChangePassword:
-                        Intent ChangePasswordIntent = new Intent(this, ChangePassword.class);
-                        this.startActivity(ChangePasswordIntent);
+                        x=c.isConnectingToInternet();
+                        if(x==true){
+                            Intent ChangePasswordIntent = new Intent(this, ChangePassword.class);
+                            this.startActivity(ChangePasswordIntent);
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                        }
                         break;
+
                     case R.id.MyOrders:
-                        Intent MyOrdersIntent = new Intent(this, MyOrders.class);
-                        this.startActivity(MyOrdersIntent);
+
+                        x=c.isConnectingToInternet();
+                        if(x==true){
+                            Intent MyOrdersIntent = new Intent(this, MyOrders.class);
+                            this.startActivity(MyOrdersIntent);
+
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                        }
+
                         break;
                     case R.id.action_login:
-                        Intent LoginIntent = new Intent(this, LoginActivity.class);
-                        this.startActivity(LoginIntent);
+                        x=c.isConnectingToInternet();
+                        if(x==true){
+                            Intent MyOrdersIntent = new Intent(this, MyOrders.class);
+                            this.startActivity(MyOrdersIntent);
+
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+                        }
+
                         break;
                     default:
                         return super.onOptionsItemSelected(item);

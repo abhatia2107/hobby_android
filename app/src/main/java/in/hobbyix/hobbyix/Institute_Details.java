@@ -106,9 +106,15 @@ public class Institute_Details extends Activity {
 
             JSONObject json = jparser.makeHttpRequest(url_for_institute, "GET", params);
             if (json == null) {
+
                 message = "No internet connection... please try later";
+                length="-1";
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(TAG_INSTITUTE, "dfj");
+                map.put("batch_category","kjdfkj" );
                 Log.v("tushita", "The Json Object was Null");
-                return null;
+                guidelist.add(map);
+                return guidelist;
             }
             try {
                 int success = json.getInt(TAG_SUCCESS);
@@ -125,6 +131,7 @@ public class Institute_Details extends Activity {
                         String name_of_institute = c.getString(TAG_INSTITUTE);
                         String batch_category = c.getString("subcategory");
                         String venue_address = c.getString("venue_address");
+
                         String batch_comment = c.getString("batch_comment");
                         Integer price = c.getInt("batch_single_price");
                         String batch_price=price.toString();

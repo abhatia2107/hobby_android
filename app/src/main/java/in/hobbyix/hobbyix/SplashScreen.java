@@ -1,14 +1,27 @@
 package in.hobbyix.hobbyix;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class SplashScreen extends Activity {
+    ConnectionDetector cd;
+    Boolean isInternetPresent = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalsh_screen);
+        // creating connection detector class instance
+        cd = new ConnectionDetector(getApplicationContext());
         Thread timer = new Thread(){
             public void run(){
                 try{
@@ -18,11 +31,29 @@ public class SplashScreen extends Activity {
                     e.printStackTrace();
                 }
                 finally {
-                    Intent openTermsCondition = new Intent(getApplicationContext(),Institute_Details.class);
-                    startActivity(openTermsCondition);
-                    finish();
+                   /* isInternetPresent = cd.isConnectingToInternet();
+
+                    // check for Internet status
+                    if (isInternetPresent) {*/
+                        // Internet Connection is Present
+                        // make HTTP requests
+                        Intent openTermsCondition = new Intent(getApplicationContext(),Institute_Details.class);
+                        startActivity(openTermsCondition);
+                        finish();
+
+                    /*} else {
+                        Log.e("sfjfk", "  fgjkdfg");
+                        // Internet connection is not present
+                        // Ask user to connect to Internet
+                        showAlertDialog(SplashScreen.this, "No Internet Connection",
+                                "You don't have internet connection.");
+                       // Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    }*/
                 }
-            }
+
+
+                }
+
         };
         timer.start();
     }
@@ -43,5 +74,27 @@ public class SplashScreen extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void showAlertDialog(Context context, String title, String message) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+alertDialog.setIcon(R.drawable.button_cancel);       // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting alert dialog icon
+
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

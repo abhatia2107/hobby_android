@@ -84,6 +84,7 @@ public class Subcategory_Fitness  {
             JSONObject json = jparser.makeHttpRequest(url_for_subcategory, "GET", params);
             if(json==null){
                 message = "No internet connection... please try later";
+                length=-1;
                 Log.v("tushita","The Json Object was Null");
                 return null;
             }

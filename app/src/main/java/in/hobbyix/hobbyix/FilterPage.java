@@ -40,6 +40,9 @@ public class FilterPage extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        ConnectionDetector c= new ConnectionDetector(getApplicationContext());
+        Boolean x=c.isConnectingToInternet();
+        if(true){
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -51,7 +54,11 @@ public class FilterPage extends ActionBarActivity {
         length_local=Location_batches.length;
         populatecheckBoxList();
 
-        checkButtonClick();
+        checkButtonClick();}
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -100,34 +107,13 @@ public class FilterPage extends ActionBarActivity {
                 R.layout.checkbox_element, checkBoxList);
         ListView list = (ListView) findViewById(R.id.SubCategoriesListView);
         list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-
-                // When clicked, show a toast with the TextView text
-                CheckBoxString checkbox1 = (CheckBoxString) parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),
-                        "Clicked on Row: " + checkbox1.getName(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
         adapter2 = new MyListAdapter2(this,
                 R.layout.checkbox_element, (ArrayList<CheckBoxString>) checkBoxList2);
         ListView list2 = (ListView) findViewById(R.id.LocalityListView);
         list2.setAdapter(adapter2);
 
-        list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View view,
-                                    int position, long id) {
-                // When clicked, show a toast with the TextView text
-                CheckBoxString checkbox2 = (CheckBoxString) parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),
-                        "Clicked on Row: " + checkbox2.getName(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+
 
     }
 
@@ -167,20 +153,19 @@ public class FilterPage extends ActionBarActivity {
                 holder = new ViewHolder();
                 holder.name = (CheckBox) convertView.findViewById(R.id.ItemCheckBox);
 
-
-                convertView.setTag(holder);
-
                 holder.name.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         CheckBox cb = (CheckBox) v;
-                        CheckBoxString checkBoxxx = (CheckBoxString) cb.getTag();
-                        Toast.makeText(getApplicationContext(),
-                                "Clicked on Checkbox: " + cb.getText() +
-                                        " is " + cb.isChecked(),
-                                Toast.LENGTH_LONG).show();
-                        checkBoxxx.setSelected(cb.isChecked());
+                        CheckBoxString _state = (CheckBoxString) cb.getTag();
+
+
+
+                        _state.setSelected(cb.isChecked());
                     }
                 });
+
+                convertView.setTag(holder);
+
 
 
             } else {
@@ -191,8 +176,11 @@ public class FilterPage extends ActionBarActivity {
 
 
             holder.name.setText(checkBoxString1.getName());
+            Log.e("hj",checkBoxString1.getCode());
+
             holder.name.setChecked(checkBoxString1.isSelected());
             holder.name.setTag(checkBoxString1);
+
             return convertView;
 
         }
@@ -233,17 +221,7 @@ public class FilterPage extends ActionBarActivity {
 
                 convertView.setTag(holder);
 
-                holder.name.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        CheckBox cb = (CheckBox) v;
-                        CheckBoxString checkBoxxx = (CheckBoxString) cb.getTag();
-                        Toast.makeText(getApplicationContext(),
-                                "Clicked on Checkbox: " + cb.getText() +
-                                        " is " + cb.isChecked(),
-                                Toast.LENGTH_LONG).show();
-                        checkBoxxx.setSelected(cb.isChecked());
-                    }
-                });
+
 
 
             } else {
@@ -271,65 +249,73 @@ public class FilterPage extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
-                final String subcategory[]= new String[100];
-                final String locality[]=new String[100];
-
+                final String subcategory[] = new String[400];
+                final String locality[] = new String[400];
+                int l = 0;
+                int k = 0,f=0;
+                int z = 0;
                 StringBuffer responseText = new StringBuffer();
                 responseText.append("Selected Countries are...\n");
-                    int k=0;
+
                 ArrayList<CheckBoxString> checkboxlists = adapter.checkboxlist;
 
                 for (int i = 0; i < checkboxlists.size(); i++) {
                     CheckBoxString check = checkboxlists.get(i);
 
                     if (check.isSelected()) {
-                        subcategory[k++]=check.getCode();
+                        f=1;
+                        subcategory[k++] = check.getCode();
 
-                        Log.e("dhdfhdfhdfhf","   "+check.getCode());
+                        Log.e("dhdfhdfhdfhf", "   " + check.getCode());
                         responseText.append("\n" + check.getName());
                     }
                 }
 
-                Toast.makeText(getApplicationContext(), responseText,
-                        Toast.LENGTH_LONG).show();
 
-                   int l=0;
+
                 ArrayList<CheckBoxString> checkboxlists2 = adapter2.checkboxlist;
 
                 for (int i = 0; i < checkboxlists2.size(); i++) {
                     CheckBoxString check = checkboxlists2.get(i);
 
                     if (check.isSelected()) {
-                        locality[l++]=check.getCode();
-                        Log.e("uriir","  "+check.getCode());
+                        z = 1;
+                        locality[l++] = check.getCode();
+                        Log.e("uriir", "  " + check.getCode());
                         responseText.append("\n" + check.getName());
                     }
                 }
-                ArrayList<HashMap<String, String>> guidelist=new             ArrayList<HashMap<String, String>>();
+                Log.e("ioioio","  "+z+"  "+f);
 
-               guidelist= Filter_page_backend.get_codes(subcategory,locality,k,l);
-                for(HashMap<String, String> map:guidelist )
-
-                    for(Map.Entry<String, String> mapEntry: map.entrySet()) {
-                        String key = mapEntry.getKey();
-                        //key=
-                        String value = mapEntry.getValue();
-                        Log.e("fjgdf", "   "+key+"     "+value);
+              if (z == 0 && f == 0) {
+                    Toast.makeText(getApplicationContext(), "Select at least one", Toast.LENGTH_SHORT).show();
 
 
-                    }
-String length=Integer.toString(Filter_page_backend.length);
-              Toast.makeText(getApplicationContext(), responseText,
-                        Toast.LENGTH_LONG).show();
-                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
-                OpenLogin.putExtra("guidelist",guidelist);
-               OpenLogin.putExtra("length",length);
-                startActivityForResult(OpenLogin, 0);
+                } else {
+                    ArrayList<HashMap<String, String>> guidelist = new ArrayList<HashMap<String, String>>();
 
+                    guidelist = Filter_page_backend.get_codes(subcategory, locality, k, l);
+                    for (HashMap<String, String> map : guidelist)
+
+                        for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                            String key = mapEntry.getKey();
+                            //key=
+                            String value = mapEntry.getValue();
+                            Log.e("fjgdf", "   " + key + "     " + value);
+
+
+                        }
+                    String length = Integer.toString(Filter_page_backend.length);
+
+                    Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+                    OpenLogin.putExtra("guidelist", guidelist);
+                    OpenLogin.putExtra("length", length);
+                    startActivityForResult(OpenLogin, 0);
+
+
+             }
 
             }
-
-
         });
         reset.setOnClickListener(new View.OnClickListener() {
 
@@ -346,12 +332,12 @@ String length=Integer.toString(Filter_page_backend.length);
                     CheckBoxString check = checkboxlists.get(i);
 
                     if (check.isSelected()) {
+                        Log.e("SELECTED","Dfk");
                         check.setSelected(false);
                     }
                 }
 
-                Toast.makeText(getApplicationContext(), responseText,
-                        Toast.LENGTH_LONG).show();
+
 
 
                 ArrayList<CheckBoxString> checkboxlists2 = adapter2.checkboxlist;
@@ -365,9 +351,8 @@ String length=Integer.toString(Filter_page_backend.length);
                 }
 
 
-                Toast.makeText(getApplicationContext(), responseText,
-                        Toast.LENGTH_LONG).show();
-                Intent OpenLogin = new Intent(v.getContext(), MainActivity.class);
+
+                Intent OpenLogin = new Intent(v.getContext(), Institute_Details.class);
 
                 startActivityForResult(OpenLogin, 0);
             }

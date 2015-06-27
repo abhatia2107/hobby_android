@@ -4,6 +4,7 @@ package in.hobbyix.hobbyix;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -207,16 +208,80 @@ public class SamplePage extends ActionBarActivity {
                  // open datepicker dialog.
                 // set date picker for current date
                 // add pickerListener listner to date picker
+              /*  DatePickerDialog _date =   new DatePickerDialog(this, datePickerListener, year,month,
+                        day){
 
-                return new DatePickerDialog(this, pickerListener, year, month, day);
+                    @Override
+                    public void onDateChanged(DatePicker view, int yyear, int monthOfYear, int dayOfMonth)
+                    {
+                        if (yyear < year)
+                            view.updateDate(year, month, day);
+
+                        if (monthOfYear < month && yyear == year)
+                            view.updateDate(year, month, day);
+
+                        if (dayOfMonth < day && yyear == year && monthOfYear == month)
+                            view.updateDate(year, month, day);
+
+                    }
+                };
+                return _date;
+        }
+        return null;*/
+                DatePickerDialog dialog = null;
+
+                    dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
+                    {
+                        @Override
+                        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDate)
+                        {
+                            year = selectedYear;
+                            month = selectedMonth;
+                            day = selectedDate;
+                            Output.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year));
+                        }
+                    }, year, month - 1, day);
+                    Calendar currentDate = Calendar.getInstance();
+                    dialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
+                    //If you need you can set min date too
+
+              /*  else
+                {
+                    dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
+                    {
+                        @Override
+                        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDate)
+                        {
+                            Output.setText(selectedDate + "/" + selectedMonth + 1 + "/" + selectedYear);
+                        }
+                    }, year, month - 1, day)
+                    {
+                        @Override
+                        public void onDateChanged(DatePicker view, int year, int month, int day)
+                        {
+                            if ( year <= 2015 && month + 1 <= 12) //meets your criteria
+                            {
+                                view.updateDate(year, month, day); //update the date picker to selected date
+                            }
+                            else
+                            {
+                                view.updateDate(2015, 12- 1, 31); // or you update the date picker to previously selected date
+                            }
+                        }
+                    };
+                }*/
+                return dialog;
+        }
+        return null;
+
+
         }
 
-        return null;
-    }
 
 
 
-        private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             // when dialog box is closed, below method will be called.
 
             @Override

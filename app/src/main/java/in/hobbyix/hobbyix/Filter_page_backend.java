@@ -197,6 +197,7 @@ public class Filter_page_backend extends Activity {
             JSONObject json = jparser.makeHttpRequest(url_end, "GET", params);
             if (json == null) {
                 message = "No internet connection... please try later";
+                length=-1;
                 Log.v("tushita", "The Json Object was Null");
                 return null;
             }
@@ -209,6 +210,7 @@ public class Filter_page_backend extends Activity {
                     length=guidelines.length();
                     if(guidelines.length()==0)
                     {
+                        length=0;
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put(TAG_INSTITUTE, "no such institute");
                         guidelist.add(map);
