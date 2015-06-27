@@ -11,15 +11,22 @@ public class PostItems{
 
     private String Credit;
     private  String Id;
-    public PostItems(String name,String classtype,String address,String fees,String timings,String credit,String booknow,String id){
-        BookNow=booknow;
+    public PostItems(String name,String classType,String address,String fees,String timings,String credit,String bookNow,String id){
+        BookNow=bookNow;
         Name=name;
-        ClassType=classtype;
+        ClassType=classType;
         Address=address;
-        Fees=fees;
+        Fees="Rs." + fees;
         Timings=timings;
         Credit=credit;
-       Id=id;}
+        Id=id;
+        if(Timings.length()>20){
+            Timings = Timings.substring(0,20)+"...";
+        }
+        if(Address.length()>20){
+            Address = Address.substring(0,20)+"...";
+        }
+    }
 
 
 
